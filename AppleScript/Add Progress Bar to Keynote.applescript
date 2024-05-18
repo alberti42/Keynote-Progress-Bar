@@ -1,14 +1,17 @@
 -- {progress bar; duration=1; start; ChapterSeparation=30; FontFamily=Helvetica Neue; FlipUpsideDown=false; FontFamilyHighlightedChapter=Helvetica Neue Medium; SetAllPositionsEqual=true; NumberOfDots=80; DotSize=8; ContourWidth=0.2; FontSize=12; chapter=Introduction; CompletedDotFillColor={91,96,95,100}; UncompletedDotFillColor={91,96,95,30}; CompletedDotStrokeColor={0,0,0,100}; BaselineOffset=0; UncompletedDotStrokeColor={0,0,0,100}; Margins={0,0,0,0}; OverwriteAllImages=true;}
 
+-- Import necessary frameworks
 use framework "Foundation"
 use framework "CoreImage"
 use framework "AppKit"
 use framework "CoreGraphics"
 
+-- Import custom framework for creating progress bar images
 use framework "KeynoteProgressBarHelper"
 
 use scripting additions
 
+-- Set default values for properties
 property theDefaultDuration : 1
 property theNumberOfDots : 80
 
@@ -36,6 +39,7 @@ property doResetSizeAndPosition : false
 property doOverwriteAllImages : false
 property doRemoveAll : false
 
+-- Limit color values to a range of 0 to 255
 on limitColor(theVal)
 	if theVal > 255 then
 		return 255
@@ -46,6 +50,7 @@ on limitColor(theVal)
 	end if
 end limitColor
 
+-- Limit alpha values to a range of 0 to 100
 on limitAlpha(theVal)
 	if theVal > 100 then
 		return 100
@@ -56,6 +61,7 @@ on limitAlpha(theVal)
 	end if
 end limitAlpha
 
+-- Configure color from a string of values
 on configureColor(theColorStr)
 	set theColor to missing value
 	if (theColorStr's |count|()) ≥ 3 then
@@ -68,11 +74,9 @@ on configureColor(theColorStr)
 			(theColorStr's setObject:100 atIndex:3)
 		end if
 		set theColor to (current application's NSColor's colorWithSRGBRed:(theColorStr's objectAtIndex:0) green:(theColorStr's objectAtIndex:1) blue:(theColorStr's objectAtIndex:2) alpha:(theColorStr's objectAtIndex:3))
-		
 	end if
 	return theColor
 end configureColor
-
 -- Defines the total number of steps for the progress reporting.
 on setTotalStepsForProgress(totalSteps)
 	set progress total steps to totalSteps
@@ -93,6 +97,7 @@ on displayError(errorMessage, errorDetails, dismissAfter, cancelSriptExecution)
 	end if
 end displayError
 
+-- Rounds a value to the nearest integer.
 on roundVal(theVal)
 	if theVal > 0 then
 		return (theVal + 0.5) div 1
@@ -101,6 +106,7 @@ on roundVal(theVal)
 	end if
 end roundVal
 
+-- Returns the ceiling of a value.
 on ceiling(theVal)
 	if theVal mod 1 > 0 then
 		return (theVal div 1) + 1
@@ -109,6 +115,7 @@ on ceiling(theVal)
 	end if
 end ceiling
 
+-- Returns the absolute value of a number.
 on abs(numericVariable)
 	if numericVariable < 0 then
 		return -numericVariable
@@ -117,6 +124,7 @@ on abs(numericVariable)
 	end if
 end abs
 
+-- Toggles the visibility of presenter notes.
 on showPresenterNotes:theStatus
 	set didToggled to false
 	
@@ -137,7 +145,6 @@ on showPresenterNotes:theStatus
 				set didToggled to true
 			end if
 		end if
-		
 	end tell
 	
 	tell application "System Events"
@@ -157,13 +164,14 @@ on showPresenterNotes:theStatus
 	return didToggled
 end showPresenterNotes:
 
+-- Main script execution
 on run
 	
 	set theNullObj to current application's NSNull's |null|()
 	
 	tell application "Keynote"
 		
-		if not (exists front document) then my displayError("Critial error: Progress Bar", "You must first open a Keynote document.", 15, true)
+		if not (exists front document) then my displayError("Critical error: Progress Bar", "You must first open a Keynote document.", 15, true)
 		if playing is true then tell the front document to stop
 		
 		set theCurrentSlide to current slide of front document
@@ -269,7 +277,7 @@ on run
 									exit repeat
 								end if
 							else
-								my displayError("Critial error: Progress Bar", "Error: Command {progress bar; ...} not properly terminated by a curly bracket at slide number " & slide number of theSlide & ".", 15, true)
+								my displayError("Critical error: Progress Bar", "Error: Command {progress bar; ...} not properly terminated by a curly bracket at slide number " & slide number of theSlide & ".", 15, true)
 								exit repeat
 							end if
 						end repeat
