@@ -294,7 +294,7 @@ on run
 							repeat with scrollarea in scrollareas
 								set theAXIdentifier to (attributes of scrollarea whose name is "AXIdentifier") as list
 								if (count of theAXIdentifier) > 0 then
-									if value of first item of theAXIdentifier is "_NS:11" then
+									if value of first item of theAXIdentifier is "_NS:8" then
 										set thePresenterNotes to scrollarea
 									end if
 								end if
