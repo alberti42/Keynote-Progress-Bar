@@ -142,7 +142,12 @@ on showPresenterNotes:theStatus
 	
 	tell application "System Events"
 		repeat
-			if (count of (menu items of theViewMenu whose name is "Show Presenter Notes")) = 0 then
+			if theStatus then
+				set theString to "Hide Presenter Notes"
+			else
+				set theString to "Show Presenter Notes"
+			end if
+			if (count of (menu items of theViewMenu whose name is theString)) = 1 then
 				exit repeat
 			end if
 			delay 0.1
@@ -167,6 +172,7 @@ on run
 		set theDocHeight to height of front document
 		
 		set theSlides to slides of front document whose skipped is false
+		set theSkippedSlides to slides of front document whose skipped is true
 		
 		set delimiters to (current application's NSCharacterSet's characterSetWithCharactersInString:("{};="))
 		set whiteSpaces to (current application's NSCharacterSet's whitespaceCharacterSet())
@@ -271,6 +277,7 @@ on run
 				end if
 			else
 				
+				(* Check if the presenter note is empty, then it just writes the default note configuration, otherwise extend them by emulating typing *)
 				if (((current application's NSString's alloc()'s initWithString:(presenter notes of theSlide))'s stringByTrimmingCharactersInSet:whiteSpaces)'s isEqualToString:"") then
 					set presenter notes of theSlide to theDefaultConfiguration & linefeed
 				else
@@ -283,11 +290,11 @@ on run
 						
 						tell application "System Events" to tell application process "Keynote"
 							set frontmost to true
-							set scrollareas to scroll areas of item 1 of first window of (windows whose value of attribute "AXMain" is true)
+							set scrollareas to scroll areas of (item 1 of (splitter groups of (item 1 of first window of (windows whose value of attribute "AXMain" is true))))
 							repeat with scrollarea in scrollareas
 								set theAXIdentifier to (attributes of scrollarea whose name is "AXIdentifier") as list
 								if (count of theAXIdentifier) > 0 then
-									if value of first item of theAXIdentifier is "_NS:9" then
+									if value of first item of theAXIdentifier is "_NS:11" then
 										set thePresenterNotes to scrollarea
 									end if
 								end if
@@ -297,7 +304,7 @@ on run
 					
 					set theNotes to (presenter notes of theSlide as string)
 					
-					(* Find out how many new lines at the end *)
+					(* Find out how many empty lines at the beginning *)
 					repeat with i from 0 to (count of theNotes) - 1
 						if (character (i + 1) of theNotes) ≠ linefeed then
 							exit repeat
@@ -317,7 +324,7 @@ on run
 					
 					tell application "System Events" to tell application process "Keynote"
 						key code 126 using {command down} -- arrow up
-						key code 123 using {command down} -- arrow left
+						-- key code 123 using {command down} -- arrow left
 						
 						keystroke theDefaultConfiguration
 						
@@ -331,8 +338,49 @@ on run
 					end tell
 					
 					-- The following code does not work because Keynote uses a propetary format ("com.apple.iWork.TSPNativeData") for the clipboard
-					(*					(* clears the clipboard content *)					thePasteboard's clearContents()										tell application "System Events" to tell application process "Keynote"						set focused of thePresenterNotes to true						keystroke "a" using command down						keystroke "c" using command down					end tell										(* wait that the content is really copied to the clipboard *)					repeat						if (thePasteboard's |types|()'s |count|()) > 0 then							exit repeat						end if						(* introduce a small pause *)						delay 0.1					end repeat										set theCB to ((current application's NSString's alloc())'s initWithData:(thePasteboard's dataForType:"public.rtf") encoding:(current application's NSUTF8StringEncoding))					-- set theCB to (thePasteboard's stringForType:"public.rtf")
-										if (theCB's hasSuffix:"}") then						set thePrefix to ""						set theSuffix to "\\" & linefeed & linefeed						if not ((theCB's substringWithRange:{location:(theCB's |length|()) - 2, |length|:1})'s isEqualToString:linefeed) then							--set thePrefix to "\\" & linefeed & "\\" & linefeed						else							--set thePrefix to "\\" & linefeed						end if						set theNewCB to ((theCB's substringToIndex:((theCB's |length|()) - 1))'s ¬							stringByAppendingString:(thePrefix & "\\pard\\pardeftab720\\sl283\\slmult1\\partightenfactor0 " & linefeed & linefeed & "\\fs36 \\cf2 \\strokec2 " & ¬								(((current application's NSString's alloc()'s initWithString:theDefaultConfiguration)'s stringByReplacingOccurrencesOfString:"{" withString:"\\{")'s stringByReplacingOccurrencesOfString:"}" withString:"\\}") & theSuffix & "}"))												thePasteboard's clearContents()						(thePasteboard's setData:(theNewCB's dataUsingEncoding:(current application's NSUTF8StringEncoding)) forType:"public.rtf")					end if										tell application "System Events" to tell application process "Keynote"						set focused of thePresenterNotes to true						keystroke "a" using command down						keystroke "v" using command down					end tell
+					(*
+					(* clears the clipboard content *)
+					thePasteboard's clearContents()
+					
+					tell application "System Events" to tell application process "Keynote"
+						set focused of thePresenterNotes to true
+						keystroke "a" using command down
+						keystroke "c" using command down
+					end tell
+					
+					(* wait that the content is really copied to the clipboard *)
+					repeat
+						if (thePasteboard's |types|()'s |count|()) > 0 then
+							exit repeat
+						end if
+						(* introduce a small pause *)
+						delay 0.1
+					end repeat
+					
+					set theCB to ((current application's NSString's alloc())'s initWithData:(thePasteboard's dataForType:"public.rtf") encoding:(current application's NSUTF8StringEncoding))
+					-- set theCB to (thePasteboard's stringForType:"public.rtf")
+					
+					if (theCB's hasSuffix:"}") then
+						set thePrefix to ""
+						set theSuffix to "\\" & linefeed & linefeed
+						if not ((theCB's substringWithRange:{location:(theCB's |length|()) - 2, |length|:1})'s isEqualToString:linefeed) then
+							--set thePrefix to "\\" & linefeed & "\\" & linefeed
+						else
+							--set thePrefix to "\\" & linefeed
+						end if
+						set theNewCB to ((theCB's substringToIndex:((theCB's |length|()) - 1))'s ¬
+							stringByAppendingString:(thePrefix & "\\pard\\pardeftab720\\sl283\\slmult1\\partightenfactor0 " & linefeed & linefeed & "\\fs36 \\cf2 \\strokec2 " & ¬
+								(((current application's NSString's alloc()'s initWithString:theDefaultConfiguration)'s stringByReplacingOccurrencesOfString:"{" withString:"\\{")'s stringByReplacingOccurrencesOfString:"}" withString:"\\}") & theSuffix & "}"))
+						
+						thePasteboard's clearContents()
+						(thePasteboard's setData:(theNewCB's dataUsingEncoding:(current application's NSUTF8StringEncoding)) forType:"public.rtf")
+					end if
+					
+					tell application "System Events" to tell application process "Keynote"
+						set focused of thePresenterNotes to true
+						keystroke "a" using command down
+						keystroke "v" using command down
+					end tell
 					*)
 					
 				end if
@@ -633,7 +681,7 @@ on run
 		end if
 		
 		(* Insert the progress bar into the slides *)
-		set theFontAttrsCompleted to current application's NSMutableDictionary's new
+		set theFontAttrsCompleted to current application's NSMutableDictionary's new()
 		(theFontAttrsCompleted's setObject:theBaselineOffset forKey:(current application's NSBaselineOffsetAttributeName))
 		
 		set theFontAttrsUncompleted to current application's NSMutableDictionary's alloc()'s initWithDictionary:theFontAttrsCompleted
@@ -659,8 +707,10 @@ on run
 		
 		set theVerticalMargin to theContourWidth + 1
 		
-		my setTotalStepsForProgress(theNumSlidesBefore + theNumSlidesAfter)
-		my updateProgress(0, "Cleaning slides", "Slide " & 0 & " out of " & (theNumSlidesBefore + theNumSlidesAfter))
+		set theNumSkippedSlides to count of theSkippedSlides
+		
+		my setTotalStepsForProgress(theNumSlidesBefore + theNumSlidesAfter + theNumSkippedSlides)
+		my updateProgress(0, "Cleaning slides", "Slide " & 0 & " out of " & (theNumSlidesBefore + theNumSlidesAfter + theNumSkippedSlides))
 		
 		(* Remove progress bar before the start command *)
 		repeat with k from 1 to theNumSlidesBefore
@@ -675,7 +725,23 @@ on run
 				delete item j of theOldImgs
 			end repeat
 			
-			my updateProgress(k, "Cleaning slides", "Slide " & k & " out of " & (theNumSlidesBefore + theNumSlidesAfter))
+			my updateProgress(k, "Cleaning slides", "Slide " & k & " out of " & (theNumSlidesBefore + theNumSlidesAfter + theNumSkippedSlides))
+		end repeat
+		
+		(* Remove progress bar of skipped slides *)
+		repeat with k from 1 to theNumSkippedSlides
+			set theOldImgs to (images of (item k of theSkippedSlides) whose file name starts with "ProgressBar-")
+			set theProgressBars to (iWork items of (item k of theSkippedSlides) whose object text is "{progress bar}")
+			
+			repeat with j from (count of theProgressBars) to 1 by -1
+				delete item j of theProgressBars
+			end repeat
+			
+			repeat with j from (count of theOldImgs) to 1 by -1
+				delete item j of theOldImgs
+			end repeat
+			
+			my updateProgress(k, "Cleaning slides", "Slide " & k + theNumSlidesBefore & " out of " & (theNumSlidesBefore + theNumSlidesAfter + theNumSkippedSlides))
 		end repeat
 		
 		(* Remove progress bar after the stop command *)
@@ -691,7 +757,7 @@ on run
 				delete item j of theOldImgs
 			end repeat
 			
-			my updateProgress(k + theNumSlidesBefore, "Cleaning slides", "Slide " & k + theNumSlidesBefore & " out of " & (theNumSlidesBefore + theNumSlidesAfter))
+			my updateProgress(k + theNumSlidesBefore, "Cleaning slides", "Slide " & k + theNumSlidesBefore + theNumSkippedSlides & " out of " & (theNumSlidesBefore + theNumSlidesAfter + theNumSkippedSlides))
 		end repeat
 		
 		my setTotalStepsForProgress(theNumSlides)
