@@ -196,7 +196,27 @@ on findPresenterNotes()
 	set thePresenterNotes to missing value
 	if my isAppleSilicon() then
 		
+		tell application "System Events"
+			tell application process "Keynote"
+				set frontmost to true
+				set scrollareas to scroll areas of (item 1 of (splitter groups of (item 1 of first window of (windows whose value of attribute "AXMain" is true))))
+				
+				repeat with scrollarea in scrollareas
+					-- Check if the scroll area contains a text area, which is typical for presenter notes
+					set textAreas to text areas of scrollarea
+					
+					set theAXIdentifier to (attributes of scrollarea whose name is "AXIdentifier") as list
+					if (count of theAXIdentifier) > 0 then
+						if value of first item of theAXIdentifier is "_NS:8" then
+							set thePresenterNotes to scrollarea
+						end if
+					end if
+				end repeat
+			end tell
+		end tell
+		
 	else if my isIntel() then
+		
 		tell application "System Events"
 			tell application process "Keynote"
 				set frontmost to true
@@ -355,10 +375,10 @@ on run
 						tell application "System Events" to set previousFrontmostProcess to (first process where it is frontmost)
 						
 						-- Open the presenter notes and store whether the presenter notes were toggled (meaning they were closed)
-						set wasPresenterNotesToggled to (my showPresenterNotes:true)
+						-- set wasPresenterNotesToggled to (my showPresenterNotes:true)
 						
 						-- Find the presenter notes
-						-- set thePresenterNotes to my findPresenterNotes()
+						set thePresenterNotes to my findPresenterNotes()
 						
 						if not (progressBarHelper's findPresenterNotesTextArea() as boolean) then
 							my displayError("Error: Unable to find presenter notes", "Tried finding presenter notes but failed.", 15, true)
