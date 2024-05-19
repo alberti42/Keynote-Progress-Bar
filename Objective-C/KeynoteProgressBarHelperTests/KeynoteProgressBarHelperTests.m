@@ -28,7 +28,7 @@
 
 - (void)testOpenPresenter {
     ProgressBarKeynoteUI* p = [[ProgressBarKeynoteUI alloc] init];
-    BOOL result = [p showPresenterNotes:true];
+    BOOL result = [p togglePresenterNotes:true];
     XCTAssertTrue(result, @"Failed to open the presenter notes.");
 }
 
@@ -45,12 +45,12 @@
     
     
     // Check if the presenter notes scroll area is found
-    BOOL foundScrollArea = [p findPresenterNotesTextArea];
-    XCTAssertTrue(foundScrollArea, @"Failed to find the presenter notes scroll area.");
+    BOOL foundTextArea = [p findPresenterNotesTextArea];
+    XCTAssertTrue(foundTextArea, @"Failed to find the presenter notes text area.");
     
     // Check if the focus is set on the presenter notes scroll area
     BOOL focusSet = [p focusOnPresenterNotesScrollArea];
-    XCTAssertTrue(focusSet, @"Failed to set focus on the presenter notes scroll area.");
+    XCTAssertTrue(focusSet, @"Failed to set focus on the presenter notes text area.");
     
 
     NSLog(@"\n\n=============");

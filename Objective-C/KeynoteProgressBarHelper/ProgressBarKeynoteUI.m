@@ -102,7 +102,7 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
                         if (splitGroupChildren != NULL) {
                             CFIndex splitGroupChildrenCount = CFArrayGetCount(splitGroupChildren);
 #ifdef DEBUG
-                            NSLog(@"Splitter group children count in splitter group %ld: %ld", i, splitGroupChildrenCount);
+                            NSLog(@"Children count of splitter group %ld: %ld", i, splitGroupChildrenCount);
 #endif
                             
                             for (CFIndex j = 0; j < splitGroupChildrenCount; j++) {
@@ -126,7 +126,7 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
                                         if (scrollAreaChildren != NULL) {
                                             CFIndex scrollAreaChildrenCount = CFArrayGetCount(scrollAreaChildren);
 #ifdef DEBUG
-                                            NSLog(@"Scroll area children count in scroll area %ld of splitter group %ld: %ld", j, i, scrollAreaChildrenCount);
+                                            NSLog(@"Children count of scroll area %ld in splitter group %ld: %ld", j, i, scrollAreaChildrenCount);
 #endif
                                             
                                             for (CFIndex k = 0; k < scrollAreaChildrenCount; k++) {
@@ -214,16 +214,28 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
     return NO; // Failed to set focus or verify focus within the timeout
 }
 
-
-- (BOOL)showPresenterNotes:(BOOL)show {
+- (BOOL)togglePresenterNotes:(BOOL)show {
     AXUIElementRef keynoteApp = AXUIElementCreateApplication([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.iWork.Keynote"].firstObject processIdentifier]);
     
     if (keynoteApp == NULL) {
         return NO;
     }
+
+    // Bring the frontmost document to the foreground
+    AXUIElementRef mainWindow = NULL;
+    AXError error = AXUIElementCopyAttributeValue(keynoteApp, kAXMainWindowAttribute, (CFTypeRef *)&mainWindow);
     
+    if (error != kAXErrorSuccess || mainWindow == NULL) {
+        CFRelease(keynoteApp);
+        return NO;
+    }
+
+    // Ensure the main window is focused
+    AXUIElementSetAttributeValue(mainWindow, kAXFocusedAttribute, kCFBooleanTrue);
+    CFRelease(mainWindow);
+
     AXUIElementRef menuBar = NULL;
-    AXError error = AXUIElementCopyAttributeValue(keynoteApp, kAXMenuBarAttribute, (CFTypeRef *)&menuBar);
+    error = AXUIElementCopyAttributeValue(keynoteApp, kAXMenuBarAttribute, (CFTypeRef *)&menuBar);
     
     if (error != kAXErrorSuccess || menuBar == NULL) {
         CFRelease(keynoteApp);
