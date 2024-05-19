@@ -11,6 +11,17 @@
 #include <ApplicationServices/ApplicationServices.h>
 #import "ProgressBarKeynoteUI.h"
 
+#if defined(__arm64__) || defined(__aarch64__)
+// Code for Apple Silicon (ARM)
+#define IS_APPLE_SILICON 1
+#define IS_INTEL 0
+#else
+// Code for Intel
+#define IS_APPLE_SILICON 0
+#define IS_INTEL 1
+#endif
+
+
 #ifdef DEBUG
 void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format, ...) {
     // Get and log the specified attribute
@@ -89,7 +100,7 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
                     NSString *roleString = (__bridge_transfer NSString *)mainWindowChildRole;
                     if ([roleString isEqualToString:(__bridge NSString *)kAXSplitGroupRole]) {
                         
-                        /* Splitter Group */
+                        // Splitter Group //
                         
 #ifdef DEBUG
                         getAttribute(mainWindowChild, kAXRoleDescriptionAttribute, @"\n\nRole description of splitter group %ld:", i);
@@ -113,12 +124,48 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
                                     NSString *scrollAreaRoleString = (__bridge_transfer NSString *)splitGroupChildRole;
                                     if ([scrollAreaRoleString isEqualToString:(__bridge NSString *)kAXScrollAreaRole]) {
                                         
-                                        /* Scroll Area */
+                                        // Scroll Area //
                                         
 #ifdef DEBUG
                                         getAttribute(splitGroupChild, kAXRoleDescriptionAttribute, @"\n\n===\nRole description of scroll area %ld of splitter group %ld:", j, i);
                                         getAttribute(splitGroupChild, kAXIdentifierAttribute, @"AXIdentifier of scroll area %ld of splitter group %ld:", j, i);
 #endif
+                                        
+                                        
+#if IS_APPLE_SILICON
+#ifdef DEBUG
+                                        NSLog(@"Compiled for Apple Silicon (ARM)");
+#endif
+
+                                        
+                                        CFTypeRef identifierAttribute = NULL;
+                                        AXUIElementCopyAttributeValue(splitGroupChild, kAXIdentifierAttribute, &identifierAttribute);
+                                        
+                                        if (identifierAttribute != NULL) {
+                                            NSString *identifierAttributeString = (__bridge_transfer NSString *)identifierAttribute;
+                                            if ([identifierAttributeString isEqualToString:@"_NS:8"]) {
+#ifdef DEBUG
+                                                NSLog(@"FOUND scroll area %ld of splitter group %ld", j, i);
+#endif
+                                                self.presenterNotesTextArea = (AXUIElementRef)CFRetain(splitGroupChild);
+                                                
+                                                CFRelease(splitGroupChildRole);
+                                                CFRelease(mainWindowChildRole);
+                                                CFRelease(splitGroupChildren);
+                                                CFRelease(mainWindowChildren);
+                                                CFRelease(mainWindow);
+                                                CFRelease(keynoteApp);
+                                                CFRelease(identifierAttribute);
+                                                return YES;
+                                            }
+                                            CFRelease(identifierAttribute);
+                                        }
+                                        
+#elif IS_INTEL
+#ifdef DEBUG
+                                        NSLog(@"Compiled for Intel");
+#endif
+                                        
                                         
                                         CFArrayRef scrollAreaChildren = NULL;
                                         AXUIElementCopyAttributeValue(splitGroupChild, kAXChildrenAttribute, (CFTypeRef *)&scrollAreaChildren);
@@ -139,7 +186,7 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
                                                     NSString *scrollAreaChildRoleString = (__bridge_transfer NSString *)scrollAreaChildRole;
                                                     if ([scrollAreaChildRoleString isEqualToString:(__bridge NSString *)kAXTextAreaRole]) {
                                                         
-                                                        /* Text area */
+                                                        // Text area //
 #ifdef DEBUG
                                                         getAttribute(scrollAreaChild, kAXRoleDescriptionAttribute, @"---\nRole description of text area %ld in scroll area %ld of splitter group %ld:", k, j, i);
                                                         //getAttribute(scrollAreaChild, kAXIdentifierAttribute, @"AXIdentifier of scroll bar %ld in scroll area %ld of splitter group %ld:", k, j, i);
@@ -149,7 +196,6 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
                                                         NSLog(@"FOUND text area %ld in scroll area %ld of splitter group %ld", k, j, i);
 #endif
                                                         self.presenterNotesTextArea = (AXUIElementRef)CFRetain(scrollAreaChild);
-                                                        
                                                         
                                                         CFRelease(scrollAreaChildRole);
                                                         CFRelease(splitGroupChildRole);
@@ -166,6 +212,8 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
                                             }
                                             CFRelease(scrollAreaChildren);
                                         }
+#endif
+                                        
                                     }
                                     CFRelease(splitGroupChildRole);
                                 }
@@ -220,7 +268,7 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
     if (keynoteApp == NULL) {
         return NO;
     }
-
+    
     // Bring the frontmost document to the foreground
     AXUIElementRef mainWindow = NULL;
     AXError error = AXUIElementCopyAttributeValue(keynoteApp, kAXMainWindowAttribute, (CFTypeRef *)&mainWindow);
@@ -229,11 +277,11 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
         CFRelease(keynoteApp);
         return NO;
     }
-
+    
     // Ensure the main window is focused
     AXUIElementSetAttributeValue(mainWindow, kAXFocusedAttribute, kCFBooleanTrue);
     CFRelease(mainWindow);
-
+    
     AXUIElementRef menuBar = NULL;
     error = AXUIElementCopyAttributeValue(keynoteApp, kAXMenuBarAttribute, (CFTypeRef *)&menuBar);
     
@@ -284,9 +332,9 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
                                 
                                 if ((show && CFStringCompare(submenuItemTitle, CFSTR("Show Presenter Notes"), 0) == kCFCompareEqualTo) ||
                                     (!show && CFStringCompare(submenuItemTitle, CFSTR("Hide Presenter Notes"), 0) == kCFCompareEqualTo)) {
-
+                                    
                                     NSLog(@"Triggering menu item: %@", submenuItemTitle);
-
+                                    
                                     AXUIElementPerformAction(submenuItem, kAXPressAction);
                                     success = YES;
                                     CFRelease(submenuItemTitle);
