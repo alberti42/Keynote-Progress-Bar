@@ -371,11 +371,28 @@ on run
 				else
 					set progressBarHelper to current application's ProgressBarKeynoteUI's alloc()'s init()
 					
+					(*
+					-- This code only works on Apple Silicon but not Apple Intel
+					-- Therefore, we use the alternative written in Objective-C
+										
+					-- Find the presenter notes
+					set thePresenterNotes to my findPresenterNotes()
+										
+					tell application "System Events"
+						repeat
+							set focused of thePresenterNotes to true
+							if focused of thePresenterNotes is true then
+								exit repeat
+							end if
+						end repeat
+					end tell
+					*)
+					
 					if thePresenterNotes is missing value then
 						tell application "System Events" to set previousFrontmostProcess to (first process where it is frontmost)
 						
 						-- Open the presenter notes and store whether the presenter notes were toggled (meaning they were closed)
-						-- set wasPresenterNotesToggled to (my showPresenterNotes:true)
+						set wasPresenterNotesToggled to (my showPresenterNotes:true)
 						
 						-- Find the presenter notes
 						-- set thePresenterNotes to my findPresenterNotes()
@@ -390,7 +407,6 @@ on run
 					if thePresenterNotes is missing value then
 						my displayError("Error: Unable to identify the scroll area of the presenter notes", "No matching scroll area found in the Keynote window.", 15, true)
 					end if
-					
 					
 					set theNotes to (presenter notes of theSlide as string)
 					

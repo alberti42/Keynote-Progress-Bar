@@ -1,5 +1,9 @@
 use AppleScript version "2.4" -- Yosemite (10.10) or later
 use framework "Foundation"
+
+-- Import custom framework for creating progress bar images
+use framework "KeynoteProgressBarHelper"
+
 use scripting additions
 
 -- Function to check if running on Apple Silicon (ARM)
@@ -140,7 +144,6 @@ on run
 	set theNullObj to current application's NSNull's |null|()
 	
 	tell application "Keynote"
-		
 		if not (exists front document) then my displayError("Critial error: Set Keynote slides duration", "You must first open a Keynote document.", 15, true)
 		if playing is true then tell the front document to stop
 		
@@ -228,10 +231,8 @@ on run
 		my updateProgress(0, "Parsing slides", "Slide " & 0 & " out of " & (count of theSlides))
 		
 		set idx to 0
-		
 		(* Parse all commands in the presenter notes to find the position of the `duration` field  *)
 		repeat with theSlide in theSlides
-			
 			set theSlideNumber to slide number of theSlide
 			set theTotalNumberOfSlides to (theDurationsLog's |count|())
 			set theDuration to (theDurationsLog's valueForKey:((theSlideNumber) as string))
@@ -328,7 +329,6 @@ on run
 					if theDurationPosition is missing value then
 						my displayError("Critial error: Set Keynote slides duration", "Error: Command {progress bar; ...} was not found, or was not properly configured with the duration of the slide " & slide number of theSlide & ".", 15, true)
 					end if
-					
 					set progressBarHelper to current application's ProgressBarKeynoteUI's alloc()'s init()
 					if not (progressBarHelper's findPresenterNotesTextArea() as boolean) then
 						my displayError("Error: Unable to find presenter notes", "Tried finding presenter notes but failed.", 15, true)
@@ -337,7 +337,6 @@ on run
 					if thePresenterNotes is missing value then
 						my displayError("Error: Unable to identify the scroll area of the presenter notes", "No matching scroll area found in the Keynote window.", 15, true)
 					end if
-					
 					if not (progressBarHelper's focusOnPresenterNotesScrollArea() as boolean) then
 						my displayError("Error: Unable to focus presenter notes", "Tried focusing the presenter notes for 1 second but failed.", 15, true)
 					end if
