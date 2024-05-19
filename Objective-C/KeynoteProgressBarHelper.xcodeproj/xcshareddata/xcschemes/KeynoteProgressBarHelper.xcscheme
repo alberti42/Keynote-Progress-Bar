@@ -51,7 +51,7 @@
                   Identifier = "KeynoteProgressBarHelperTests/testExample">
                </Test>
                <Test
-                  Identifier = "KeynoteProgressBarHelperTests/testOpenPresenter">
+                  Identifier = "KeynoteProgressBarHelperTests/testKeynoteUI">
                </Test>
                <Test
                   Identifier = "KeynoteProgressBarHelperTests/testPerformanceExample">

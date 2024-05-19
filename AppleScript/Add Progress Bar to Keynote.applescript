@@ -39,6 +39,28 @@ property doResetSizeAndPosition : false
 property doOverwriteAllImages : false
 property doRemoveAll : false
 
+-- Function to check if running on Apple Silicon (ARM)
+on isAppleSilicon()
+	set processInfo to current application's NSProcessInfo's processInfo()
+	set architecture to processInfo's |operatingSystemVersionString|() as string
+	try
+		-- Check if the processor architecture contains 'arm64'
+		set result to do shell script "uname -m"
+		if result is "arm64" then
+			return true
+		else
+			return false
+		end if
+	on error
+		return false
+	end try
+end isAppleSilicon
+
+-- Function to check if running on Intel
+on isIntel()
+	return not isAppleSilicon()
+end isIntel
+
 -- Limit color values to a range of 0 to 255
 on limitColor(theVal)
 	if theVal > 255 then
@@ -164,6 +186,39 @@ on showPresenterNotes:theStatus
 	return didToggled
 end showPresenterNotes:
 
+--Function to find the presenter notes
+on findPresenterNotes()
+	set thePresenterNotes to missing value
+	if my isAppleSilicon() then
+		
+	else if my isIntel() then
+		tell application "System Events"
+			tell application process "Keynote"
+				set frontmost to true
+				set scrollareas to scroll areas of (item 1 of (splitter groups of (item 1 of first window of (windows whose value of attribute "AXMain" is true))))
+				
+				repeat with scrollarea in scrollareas
+					-- Check if the scroll area contains a text area, which is typical for presenter notes
+					set textAreas to text areas of scrollarea
+					if (count of textAreas) > 0 then
+						-- Further verify by checking if the text area has the right characteristics
+						set textArea to item 1 of textAreas
+						set roleDescription to (value of attribute "AXRoleDescription" of textArea) as string
+						if roleDescription is "text entry area" then
+							set thePresenterNotes to scrollarea
+							exit repeat
+						end if
+					end if
+				end repeat
+				
+				
+			end tell
+		end tell
+	end if
+	return thePresenterNotes
+end findPresenterNotes
+
+
 -- Main script execution
 on run
 	
@@ -191,7 +246,6 @@ on run
 		set theCmdsSlides to current application's NSMutableArray's new
 		
 		set previousFrontmostProcess to missing value
-		set thePresenterNotesStatus to missing value
 		set thePresenterNotes to missing value
 		set thePasteboard to current application's NSPasteboard's generalPasteboard()
 		
@@ -289,25 +343,44 @@ on run
 				if (((current application's NSString's alloc()'s initWithString:(presenter notes of theSlide))'s stringByTrimmingCharactersInSet:whiteSpaces)'s isEqualToString:"") then
 					set presenter notes of theSlide to theDefaultConfiguration & linefeed
 				else
+					
 					if thePresenterNotes is missing value then
 						tell application "System Events" to set previousFrontmostProcess to (first process where it is frontmost)
 						
-						if (my showPresenterNotes:true) then
-							set thePresenterNotesStatus to false
+						-- Open the presenter notes and store whether the presenter notes were toggled (meaning they were closed)
+						set wasPresenterNotesToggled to (my showPresenterNotes:true)
+						
+						-- Find the presenter notes
+						set thePresenterNotes to my findPresenterNotes()
+					end if
+					
+					if thePresenterNotes is missing value then
+						my displayError("Error: Unable to identify the scroll area of the presenter notes", "No matching scroll area found in the Keynote window.", 15, true)
+					end if
+					
+					if false then
+						-- Create an instance of the Objective-C bridge class
+						set progressBarHelper to current application's ProgressBarKeynoteUI's alloc()'s init()
+						
+						-- Toggle Presenter Notes (True for show, False for hide)
+						set theResult to (progressBarHelper's togglePresenterNotes:true) as boolean
+						
+						-- Check the result
+						if theResult then
+							log "Presenter Notes toggled successfully."
+						else
+							log "Failed to toggle Presenter Notes."
 						end if
 						
-						tell application "System Events" to tell application process "Keynote"
-							set frontmost to true
-							set scrollareas to scroll areas of (item 1 of (splitter groups of (item 1 of first window of (windows whose value of attribute "AXMain" is true))))
-							repeat with scrollarea in scrollareas
-								set theAXIdentifier to (attributes of scrollarea whose name is "AXIdentifier") as list
-								if (count of theAXIdentifier) > 0 then
-									if value of first item of theAXIdentifier is "_NS:8" then
-										set thePresenterNotes to scrollarea
-									end if
-								end if
-							end repeat
-						end tell
+						
+						-- Create an instance of the Objective-C bridge class
+						set progressBarHelper to current application's ProgressBarKeynoteUI's alloc()'s init()
+						set theResult to progressBarHelper's findPresenterNotesTextArea() as boolean
+						if not theResult then
+							my displayError("Error: Unable to find presenter notes", "Tried finding presenter notes but failed.", 15, true)
+						end if
+						set thePresenterNotes to (progressBarHelper's getPresenterNotesTextArea())
+						
 					end if
 					
 					set theNotes to (presenter notes of theSlide as string)
@@ -321,14 +394,9 @@ on run
 					
 					set current slide of the front document to theSlide
 					
-					tell application "System Events"
-						repeat
-							set focused of thePresenterNotes to true
-							if focused of thePresenterNotes is true then
-								exit repeat
-							end if
-						end repeat
-					end tell
+					if not (progressBarHelper's focusOnPresenterNotesScrollArea() as boolean) then
+						my displayError("Error: Unable to focus presenter notes", "Tried focusing the presenter notes for 1 second but failed.", 15, true)
+					end if
 					
 					tell application "System Events" to tell application process "Keynote"
 						key code 126 using {command down} -- arrow up
@@ -345,52 +413,6 @@ on run
 						
 					end tell
 					
-					-- The following code does not work because Keynote uses a propetary format ("com.apple.iWork.TSPNativeData") for the clipboard
-					(*
-					(* clears the clipboard content *)
-					thePasteboard's clearContents()
-					
-					tell application "System Events" to tell application process "Keynote"
-						set focused of thePresenterNotes to true
-						keystroke "a" using command down
-						keystroke "c" using command down
-					end tell
-					
-					(* wait that the content is really copied to the clipboard *)
-					repeat
-						if (thePasteboard's |types|()'s |count|()) > 0 then
-							exit repeat
-						end if
-						(* introduce a small pause *)
-						delay 0.1
-					end repeat
-					
-					set theCB to ((current application's NSString's alloc())'s initWithData:(thePasteboard's dataForType:"public.rtf") encoding:(current application's NSUTF8StringEncoding))
-					-- set theCB to (thePasteboard's stringForType:"public.rtf")
-					
-					if (theCB's hasSuffix:"}") then
-						set thePrefix to ""
-						set theSuffix to "\\" & linefeed & linefeed
-						if not ((theCB's substringWithRange:{location:(theCB's |length|()) - 2, |length|:1})'s isEqualToString:linefeed) then
-							--set thePrefix to "\\" & linefeed & "\\" & linefeed
-						else
-							--set thePrefix to "\\" & linefeed
-						end if
-						set theNewCB to ((theCB's substringToIndex:((theCB's |length|()) - 1))'s ¬
-							stringByAppendingString:(thePrefix & "\\pard\\pardeftab720\\sl283\\slmult1\\partightenfactor0 " & linefeed & linefeed & "\\fs36 \\cf2 \\strokec2 " & ¬
-								(((current application's NSString's alloc()'s initWithString:theDefaultConfiguration)'s stringByReplacingOccurrencesOfString:"{" withString:"\\{")'s stringByReplacingOccurrencesOfString:"}" withString:"\\}") & theSuffix & "}"))
-						
-						thePasteboard's clearContents()
-						(thePasteboard's setData:(theNewCB's dataUsingEncoding:(current application's NSUTF8StringEncoding)) forType:"public.rtf")
-					end if
-					
-					tell application "System Events" to tell application process "Keynote"
-						set focused of thePresenterNotes to true
-						keystroke "a" using command down
-						keystroke "v" using command down
-					end tell
-					*)
-					
 				end if
 				
 			end if
@@ -406,8 +428,8 @@ on run
 			
 		end repeat
 		
-		if thePresenterNotesStatus is not missing value then
-			(my showPresenterNotes:thePresenterNotesStatus)
+		if wasPresenterNotesToggled then
+			(my showPresenterNotes:false)
 		end if
 		
 		if previousFrontmostProcess is not missing value then

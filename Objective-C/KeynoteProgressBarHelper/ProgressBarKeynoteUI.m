@@ -269,7 +269,6 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
         return NO;
     }
     
-    // Bring the frontmost document to the foreground
     AXUIElementRef mainWindow = NULL;
     AXError error = AXUIElementCopyAttributeValue(keynoteApp, kAXMainWindowAttribute, (CFTypeRef *)&mainWindow);
     
@@ -278,14 +277,11 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
         return NO;
     }
     
-    // Ensure the main window is focused
-    AXUIElementSetAttributeValue(mainWindow, kAXFocusedAttribute, kCFBooleanTrue);
-    CFRelease(mainWindow);
-    
     AXUIElementRef menuBar = NULL;
-    error = AXUIElementCopyAttributeValue(keynoteApp, kAXMenuBarAttribute, (CFTypeRef *)&menuBar);
+    error = AXUIElementCopyAttributeValue(mainWindow, kAXMenuBarAttribute, (CFTypeRef *)&menuBar);
     
     if (error != kAXErrorSuccess || menuBar == NULL) {
+        CFRelease(mainWindow);
         CFRelease(keynoteApp);
         return NO;
     }
@@ -295,6 +291,7 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
     
     if (error != kAXErrorSuccess || menuBarItems == NULL) {
         CFRelease(menuBar);
+        CFRelease(mainWindow);
         CFRelease(keynoteApp);
         return NO;
     }
@@ -332,9 +329,9 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
                                 
                                 if ((show && CFStringCompare(submenuItemTitle, CFSTR("Show Presenter Notes"), 0) == kCFCompareEqualTo) ||
                                     (!show && CFStringCompare(submenuItemTitle, CFSTR("Hide Presenter Notes"), 0) == kCFCompareEqualTo)) {
-                                    
+
                                     NSLog(@"Triggering menu item: %@", submenuItemTitle);
-                                    
+
                                     AXUIElementPerformAction(submenuItem, kAXPressAction);
                                     success = YES;
                                     CFRelease(submenuItemTitle);
@@ -367,6 +364,7 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
     
     CFRelease(menuBarItems);
     CFRelease(menuBar);
+    CFRelease(mainWindow);
     CFRelease(keynoteApp);
     
     return success;
