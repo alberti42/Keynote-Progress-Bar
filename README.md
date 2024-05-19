@@ -30,22 +30,22 @@ To configure the progress bar, add commands to the presenter notes of your Keyno
 
 - `start`: Marks the beginning of the slides where the progress bar should be displayed.
 - `stop`: Marks the end of the slides where the progress bar should be displayed.
-- `skip`: Skips the progress bar for the current slide.
-- `duration`: Sets the duration (in minutes) for the current slide.
+- `skipDrawing`: Skips drawing the progress bar for the current slide.
 
 ### Parameters
 
+- `duration (floating point number)`: Sets the duration in minutes for the current slide.
 - `RemoveAll`: (true/false) Removes all progress bars before starting.
 - `ChapterSeparation`: (number) Distance between chapter markers in points.
 - `FontFamily`: (string) Font family for the progress bar text.
 - `FlipUpsideDown`: (true/false) Flips the progress bar upside down.
 - `FontFamilyHighlightedChapter`: (string) Font family for the highlighted chapter text.
 - `SetAllPositionsEqual`: (true/false) Sets all progress bar positions to be equal.
-- `NumberOfDots`: (number) Number of dots in the progress bar.
-- `DotSize`: (number) Size of the dots in points.
+- `NumberOfDots`: (integer number) Number of dots in the progress bar.
+- `DotSize`: (floating number) Size of the dots in points.
 - `ContourWidth`: (number) Width of the contour line around the dots.
 - `FontSize`: (number) Font size of the progress bar text.
-- `chapter`: (string) Name of the current chapter.
+- `chapter`: (string) Name of the new chapter.
 - `CompletedDotFillColor`: (array) Color of completed dots in RGBA format (e.g., `{91,96,95,100}`).
 - `UncompletedDotFillColor`: (array) Color of uncompleted dots in RGBA format.
 - `CompletedDotStrokeColor`: (array) Stroke color of completed dots in RGBA format.
