@@ -36,7 +36,7 @@ property theBaselineOffset : 0
 
 property doFlipUpsideDown : false
 property doResetSizeAndPosition : false
-property doOverwriteAllImages : false
+property doPreserveExistingImages : true
 property doRemoveAll : false
 
 -- Function to check if running on Apple Silicon (ARM)
@@ -489,12 +489,12 @@ on run
 						set doResetSizeAndPosition to theConf's boolValue()
 					end if
 				end if
-				set theConf to (theCmds's valueForKey:("OverwriteAllImages"))
+				set theConf to (theCmds's valueForKey:("PreserveExistingImages"))
 				if theConf is not missing value then
 					if (theConf's isEqualTo:theNullObj) then
-						set doOverwriteAllImages to true
+						set doPreserveExistingImages to true
 					else
-						set doOverwriteAllImages to theConf's boolValue()
+						set doPreserveExistingImages to theConf's boolValue()
 					end if
 				end if
 				set theConf to (theCmds's valueForKey:("RemoveAll"))
@@ -981,7 +981,7 @@ on run
 				end if
 				
 				if theResult is false then my displayError("Critical error: Progress Bar", "The progress bar could not be generated for slide number " & theSlide & ".", 15, true)
-				if not doOverwriteAllImages and (count of theOldImgs) > 0 then
+				if doPreserveExistingImages and (count of theOldImgs) > 0 then
 					set file name of (item 1 of theOldImgs) to POSIX file theImgPath
 					set position of (item 1 of theOldImgs) to thePosition
 					set height of (item 1 of theOldImgs) to theHeight
@@ -996,7 +996,7 @@ on run
 				delete item j of theProgressBars
 			end repeat
 			
-			if doOverwriteAllImages then
+			if not doPreserveExistingImages then
 				repeat with j from (count of theOldImgs) to 1 by -1
 					delete item j of theOldImgs
 				end repeat
