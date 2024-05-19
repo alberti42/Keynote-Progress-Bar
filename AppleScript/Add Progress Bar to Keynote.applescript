@@ -147,40 +147,45 @@ on abs(numericVariable)
 end abs
 
 -- Toggles the visibility of presenter notes.
-on showPresenterNotes:theStatus
+on showPresenterNotes:theNewStatus
 	set didToggled to false
 	
-	tell application "System Events" to tell application process "Keynote"
-		set frontmost to true
-		
-		set theViewMenu to menu 1 of menu bar item "View" of menu bar 1
-		if theStatus then
-			set theItem to (menu items of theViewMenu whose name is "Show Presenter Notes")
-			if (count of theItem) > 0 then
-				click item 1 of theItem
-				set didToggled to true
-			end if
-		else
-			set theItem to (menu items of theViewMenu whose name is "Hide Presenter Notes")
-			if (count of theItem) > 0 then
-				click item 1 of theItem
-				set didToggled to true
-			end if
-		end if
-	end tell
-	
 	tell application "System Events"
-		repeat
-			if theStatus then
-				set theString to "Hide Presenter Notes"
-			else
-				set theString to "Show Presenter Notes"
+		tell application process "Keynote"
+			-- Ensure the application process is frontmost
+			set frontmost to true
+			
+			-- Ensure the main window is active
+			set theMainWindow to (first window whose value of attribute "AXMain" is true)
+			
+			-- Access the menu bar and the "View" menu
+			set menuBar to menu bar 1
+			set viewMenuItem to menu bar item "View" of menuBar
+			set viewMenu to menu 1 of viewMenuItem
+			
+			-- Check if the "Show Presenter Notes" menu item exists
+			if (exists menu item "Show Presenter Notes" of viewMenu) then
+				if theNewStatus is true then
+					set presenterNotesMenuItem to menu item "Show Presenter Notes" of viewMenu
+					
+					-- Click the "Show Presenter Notes" menu item
+					perform action "AXPress" of presenterNotesMenuItem
+					
+					-- Record the change
+					set didToggled to true
+				end if
+			else if (exists menu item "Hide Presenter Notes" of viewMenu) then
+				if theNewStatus is false then
+					set presenterNotesMenuItem to menu item "Hide Presenter Notes" of viewMenu
+					
+					-- Click the "Show Presenter Notes" menu item
+					perform action "AXPress" of presenterNotesMenuItem
+					
+					-- Record the change
+					set didToggled to true
+				end if
 			end if
-			if (count of (menu items of theViewMenu whose name is theString)) = 1 then
-				exit repeat
-			end if
-			delay 0.1
-		end repeat
+		end tell
 	end tell
 	
 	return didToggled
@@ -246,6 +251,7 @@ on run
 		set theCmdsSlides to current application's NSMutableArray's new
 		
 		set previousFrontmostProcess to missing value
+		set wasPresenterNotesToggled to false
 		set thePresenterNotes to missing value
 		set thePasteboard to current application's NSPasteboard's generalPasteboard()
 		
@@ -365,21 +371,6 @@ on run
 						my displayError("Error: Unable to identify the scroll area of the presenter notes", "No matching scroll area found in the Keynote window.", 15, true)
 					end if
 					
-					if false then
-						-- Create an instance of the Objective-C bridge class
-						set progressBarHelper to current application's ProgressBarKeynoteUI's alloc()'s init()
-						
-						-- Toggle Presenter Notes (True for show, False for hide)
-						set theResult to (progressBarHelper's togglePresenterNotes:true) as boolean
-						
-						-- Check the result
-						if theResult then
-							log "Presenter Notes toggled successfully."
-						else
-							log "Failed to toggle Presenter Notes."
-						end if
-						
-					end if
 					
 					set theNotes to (presenter notes of theSlide as string)
 					
@@ -392,18 +383,6 @@ on run
 					
 					set current slide of the front document to theSlide
 					
-					
-					(*
-					tell application "System Events"
-						set focused of thePresenterNotes to true
-						repeat
-							set focused of thePresenterNotes to true
-							if focused of thePresenterNotes is true then
-								exit repeat
-							end if
-						end repeat
-					end tell
-					*)
 					
 					if not (progressBarHelper's focusOnPresenterNotesScrollArea() as boolean) then
 						my displayError("Error: Unable to focus presenter notes", "Tried focusing the presenter notes for 1 second but failed.", 15, true)
@@ -815,7 +794,7 @@ on run
 			set theOldImgs to (images of (item theSlide of theSlides) whose file name starts with "ProgressBar-")
 			set theProgressBars to (iWork items of (item theSlide of theSlides) whose object text is "{progress bar}")
 			
-			if (theCmds's valueForKey:"skip") is missing value then
+			if (theCmds's valueForKey:"skipDrawing") is missing value then
 				
 				set theSame to (theCmds's valueForKey:"SameAsPrevious")
 				if theSame is missing value then

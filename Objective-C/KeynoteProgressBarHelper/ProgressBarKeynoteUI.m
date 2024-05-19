@@ -263,112 +263,154 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
 }
 
 - (BOOL)togglePresenterNotes:(BOOL)show {
-    AXUIElementRef keynoteApp = AXUIElementCreateApplication([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.iWork.Keynote"].firstObject processIdentifier]);
+    NSArray *runningApps = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.iWork.Keynote"];
+    if (runningApps.count == 0) {
+        return NO;
+    }
+
+    NSRunningApplication *keynoteAppInstance = runningApps.firstObject;
+    if (!keynoteAppInstance) {
+        return NO;
+    }
+
+    // Bring Keynote to the front
+    [keynoteAppInstance activateWithOptions:(NSApplicationActivateIgnoringOtherApps | NSApplicationActivateAllWindows)];
     
+    // Small delay to ensure the app is frontmost
+    // [NSThread sleepForTimeInterval:0.01];
+    
+    // Loop to wait until the app is frontmost
+    for (int i = 0; i < 100; i++) { // maximum of 1 seconds
+        NSDictionary *activeAppInfo = [[NSWorkspace sharedWorkspace] activeApplication];
+        NSString *activeAppBundleIdentifier = activeAppInfo[@"NSApplicationBundleIdentifier"];
+        
+        //NSRunningApplication *frontmostApp = [[NSWorkspace sharedWorkspace] frontmostApplication];
+        //NSString *frontmostAppBundleIdentifier = frontmostApp.bundleIdentifier;
+        
+        if ([activeAppBundleIdentifier isEqualToString:@"com.apple.iWork.Keynote"]) {
+            break;
+        }
+        [NSThread sleepForTimeInterval:0.01];
+    }
+        
+    AXUIElementRef keynoteApp = AXUIElementCreateApplication([keynoteAppInstance processIdentifier]);
+
     if (keynoteApp == NULL) {
         return NO;
     }
-    
+
+    // Bring the frontmost document to the foreground
     AXUIElementRef mainWindow = NULL;
     AXError error = AXUIElementCopyAttributeValue(keynoteApp, kAXMainWindowAttribute, (CFTypeRef *)&mainWindow);
-    
+
     if (error != kAXErrorSuccess || mainWindow == NULL) {
         CFRelease(keynoteApp);
         return NO;
     }
-    
+
+    // Ensure the main window is focused
+    AXUIElementSetAttributeValue(mainWindow, kAXFocusedAttribute, kCFBooleanTrue);
+    CFRelease(mainWindow);
+
     AXUIElementRef menuBar = NULL;
-    error = AXUIElementCopyAttributeValue(mainWindow, kAXMenuBarAttribute, (CFTypeRef *)&menuBar);
-    
+    error = AXUIElementCopyAttributeValue(keynoteApp, kAXMenuBarAttribute, (CFTypeRef *)&menuBar);
+
     if (error != kAXErrorSuccess || menuBar == NULL) {
-        CFRelease(mainWindow);
         CFRelease(keynoteApp);
         return NO;
     }
-    
+
     CFArrayRef menuBarItems = NULL;
     error = AXUIElementCopyAttributeValue(menuBar, kAXChildrenAttribute, (CFTypeRef *)&menuBarItems);
-    
+
     if (error != kAXErrorSuccess || menuBarItems == NULL) {
         CFRelease(menuBar);
-        CFRelease(mainWindow);
         CFRelease(keynoteApp);
         return NO;
     }
-    
+
     CFIndex itemCount = CFArrayGetCount(menuBarItems);
     BOOL success = NO;
-    
+
     for (CFIndex i = 0; i < itemCount; i++) {
         AXUIElementRef menuBarItem = CFArrayGetValueAtIndex(menuBarItems, i);
         CFStringRef title = NULL;
         AXUIElementCopyAttributeValue(menuBarItem, kAXTitleAttribute, (CFTypeRef *)&title);
-        
+
         if (title && CFStringCompare(title, CFSTR("View"), 0) == kCFCompareEqualTo) {
             CFArrayRef viewMenuItems = NULL;
             error = AXUIElementCopyAttributeValue(menuBarItem, kAXChildrenAttribute, (CFTypeRef *)&viewMenuItems);
-            
+
             if (error == kAXErrorSuccess && viewMenuItems != NULL) {
                 CFIndex viewMenuItemCount = CFArrayGetCount(viewMenuItems);
-                
+
                 for (CFIndex j = 0; j < viewMenuItemCount; j++) {
                     AXUIElementRef viewMenuItem = CFArrayGetValueAtIndex(viewMenuItems, j);
                     CFArrayRef submenuItems = NULL;
                     AXUIElementCopyAttributeValue(viewMenuItem, kAXChildrenAttribute, (CFTypeRef *)&submenuItems);
-                    
+
                     if (submenuItems != NULL) {
                         CFIndex submenuItemCount = CFArrayGetCount(submenuItems);
-                        
+
                         for (CFIndex k = 0; k < submenuItemCount; k++) {
                             AXUIElementRef submenuItem = CFArrayGetValueAtIndex(submenuItems, k);
                             CFStringRef submenuItemTitle = NULL;
                             AXUIElementCopyAttributeValue(submenuItem, kAXTitleAttribute, (CFTypeRef *)&submenuItemTitle);
-                            
+
                             if (submenuItemTitle) {
-                                NSLog(@"Submenu item title: %@", submenuItemTitle); // Print submenu item titles
-                                
-                                if ((show && CFStringCompare(submenuItemTitle, CFSTR("Show Presenter Notes"), 0) == kCFCompareEqualTo) ||
-                                    (!show && CFStringCompare(submenuItemTitle, CFSTR("Hide Presenter Notes"), 0) == kCFCompareEqualTo)) {
+#ifdef DEBUG
+                                //NSLog(@"Submenu item title: %@", submenuItemTitle); // Print submenu item titles
+#endif
 
+                                if (show) {
+                                    if(CFStringCompare(submenuItemTitle, CFSTR("Show Presenter Notes"), 0) == kCFCompareEqualTo) {
+                                        AXUIElementPerformAction(submenuItem, kAXPressAction);
+#ifdef DEBUG
                                     NSLog(@"Triggering menu item: %@", submenuItemTitle);
-
-                                    AXUIElementPerformAction(submenuItem, kAXPressAction);
-                                    success = YES;
-                                    CFRelease(submenuItemTitle);
-                                    break;
+#endif
+                                    }
+                                } else
+                                {
+                                    if(CFStringCompare(submenuItemTitle, CFSTR("Hide Presenter Notes"), 0) == kCFCompareEqualTo) {
+#ifdef DEBUG
+                                    NSLog(@"Triggering menu item: %@", submenuItemTitle);
+#endif
+                                        AXUIElementPerformAction(submenuItem, kAXPressAction);
+                                    }
                                 }
+                                success = YES;
                                 CFRelease(submenuItemTitle);
                             }
                         }
-                        
+
                         CFRelease(submenuItems);
                     }
-                    
+
                     if (success) {
                         break;
                     }
                 }
-                
+
                 CFRelease(viewMenuItems);
             }
         }
-        
+
         if (title) {
             CFRelease(title);
         }
-        
+
         if (success) {
             break;
         }
     }
-    
+
     CFRelease(menuBarItems);
     CFRelease(menuBar);
-    CFRelease(mainWindow);
     CFRelease(keynoteApp);
-    
+
     return success;
 }
+
 
 
 

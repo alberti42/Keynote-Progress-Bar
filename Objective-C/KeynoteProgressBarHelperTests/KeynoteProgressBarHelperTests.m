@@ -26,10 +26,16 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
 }
 
-- (void)testOpenPresenter {
+- (void)testOpenClosePresenter {
+    BOOL result;
+    
     ProgressBarKeynoteUI* p = [[ProgressBarKeynoteUI alloc] init];
-    BOOL result = [p togglePresenterNotes:true];
+    result = [p togglePresenterNotes:true];
     XCTAssertTrue(result, @"Failed to open the presenter notes.");
+    
+    [NSThread sleepForTimeInterval:1.0];
+    result = [p togglePresenterNotes:false];
+    XCTAssertTrue(result, @"Failed to close the presenter notes.");
 }
 
 
@@ -39,10 +45,8 @@
 
     ProgressBarKeynoteUI* p = [[ProgressBarKeynoteUI alloc] init];
     
-    // Test showing presenter notes
-    // BOOL showPresenterNotesSuccess = [p showPresenterNotes:YES];
-    // XCTAssertTrue(showPresenterNotesSuccess, @"Failed to show presenter notes.");
-    
+    BOOL result = [p togglePresenterNotes:true];
+    XCTAssertTrue(result, @"Failed to open the presenter notes.");
     
     // Check if the presenter notes scroll area is found
     BOOL foundTextArea = [p findPresenterNotesTextArea];
@@ -56,26 +60,28 @@
     NSLog(@"\n\n=============");
 }
 
-
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-    
+- (void)testPDFimages {
     
     NSLog(@"\n\n=============");
     NSLog(@"Logging!");
     
-    ProgressBarPDFImage* p = [[ProgressBarPDFImage alloc] initPDFwithSize:NSMakeSize(200, 200) andFilename:[@"~/test.pdf" stringByExpandingTildeInPath]];
+    ProgressBarPDFImage* p = [[ProgressBarPDFImage alloc] initPDFwithSize:NSMakeSize(900, 30) andFilename:[@"~/Downloads/ProgressBar-1.pdf" stringByExpandingTildeInPath]];
     
-    [p setLineWidth:0];
-    [p setFillColor:[NSColor redColor] andStrokeColor:[NSColor blueColor]];
-    [p drawOvalInRect:NSMakeRect(0, 0, 100, 100)];
+    double blockSep = 15.28;
+    double Xpos;
     
-    NSFont* theFont = [NSFont fontWithName:@"Helvetica" size:12];
+    [p setLineWidth:0.2];
+    for(int i=0; i<8; i++){
+        Xpos = 41.2 + i*blockSep;
+        [p setFillColor:[NSColor colorWithRed:91/255. green:96/255. blue: 95/255. alpha:100/255.] andStrokeColor:[NSColor colorWithRed:0/255. green:0/255. blue: 0/255. alpha:100/255.] ];
+        [p drawOvalInRect:NSMakeRect(Xpos, 1.2, 7.0, 7.0)];
+    }
+    
+    NSFont* theFont = [NSFont fontWithName:@"Helvetica" size:18];
     
     NSDictionary* attr = @{ NSFontAttributeName : theFont };
     
-    [p drawAttributedString:[[NSAttributedString alloc] initWithString:@"Hello" attributes:attr] inRect:NSMakeRect(0, 0, 100, 100)];
+    [p drawAttributedString:[[NSAttributedString alloc] initWithString:@"Introduction" attributes:attr] inRect:NSMakeRect(51.14, -0.3, 911., 35.)];
     
     [p releasePDFimage];
     
