@@ -378,7 +378,7 @@ on run
 						-- set wasPresenterNotesToggled to (my showPresenterNotes:true)
 						
 						-- Find the presenter notes
-						set thePresenterNotes to my findPresenterNotes()
+						-- set thePresenterNotes to my findPresenterNotes()
 						
 						if not (progressBarHelper's findPresenterNotesTextArea() as boolean) then
 							my displayError("Error: Unable to find presenter notes", "Tried finding presenter notes but failed.", 15, true)
@@ -402,7 +402,6 @@ on run
 					end repeat
 					
 					set current slide of the front document to theSlide
-					
 					
 					if not (progressBarHelper's focusOnPresenterNotesScrollArea() as boolean) then
 						my displayError("Error: Unable to focus presenter notes", "Tried focusing the presenter notes for 1 second but failed.", 15, true)
