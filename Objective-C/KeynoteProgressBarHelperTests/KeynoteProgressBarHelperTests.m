@@ -26,6 +26,13 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
 }
 
+- (void)testOpenPresenter {
+    ProgressBarKeynoteUI* p = [[ProgressBarKeynoteUI alloc] init];
+    BOOL result = [p showPresenterNotes:true];
+    XCTAssertTrue(result, @"Failed to open the presenter notes.");
+}
+
+
 - (void)testKeynoteUI {
     NSLog(@"\n\n=============");
     NSLog(@"Testing Keynote UI control functionalities");

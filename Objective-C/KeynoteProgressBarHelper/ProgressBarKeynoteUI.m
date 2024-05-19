@@ -215,6 +215,104 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
 }
 
 
+- (BOOL)showPresenterNotes:(BOOL)show {
+    AXUIElementRef keynoteApp = AXUIElementCreateApplication([[NSRunningApplication runningApplicationsWithBundleIdentifier:@"com.apple.iWork.Keynote"].firstObject processIdentifier]);
+    
+    if (keynoteApp == NULL) {
+        return NO;
+    }
+    
+    AXUIElementRef menuBar = NULL;
+    AXError error = AXUIElementCopyAttributeValue(keynoteApp, kAXMenuBarAttribute, (CFTypeRef *)&menuBar);
+    
+    if (error != kAXErrorSuccess || menuBar == NULL) {
+        CFRelease(keynoteApp);
+        return NO;
+    }
+    
+    CFArrayRef menuBarItems = NULL;
+    error = AXUIElementCopyAttributeValue(menuBar, kAXChildrenAttribute, (CFTypeRef *)&menuBarItems);
+    
+    if (error != kAXErrorSuccess || menuBarItems == NULL) {
+        CFRelease(menuBar);
+        CFRelease(keynoteApp);
+        return NO;
+    }
+    
+    CFIndex itemCount = CFArrayGetCount(menuBarItems);
+    BOOL success = NO;
+    
+    for (CFIndex i = 0; i < itemCount; i++) {
+        AXUIElementRef menuBarItem = CFArrayGetValueAtIndex(menuBarItems, i);
+        CFStringRef title = NULL;
+        AXUIElementCopyAttributeValue(menuBarItem, kAXTitleAttribute, (CFTypeRef *)&title);
+        
+        if (title && CFStringCompare(title, CFSTR("View"), 0) == kCFCompareEqualTo) {
+            CFArrayRef viewMenuItems = NULL;
+            error = AXUIElementCopyAttributeValue(menuBarItem, kAXChildrenAttribute, (CFTypeRef *)&viewMenuItems);
+            
+            if (error == kAXErrorSuccess && viewMenuItems != NULL) {
+                CFIndex viewMenuItemCount = CFArrayGetCount(viewMenuItems);
+                
+                for (CFIndex j = 0; j < viewMenuItemCount; j++) {
+                    AXUIElementRef viewMenuItem = CFArrayGetValueAtIndex(viewMenuItems, j);
+                    CFArrayRef submenuItems = NULL;
+                    AXUIElementCopyAttributeValue(viewMenuItem, kAXChildrenAttribute, (CFTypeRef *)&submenuItems);
+                    
+                    if (submenuItems != NULL) {
+                        CFIndex submenuItemCount = CFArrayGetCount(submenuItems);
+                        
+                        for (CFIndex k = 0; k < submenuItemCount; k++) {
+                            AXUIElementRef submenuItem = CFArrayGetValueAtIndex(submenuItems, k);
+                            CFStringRef submenuItemTitle = NULL;
+                            AXUIElementCopyAttributeValue(submenuItem, kAXTitleAttribute, (CFTypeRef *)&submenuItemTitle);
+                            
+                            if (submenuItemTitle) {
+                                NSLog(@"Submenu item title: %@", submenuItemTitle); // Print submenu item titles
+                                
+                                if ((show && CFStringCompare(submenuItemTitle, CFSTR("Show Presenter Notes"), 0) == kCFCompareEqualTo) ||
+                                    (!show && CFStringCompare(submenuItemTitle, CFSTR("Hide Presenter Notes"), 0) == kCFCompareEqualTo)) {
+
+                                    NSLog(@"Triggering menu item: %@", submenuItemTitle);
+
+                                    AXUIElementPerformAction(submenuItem, kAXPressAction);
+                                    success = YES;
+                                    CFRelease(submenuItemTitle);
+                                    break;
+                                }
+                                CFRelease(submenuItemTitle);
+                            }
+                        }
+                        
+                        CFRelease(submenuItems);
+                    }
+                    
+                    if (success) {
+                        break;
+                    }
+                }
+                
+                CFRelease(viewMenuItems);
+            }
+        }
+        
+        if (title) {
+            CFRelease(title);
+        }
+        
+        if (success) {
+            break;
+        }
+    }
+    
+    CFRelease(menuBarItems);
+    CFRelease(menuBar);
+    CFRelease(keynoteApp);
+    
+    return success;
+}
+
+
 
 - (AXUIElementRef)getPresenterNotesTextArea {
     return self.presenterNotesTextArea;

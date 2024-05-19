@@ -15,7 +15,7 @@
 
 - (BOOL)findPresenterNotesTextArea;
 - (BOOL)focusOnPresenterNotesScrollArea;
-//- (BOOL)showPresenterNotes:(BOOL)show;
+- (BOOL)showPresenterNotes:(BOOL)show;
 - (AXUIElementRef)getPresenterNotesTextArea;
 
 @end
