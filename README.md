@@ -4,8 +4,8 @@ This AppleScript program adds a customizable progress bar to presentations creat
 
 ## Table of Contents
 
-- [[#1. Keynote Progress Bar|1. Keynote Progress Bar]]
-- [[#Table of Contents ^toc|Table of Contents]]
+- [[Keynote Progress Bar|Keynote Progress Bar]]
+- [[## Table of Contents|Table of Contents]]
 	- [[#1. Features|1. Features]]
 	- [[#2. Installation and usage|2. Installation and usage]]
 	- [[#3. Configuration|3. Configuration]]
@@ -27,7 +27,6 @@ This AppleScript program adds a customizable progress bar to presentations creat
 	- [[#8. Troubleshooting|8. Troubleshooting]]
 
 
-
 ## 1. Features
 
 - Customizable progress bar with various styling options
@@ -39,7 +38,7 @@ This AppleScript program adds a customizable progress bar to presentations creat
 
 1. Clone this repository:
    ```sh
-   git clone https://github.com/yourusername/KeynoteProgressBar.git
+   git clone https://github.com/alberti42/Keynote-ProgressBar.git
    ```
 2. Open the `KeynoteProgressBarHelper` framework in Xcode and build it.
 3. Place the compiled framework in `/Users/your-username/Library/Frameworks`.
