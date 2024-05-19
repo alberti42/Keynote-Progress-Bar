@@ -343,6 +343,7 @@ on run
 				if (((current application's NSString's alloc()'s initWithString:(presenter notes of theSlide))'s stringByTrimmingCharactersInSet:whiteSpaces)'s isEqualToString:"") then
 					set presenter notes of theSlide to theDefaultConfiguration & linefeed
 				else
+					set progressBarHelper to current application's ProgressBarKeynoteUI's alloc()'s init()
 					
 					if thePresenterNotes is missing value then
 						tell application "System Events" to set previousFrontmostProcess to (first process where it is frontmost)
@@ -351,7 +352,13 @@ on run
 						set wasPresenterNotesToggled to (my showPresenterNotes:true)
 						
 						-- Find the presenter notes
-						set thePresenterNotes to my findPresenterNotes()
+						-- set thePresenterNotes to my findPresenterNotes()
+						
+						if not (progressBarHelper's findPresenterNotesTextArea() as boolean) then
+							my displayError("Error: Unable to find presenter notes", "Tried finding presenter notes but failed.", 15, true)
+						end if
+						set thePresenterNotes to (progressBarHelper's getPresenterNotesTextArea())
+						
 					end if
 					
 					if thePresenterNotes is missing value then
@@ -372,15 +379,6 @@ on run
 							log "Failed to toggle Presenter Notes."
 						end if
 						
-						
-						-- Create an instance of the Objective-C bridge class
-						set progressBarHelper to current application's ProgressBarKeynoteUI's alloc()'s init()
-						set theResult to progressBarHelper's findPresenterNotesTextArea() as boolean
-						if not theResult then
-							my displayError("Error: Unable to find presenter notes", "Tried finding presenter notes but failed.", 15, true)
-						end if
-						set thePresenterNotes to (progressBarHelper's getPresenterNotesTextArea())
-						
 					end if
 					
 					set theNotes to (presenter notes of theSlide as string)
@@ -393,6 +391,19 @@ on run
 					end repeat
 					
 					set current slide of the front document to theSlide
+					
+					
+					(*
+					tell application "System Events"
+						set focused of thePresenterNotes to true
+						repeat
+							set focused of thePresenterNotes to true
+							if focused of thePresenterNotes is true then
+								exit repeat
+							end if
+						end repeat
+					end tell
+					*)
 					
 					if not (progressBarHelper's focusOnPresenterNotesScrollArea() as boolean) then
 						my displayError("Error: Unable to focus presenter notes", "Tried focusing the presenter notes for 1 second but failed.", 15, true)
