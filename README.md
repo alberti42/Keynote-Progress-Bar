@@ -71,6 +71,8 @@ To configure the progress bar, add commands to the _Presenter Notes_ of your Key
 {progress bar; command; parameter1=value1; parameter2=value2; ...}
 ```
 
+A detailed description of the commands is provided in [this section](#commands).
+
 ### 4.3. Progress bar calculation<a id="usage-calculation"></a>
 
 The progress of the dots in the progress bar is computed based on the actual time spent on each slide, as indicated by the `duration` field, rather than the slide number. This approach ensures accurate representation of the presentation's progress, especially in cases where a sequence of slides is used to create an animation that conceptually belongs to a single slide. By relying on the `duration` field, the progress bar accurately reflects the time allocated to each section of the presentation, providing a better visual cue for the audience.
