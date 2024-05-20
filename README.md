@@ -24,11 +24,10 @@ This AppleScript program adds a customizable progress bar to presentations creat
 			- [5.2.2. SetAllPositionsEqual](#SetAllPositionsEqual)
 			- [5.2.3. SameAsPrevious](#SameAsPrevious)
 			- [5.3. RemoveAll](#RemoveAll)
-	- [[#6. Positioning and Resizing|6. Positioning and Resizing]]
-	- [[#7. Donations|7. Donations]]
-	- [[#8. Author|8. Author]]
-	- [[#9. Contributing|9. Contributing]]
-	- [[#10. License|10. License]]
+	- [6. Donations](#donations)
+	- [7. Author](#author)
+	- [8. Contributing](#contributing)
+	- [9. License](#license)
 
 ## 2. Features<a id="features"></a>
 
@@ -208,22 +207,22 @@ When this command is used, the current slide reuses the progress bar image gener
 
 This is a special command in the first slide. When this is true, all images of the progress bar are removed from all slides. This is important when we would like to clean the slides from the progress bar. No progress bar is created.
 
-## 6. Donations<a id="Donations"></a>
+## 6. Donations<a id="donations"></a>
 I would be grateful for any donation to support the development of this plugin.
 
 [<img src="Docs/Images/buy_me_coffee.png" width=300 alt="Buy Me a Coffee QR Code"/>](https://buymeacoffee.com/alberti)
 
-## 7. Author<a id="xxx"></a>
+## 7. Author<a id="author"></a>
 - **Author:** Andrea Alberti
 - **GitHub Profile:** [alberti42](https://github.com/alberti42)
 - **Donations:** [![Buy Me a Coffee](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-orange)](https://buymeacoffee.com/alberti)
 
 Feel free to contribute to the development of this plugin or report any issues in the [GitHub repository](https://github.com/alberti42/import-attachments-plus/issues).
 
-## 8. Contributing<a id="xxx"></a>
+## 8. Contributing<a id="contributing"></a>
 
 Contributions are welcome! Please open an issue or submit a pull request with your improvements.
 
-## 9. License<a id="xxx"></a>
+## 9. License<a id="license"></a>
 
 This project is licensed under the MIT License; see the [LICENSE](LICENSE) file for details.
