@@ -120,7 +120,7 @@ By following these steps, you can effectively add and customize a progress bar i
    {progress bar; duration=1.5; CompletedDotFillColor={255,255,255,100}; UncompletedDotFillColor={255,255,255,60}; CompletedDotStrokeColor={0,0,0,100}; UncompletedDotStrokeColor={0,0,0,100}; CompletedTextColor={255,255,255,100}; UncompletedTextColor={255,255,255,100};}
    ```
 
-### 4.7. Running the script<a id="xxx"></a>
+### 4.7. Running the script<a id="usage-running"></a>
 
 1. **Open the Script Editor:**
    Launch Apple’s _Script Editor_ and open the saved AppleScript file.
