@@ -8,8 +8,8 @@ This AppleScript program adds a customizable progress bar to presentations creat
 	- [1. Table of Contents](#toc)
 	- [2. Features](#features)
 	- [3. Installation](#installation)
-	- [[#4. Usage|4. Usage]]
-		- [[#4.1. Adding progress bar to your presentation|4.1. Adding progress bar to your presentation]]
+	- [4. Usage](#usage)
+		- [4.1. Adding progress bar to your presentation](#usage-generation)
 		- [[#4.2. Commands and parameters|4.2. Commands and parameters]]
 		- [[#4.3. Progress bar calculation|4.3. Progress bar calculation]]
 		- [[#4.4. Example workflow|4.4. Example workflow]]
@@ -52,9 +52,9 @@ This AppleScript program adds a customizable progress bar to presentations creat
 6. Add the configuration commands to the presenter notes of the relevant slides. Check section on [[#4. Usage|usage]] for more information.
 7. From the _Script Editor_, run the AppleScript to process the slides and insert the progress bar images to your slides. If you have multiple Keynote presentations opened, only the frontmost document will be considered.
 
-## 4. Usage
+## 4. Usage<a id="usage"></a>
 
-### 4.1. Adding progress bar to your presentation
+### 4.1. Adding progress bar to your presentation<a id="usage-generation"></a>
 
 1. **Open Your Keynote Presentation:**
    Ensure your Keynote presentation is open before running the script.
@@ -65,7 +65,7 @@ This AppleScript program adds a customizable progress bar to presentations creat
 3. **Run the AppleScript:**
    Open the AppleScript with Apple’s _Script Editor_ and run it. If you have multiple Keynote presentations open, the foremost document will be processed.
 
-### 4.2. Commands and parameters
+### 4.2. Commands and parameters<a id="usage-commands"></a>
 
 - **Global Configuration Commands:** These are set on the initial slide using the `{progress bar; start; ...}` command.
   - `start`, `RemoveAll`, `ChapterSeparation`, `FontFamily`, `FontFamilyHighlightedChapter`, `FontSize`, `FlipUpsideDown`, `SetAllPositionsEqual`, `NumberOfDots`, `DotSize`, `ContourWidth`, `CompletedDotFillColor`, `UncompletedDotFillColor`, `CompletedDotStrokeColor`, `UncompletedDotStrokeColor`, `CompletedTextColor`, `UncompletedTextColor`, `BaselineOffset`, `Margins`, `PreserveExistingImages`.
