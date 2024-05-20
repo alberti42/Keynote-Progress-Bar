@@ -4,7 +4,7 @@ This AppleScript program adds a customizable progress bar to presentations creat
 
 ![Example Keynote Progress Bar](Docs/Examples/Example-Keynote-Progress-Bar.png)
 
-Download the Keynote presentation [example](Docs/Examples/Example-Keynote-Progress-Bar.key), where the Keynote Progress Bar is already inserted. You only need Keynote to open the presentation and evaluate how the _progress bar_ looks like. No other installation is required for a first look. As an alternative, you can download the [PDF](Docs/Examples/Example-Keynote-Progress-Bar.pdf) export of the Keynote presentation.
+Download the Keynote presentation [example](Docs/Examples/Example-Keynote-Progress-Bar.key), where the _Keynote Progress Bar_ has already been embedded. You only need Keynote to open the presentation and evaluate how the _Keynote Progress Bar_ looks like. No other installation is required for a first look. As an alternative, you can download the [PDF](Docs/Examples/Example-Keynote-Progress-Bar.pdf) export of the Keynote presentation.
 
 ## 1. Table of Contents<a id="toc"></a>
 
