@@ -10,11 +10,11 @@ This AppleScript program adds a customizable progress bar to presentations creat
 	- [3. Installation](#installation)
 	- [4. Usage](#usage)
 		- [4.1. Adding progress bar to your presentation](#usage-generation)
-		- [Commands and parameters](#usage-commands)
+		- [4.2 Commands and parameters](#usage-commands)
 		- [4.3. Progress bar calculation](#usage-calculation)
-		- [[#4.4. Example workflow|4.4. Example workflow]]
-		- [[#4.5. Running the Script|4.5. Running the Script]]
-		- [[#4.6. Adjusting Position and Size|4.6. Adjusting Position and Size]]
+  		- [4.4. Adjusting position and size](#usage-positioning)
+		- [4.5. Example workflow](#usage-examples)
+		- [4.6. Running the Script](#usage-running)
 	- [[#5. Configuration|5. Configuration]]
 		- [[#5.1. Basic syntax of commands|5.1. Basic syntax of commands]]
 			- [[#5.1.1. Commands on the initial slide|5.1.1. Commands on the initial slide]]
@@ -77,7 +77,24 @@ This AppleScript program adds a customizable progress bar to presentations creat
 
 The progress of the dots in the progress bar is computed based on the actual time spent on each slide, as indicated by the `duration` field, rather than the slide number. This approach ensures accurate representation of the presentation's progress, especially in cases where a sequence of slides is used to create an animation that conceptually belongs to a single slide. By relying on the `duration` field, the progress bar accurately reflects the time allocated to each section of the presentation, providing a better visual cue for the audience.
 
-### 4.4. Example workflow
+## 4.4. Adjusting position and size<a id="usage-positioning"></a>
+
+The first run of the app, if no previous progress bar existed, places the progress bar at the bottom to fill nearly the entire width. This is seldom ideal. The user is free to change the position by moving the progress bar and resizing it. It is important to uncheck `Constrain proportions` under the panel `Format > Arrange` of Keynote when selecting the progress bar generated in its default position. This allows the user to stretch the progress bar to the desired size. It must be mentioned that in doing so, the aspect ratio may look weird and not properly scaled. The user should not worry. The next execution of the app will use the right size, but also respect the correct aspect ratio for the dots and text.
+
+After running the script for the first time, you may need to adjust the position and size of the progress bar to better fit your slide layout:
+
+1. **Select the Progress Bar:**
+   Click on the progress bar in your Keynote slide to select it.
+
+2. **Uncheck Constrain Proportions:**
+   In the Keynote menu, go to `Format > Arrange` and uncheck `Constrain proportions` to freely adjust the width and height of the progress bar.
+
+3. **Resize and Position:**
+   Drag the progress bar to the desired position and resize it as needed. Don’t worry about the aspect ratio; the next execution of the script will maintain the correct aspect ratio for the dots and text while respecting your adjustments.
+
+By following these steps, you can effectively add and customize a progress bar in your Keynote presentations, providing a clear visual cue of the presentation's progress based on the actual time allocated to each slide.
+
+### 4.5. Example workflow<a id="usage-examples"></a>
 
 1. **Initial Setup:**
    On the first slide where you want the progress bar to start, add the following in the presenter notes:
@@ -103,7 +120,7 @@ The progress of the dots in the progress bar is computed based on the actual tim
    {progress bar; duration=1.5; CompletedDotFillColor={255,255,255,100}; UncompletedDotFillColor={255,255,255,60}; CompletedDotStrokeColor={0,0,0,100}; UncompletedDotStrokeColor={0,0,0,100}; CompletedTextColor={255,255,255,100}; UncompletedTextColor={255,255,255,100};}
    ```
 
-### 4.5. Running the Script
+### 4.7. Running the script<a id="xxx"></a>
 
 1. **Open the Script Editor:**
    Launch Apple’s _Script Editor_ and open the saved AppleScript file.
@@ -113,28 +130,12 @@ The progress of the dots in the progress bar is computed based on the actual tim
 
 3. **Verify the Progress Bar:**
    Check your Keynote slides to verify that the progress bar has been added and configured according to your specifications.
-
-### 4.6. Adjusting Position and Size
-
-After running the script for the first time, you may need to adjust the position and size of the progress bar to better fit your slide layout:
-
-1. **Select the Progress Bar:**
-   Click on the progress bar in your Keynote slide to select it.
-
-2. **Uncheck Constrain Proportions:**
-   In the Keynote menu, go to `Format > Arrange` and uncheck `Constrain proportions` to freely adjust the width and height of the progress bar.
-
-3. **Resize and Position:**
-   Drag the progress bar to the desired position and resize it as needed. Don’t worry about the aspect ratio; the next execution of the script will maintain the correct aspect ratio for the dots and text while respecting your adjustments.
-
-By following these steps, you can effectively add and customize a progress bar in your Keynote presentations, providing a clear visual cue of the presentation's progress based on the actual time allocated to each slide.
-
    
-## 5. Configuration
+## 5. Configuration<a id="xxx"></a>
 
 To configure the progress bar, add commands to the presenter notes of your Keynote slides. The syntax for the commands is as follows:
 
-### 5.1. Basic syntax of commands
+### 5.1. Basic syntax of commands<a id="xxx"></a>
 
 Commands can be provided by including in the _Presenter Notes_ of Keynote a string with the following format:
 
@@ -147,7 +148,7 @@ There are two categories of commands:
 1. commands applying to the initial slides. These are typically global configurations.
 2. commands applying to the individual slides to customize their particular behavior.
 
-#### 5.1.1. Commands on the initial slide
+#### 5.1.1. Commands on the initial slide<a id="xxx"></a>
 
 These commands are used in the `{progress bar; start; ...}` configuration on the first slide, where the progress bar is intended to start, to set up the overall behavior and style of the progress bar throughout the presentation:
 
@@ -180,7 +181,7 @@ These commands are used in the `{progress bar; start; ...}` configuration on the
 - `Margins`: (array of numbers) Margins around the progress bar in the format `{top,right,bottom,left}`.
 
 
-#### 5.1.2. Commands on individual slides
+#### 5.1.2. Commands on individual slides<a id="xxx"></a>
 
 These commands are applied to individual slides to control their specific behavior and appearance in the context of the progress bar:
 
@@ -190,44 +191,40 @@ These commands are applied to individual slides to control their specific behavi
 - `stop`: (no argument) Special command marking the last slide where the progress bar should be displayed. All slides after the `stop` command will be ignored.
 - `SameAsPrevious`: (no argument) Uses the progress bar image from the previous slide to avoid flickering during _Magic Move_ transitions. Check [[#6.3. SameAsPrevious|SameAsPrevious]] for more details.
 
-### 5.2. Detailed options
+### 5.2. Detailed options<a id="xxx"></a>
 
 #### 5.2.1. PreserveExistingImages<a id="PreserveExistingImages"></a>
 
 When this option is true (default), the app uses any previously placed progress bar as a reference and updates it, maintaining its size, position, and z-order on the slide. This is particularly useful when the progress bar needs to be positioned as the background element, hidden by other elements in the foreground. By preserving the existing progress bar, the newly generated progress bar images replace the old ones without altering their predefined z-order, ensuring that the intended layering of slide elements is maintained.
 
-#### 5.2.2. SetAllPositionsEqual
+#### 5.2.2. SetAllPositionsEqual<a id="SetAllPositionsEqual"></a>
 
 When this option is true, all progress bar images in all slides have the same size and position as the first progress bar. The first progress bar is the first one appearing. If the first slides use the command `skipDrawing`, then it will be the first progress bar on the first slide not containing `skipDrawing`.
 
-#### 5.2.3. SameAsPrevious
+#### 5.2.3. SameAsPrevious<a id="SameAsPrevious"></a>
 
 When this command is used, the current slide reuses the progress bar image generated for the previous slide. This is particularly important when using the _Magic Move_ animation from the previous slide to the current one. By displaying the previous progress bar image, we avoid flickering that would otherwise occur due to the _Magic Move_ animation. However, while the duration for the slide is correctly computed, the progress bar's advancement cannot be displayed when reusing the image from the previous slide.
 
-#### 5.3. RemoveAll
+#### 5.3. RemoveAll<a id="RemoveAll"></a>
 
 This is a special command in the first slide. When this is true, all images of the progress bar are removed from all slides. This is important when we would like to clean the slides from the progress bar. No progress bar is created.
 
-## 6. Positioning and Resizing
-
-The first run of the app, if no previous progress bar existed, places the progress bar at the bottom to fill nearly the entire width. This is seldom ideal. The user is free to change the position by moving the progress bar and resizing it. It is important to uncheck `Constrain proportions` under the panel `Format > Arrange` of Keynote when selecting the progress bar generated in its default position. This allows the user to stretch the progress bar to the desired size. It must be mentioned that in doing so, the aspect ratio may look weird and not properly scaled. The user should not worry. The next execution of the app will use the right size, but also respect the correct aspect ratio for the dots and text.
-
-## 7. Donations
+## 6. Donations<a id="Donations"></a>
 I would be grateful for any donation to support the development of this plugin.
 
 [<img src="docs/images/buy_me_coffee.png" width=300 alt="Buy Me a Coffee QR Code"/>](https://buymeacoffee.com/alberti)
 
-## 8. Author
+## 7. Author<a id="xxx"></a>
 - **Author:** Andrea Alberti
 - **GitHub Profile:** [alberti42](https://github.com/alberti42)
 - **Donations:** [![Buy Me a Coffee](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-orange)](https://buymeacoffee.com/alberti)
 
 Feel free to contribute to the development of this plugin or report any issues in the [GitHub repository](https://github.com/alberti42/import-attachments-plus/issues).
 
-## 9. Contributing
+## 8. Contributing<a id="xxx"></a>
 
 Contributions are welcome! Please open an issue or submit a pull request with your improvements.
 
-## 10. License
+## 9. License<a id="xxx"></a>
 
 This project is licensed under the MIT License; see the [LICENSE](LICENSE) file for details.
