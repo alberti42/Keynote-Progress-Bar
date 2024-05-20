@@ -175,7 +175,7 @@ These commands are used in the `{progress bar; start; ...}` configuration on the
 
 **Positioning:**
 - `FlipUpsideDown`: (true/false) Flips the progress bar upside down.
-- `SetAllPositionsEqual`: (true/false) Sets all progress bar positions to be equal. Check [this section](#set-all-positions-equal] for more details.
+- `SetAllPositionsEqual`: (true/false) Sets all progress bar positions to be equal. Check [this section](#set-all-positions-equal) for more details.
 - `Margins`: (array of numbers) Margins around the progress bar in the format `{top,right,bottom,left}`.
 
 
