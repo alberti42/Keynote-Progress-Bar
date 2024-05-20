@@ -20,9 +20,9 @@ This AppleScript program adds a customizable progress bar to presentations creat
 			- [5.1.1. Commands on the initial slide](#configuration-syntax-initial)
 			- [5.1.2. Commands on individual slides](#configuration-syntax-individuals)
 		- [5.2. Detailed options](#configuration-detailed)
-			- [5.2.1. PreserveExistingImages](#PreserveExistingImages)
-			- [5.2.2. SetAllPositionsEqual](#SetAllPositionsEqual)
-			- [5.2.3. SameAsPrevious](#SameAsPrevious)
+			- [5.2.1. PreserveExistingImages](#preserve-existing-images)
+			- [5.2.2. SetAllPositionsEqual](#set-all-positions-equal)
+			- [5.2.3. SameAsPrevious](#same-as-previous)
 			- [5.3. RemoveAll](#remove-all)
 	- [6. Donations](#donations)
 	- [7. Author](#author)
@@ -191,15 +191,15 @@ These commands are applied to individual slides to control their specific behavi
 
 ### 5.2. Detailed options<a id="configuration-detailed"></a>
 
-#### 5.2.1. PreserveExistingImages<a id="PreserveExistingImages"></a>
+#### 5.2.1. PreserveExistingImages<a id="preserve-existing-images"></a>
 
 When this option is true (default), the app uses any previously placed progress bar as a reference and updates it, maintaining its size, position, and z-order on the slide. This is particularly useful when the progress bar needs to be positioned as the background element, hidden by other elements in the foreground. By preserving the existing progress bar, the newly generated progress bar images replace the old ones without altering their predefined z-order, ensuring that the intended layering of slide elements is maintained.
 
-#### 5.2.2. SetAllPositionsEqual<a id="SetAllPositionsEqual"></a>
+#### 5.2.2. SetAllPositionsEqual<a id="set-all-positions-equal"></a>
 
 When this option is true, all progress bar images in all slides have the same size and position as the first progress bar. The first progress bar is the first one appearing. If the first slides use the command `skipDrawing`, then it will be the first progress bar on the first slide not containing `skipDrawing`.
 
-#### 5.2.3. SameAsPrevious<a id="SameAsPrevious"></a>
+#### 5.2.3. SameAsPrevious<a id="same-as-previous"></a>
 
 When this command is used, the current slide reuses the progress bar image generated for the previous slide. This is particularly important when using the _Magic Move_ animation from the previous slide to the current one. By displaying the previous progress bar image, we avoid flickering that would otherwise occur due to the _Magic Move_ animation. However, while the duration for the slide is correctly computed, the progress bar's advancement cannot be displayed when reusing the image from the previous slide.
 
