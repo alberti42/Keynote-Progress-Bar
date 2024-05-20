@@ -23,7 +23,7 @@ This AppleScript program adds a customizable progress bar to presentations creat
 			- [5.2.1. PreserveExistingImages](#PreserveExistingImages)
 			- [5.2.2. SetAllPositionsEqual](#SetAllPositionsEqual)
 			- [5.2.3. SameAsPrevious](#SameAsPrevious)
-			- [5.3. RemoveAll](#RemoveAll)
+			- [5.3. RemoveAll](#remove-all)
 	- [6. Donations](#donations)
 	- [7. Author](#author)
 	- [8. Contributing](#contributing)
@@ -203,7 +203,7 @@ When this option is true, all progress bar images in all slides have the same si
 
 When this command is used, the current slide reuses the progress bar image generated for the previous slide. This is particularly important when using the _Magic Move_ animation from the previous slide to the current one. By displaying the previous progress bar image, we avoid flickering that would otherwise occur due to the _Magic Move_ animation. However, while the duration for the slide is correctly computed, the progress bar's advancement cannot be displayed when reusing the image from the previous slide.
 
-#### 5.3. RemoveAll<a id="RemoveAll"></a>
+#### 5.3. RemoveAll<a id="remove-all"></a>
 
 This is a special command in the first slide. When this is true, all images of the progress bar are removed from all slides. This is important when we would like to clean the slides from the progress bar. No progress bar is created.
 
