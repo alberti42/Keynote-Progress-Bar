@@ -5,9 +5,9 @@ This AppleScript program adds a customizable progress bar to presentations creat
 ## 1. Table of Contents<a id="toc"></a>
 
 - [Keynote Progress Bar](#Keynote-Progress-Bar)
-	- [Table of Contents](#toc)
-	- [[#2. Features|2. Features]]
-	- [[#3. Installation|3. Installation]]
+	- [1. Table of Contents](#toc)
+	- [2. Features](#features)
+	- [3. Installation](#installation)
 	- [[#4. Usage|4. Usage]]
 		- [[#4.1. Adding progress bar to your presentation|4.1. Adding progress bar to your presentation]]
 		- [[#4.2. Commands and parameters|4.2. Commands and parameters]]
@@ -31,7 +31,7 @@ This AppleScript program adds a customizable progress bar to presentations creat
 	- [[#10. License|10. License]]
 
 
-## 2. Features
+## 2. Features<a id="features"></a>
 
 - Customizable progress bar with various styling options
 - Support for chapters with different styles
@@ -39,7 +39,7 @@ This AppleScript program adds a customizable progress bar to presentations creat
 - Automatic insertion of progress bar images into Keynote slides
 - Progress bar based on actual presentation time, ensuring accurate visual representation.
 
-## 3. Installation
+## 3. Installation<a id="installation"></a>
 
 1. Clone this repository:
    ```sh
