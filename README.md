@@ -65,14 +65,11 @@ This AppleScript program adds a customizable progress bar to presentations creat
 
 ### 4.2. Commands and parameters<a id="usage-commands"></a>
 
-- **Global Configuration Commands:** These are set on the initial slide using the `{progress bar; start; ...}` command.
-  - `ChapterSeparation`, `FontFamily`, `FontFamilyHighlightedChapter`, `FontSize`, `FlipUpsideDown`, `SetAllPositionsEqual`, `NumberOfDots`, `DotSize`, `ContourWidth`, `CompletedDotFillColor`, `UncompletedDotFillColor`, `CompletedDotStrokeColor`, `UncompletedDotStrokeColor`, `CompletedTextColor`, `UncompletedTextColor`, `BaselineOffset`, `Margins`, `PreserveExistingImages`.
+To configure the progress bar, add commands to the _Presenter Notes_ of your Keynote slides. The syntax for the commands is as follows.
 
-- **Individual Slide Commands:** These are set on each slide to control specific behaviors.
-  - `duration`, `chapter`, `skipDrawing`, `SameAsPrevious`.
- 
-- **Special commands:** These are special commands either on the first or last slide.
-  - `start`, `stop`, `RemoveAll`
+```plaintext
+{progress bar; command; parameter1=value1; parameter2=value2; ...}
+```
 
 ### 4.3. Progress bar calculation<a id="usage-calculation"></a>
 
@@ -132,15 +129,7 @@ By following these steps, you can effectively add and customize a progress bar i
    
 ## 5. Configuration<a id="configuration"></a>
 
-To configure the progress bar, add commands to the presenter notes of your Keynote slides. The syntax for the commands is as follows:
-
-### 5.1. Basic syntax of commands<a id="configuration-syntax"></a>
-
-Commands can be provided by including in the _Presenter Notes_ of Keynote a string with the following format:
-
-```plaintext
-{progress bar; command; parameter1=value1; parameter2=value2; ...}
-```
+### 5.1. Commands<a id="configuration-syntax"></a>
 
 There are two categories of commands:
 
@@ -152,7 +141,7 @@ There are two categories of commands:
 These commands are used in the `{progress bar; start; ...}` configuration on the first slide, where the progress bar is intended to start, to set up the overall behavior and style of the progress bar throughout the presentation:
 
 **General Commands:**
-- `start`: (no argument) Special command marking the slide where the progress bar should be first displayed.
+- `start`: (no argument) Special command marking the slide where the progress bar should be first displayed. It is mandatory to have one slide with this command.
 - `RemoveAll`: (true/false; default=false) Special command to clean the presentation from all progress bars; no new progress bars will be generated. Check [this section](#remove-all) for more details.
 - `PreserveExistingImages`: (true/false; default=false) Preserves all existing progress bar images. Check [this section](#preserve-existing-images) for more details.
 
@@ -187,10 +176,10 @@ These commands are applied to individual slides to control their specific behavi
 - `duration`: (floating-point number) Sets the duration in minutes for the current slide.
 - `chapter`: (string) Name of the new chapter in your presentation. You can use double quotation marks if the chapter name contains spaces.
 - `skipDrawing`: (no argument) Skips drawing the progress bar for the current slide. This command is convenient to hide the progress bar on slides where it would overlap on some graphical elements.
-- `stop`: (no argument) Special command marking the last slide where the progress bar should be displayed. All slides after the `stop` command will be ignored.
 - `SameAsPrevious`: (no argument) Uses the progress bar image from the previous slide to avoid flickering during _Magic Move_ transitions. Check [this section](#same-as-previous) for more details.
+- `stop`: (no argument) Special command marking the last slide where the progress bar should be displayed. All slides after the `stop` command will be ignored. It is mandatory to have one slide with this command.
 
-### 5.2. Detailed options<a id="configuration-detailed"></a>
+### 5.2. Detailed description of selected commands<a id="configuration-detailed"></a>
 
 #### 5.2.1. PreserveExistingImages<a id="preserve-existing-images"></a>
 
