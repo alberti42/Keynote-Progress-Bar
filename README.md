@@ -4,7 +4,7 @@ This AppleScript program adds a customizable progress bar to presentations creat
 
 ![Example Keynote Progress Bar](Docs/Examples/Example-Keynote-Progress-Bar.png)
 
-Download the Keynote presentation [example](https://github.com/alberti42/Keynote-ProgressBar/raw/main/Docs/Examples/Example-Keynote-Progress-Bar.key), where the _Keynote Progress Bar_ has already been embedded. You only need Keynote to open the presentation and evaluate how the _Keynote Progress Bar_ looks. No other installation is required for a first look. Alternatively, you can download the [PDF](https://github.com/alberti42/Keynote-ProgressBar/raw/main/Docs/Examples/Example-Keynote-Progress-Bar.pdf) export of the Keynote presentation.
+Download the Keynote presentation [example](https://github.com/alberti42/Keynote-Progress-Bar/raw/main/Docs/Examples/Example-Keynote-Progress-Bar.key), where the _Keynote Progress Bar_ has already been embedded. You only need Keynote to open the presentation and evaluate how the _Keynote Progress Bar_ looks. No other installation is required for a first look. Alternatively, you can download the [PDF](https://github.com/alberti42/Keynote-Progress-Bar/raw/main/Docs/Examples/Example-Keynote-Progress-Bar.pdf) export of the Keynote presentation.
 
 ## 1. Table of Contents<a id="toc"></a>
 
@@ -47,7 +47,7 @@ Download the Keynote presentation [example](https://github.com/alberti42/Keynote
 
 1. Clone this repository:
    ```sh
-   git clone https://github.com/alberti42/Keynote-ProgressBar.git
+   git clone https://github.com/alberti42/Keynote-Progress-Bar.git
    ```
 2. Open the `KeynoteProgressBarHelper` framework in Xcode and build it.
 3. Place the compiled framework in `/Users/your-username/Library/Frameworks`.
@@ -237,7 +237,7 @@ I would be grateful for any donation to support the development of this plugin.
 
 ## 8. Contributing<a id="contributing"></a>
 
-Feel free to contribute to the development of this plugin or report any issues in the [GitHub repository](https://github.com/alberti42/Keynote-ProgressBar/issues).
+Feel free to contribute to the development of this plugin or report any issues in the [GitHub repository](https://github.com/alberti42/Keynote-Progress-Bar/issues).
 
 ## 9. License<a id="license"></a>
 
