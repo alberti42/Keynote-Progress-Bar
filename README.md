@@ -4,7 +4,7 @@ This AppleScript program adds a customizable progress bar to presentations creat
 
 ![Example Keynote Progress Bar](Docs/Examples/Example-Keynote-Progress-Bar.png)
 
-Download the Keynote presentation [example](https://github.com/alberti42/Keynote-ProgressBar/raw/main/Docs/Examples/Example-Keynote-Progress-Bar.key), where the _Keynote Progress Bar_ has already been embedded. You only need Keynote to open the presentation and evaluate how the _Keynote Progress Bar_ looks like. No other installation is required for a first look. As an alternative, you can download the [PDF](https://github.com/alberti42/Keynote-ProgressBar/raw/main/Docs/Examples/Example-Keynote-Progress-Bar.pdf) export of the Keynote presentation.
+Download the Keynote presentation [example](https://github.com/alberti42/Keynote-ProgressBar/raw/main/Docs/Examples/Example-Keynote-Progress-Bar.key), where the _Keynote Progress Bar_ has already been embedded. You only need Keynote to open the presentation and evaluate how the _Keynote Progress Bar_ looks. No other installation is required for a first look. Alternatively, you can download the [PDF](https://github.com/alberti42/Keynote-ProgressBar/raw/main/Docs/Examples/Example-Keynote-Progress-Bar.pdf) export of the Keynote presentation.
 
 ## 1. Table of Contents<a id="toc"></a>
 
@@ -71,7 +71,7 @@ Download the Keynote presentation [example](https://github.com/alberti42/Keynote
 
 ### 4.2. Commands and parameters<a id="usage-commands"></a>
 
-To configure the progress bar, add commands to the _Presenter Notes_ of your Keynote slides. The syntax for the commands is as follows:
+To configure the _Keynote Progress Bar_, add commands to the _Presenter Notes_ of your Keynote slides. The syntax for the commands is as follows:
 
 ```plaintext
 {progress bar; command; parameter1=value1; parameter2=value2; ...}
@@ -81,13 +81,13 @@ A detailed description of the commands is provided in [this section](#configurat
 
 ### 4.3. Progress bar calculation<a id="usage-calculation"></a>
 
-The progress of the dots in the progress bar is computed based on the actual time spent on each slide, as indicated by the `duration` field, rather than the slide number. This approach ensures accurate representation of the presentation's progress, especially in cases where a sequence of slides is used to create an animation that conceptually belongs to a single slide. By relying on the `duration` field, the progress bar accurately reflects the time allocated to each section of the presentation, providing a better visual cue for the audience.
+The progress of the dots in the _Keynote Progress Bar_ is computed based on the actual time spent on each slide, as indicated by the `duration` field, rather than the slide number. This approach ensures accurate representation of the presentation's progress, especially in cases where a sequence of slides is used to create an animation that conceptually belongs to a single slide. By relying on the `duration` field, the progress bar accurately reflects the time allocated to each section of the presentation, providing a better visual cue for the audience.
 
 ## 4.4. Adjusting position and size<a id="usage-positioning"></a>
 
 ### 4.4.1. Manual adjustment<a id="usage-positioning-manual"></a>
 
-After running the script for the first time, you may need to adjust the position and size of the progress bar to better fit your slide layout. In fact, the first run of the app, if no previous progress bar existed, places the progress bar at the bottom to fill nearly the entire width. This is seldom ideal. The user is free to change the position by moving the progress bar and resizing it. It is important to uncheck `Constrain proportions` under the panel `Format > Arrange` of Keynote when selecting the progress bar generated in its default position. This allows the user to stretch the progress bar to the desired size. It must be mentioned that in doing so, the aspect ratio may look weird and not properly scaled. The user should not worry. The next execution of the app will use the right size, but also respect the correct aspect ratio for the dots and text. 
+After running the script for the first time, you may need to adjust the position and size of the _Keynote Progress Bar_ to better fit your slide layout. In fact, the first run of the app, if no previous progress bar existed, places the progress bar at the bottom to fill nearly the entire width. This is seldom ideal. The user is free to change the position by moving the progress bar and resizing it. It is important to uncheck `Constrain proportions` under the panel `Format > Arrange` of Keynote when selecting the progress bar generated in its default position. This allows the user to stretch the progress bar to the desired size. It must be mentioned that in doing so, the aspect ratio may look weird and not properly scaled. The user should not worry. The next execution of the app will use the right size, but also respect the correct aspect ratio for the dots and text. 
 
 1. **Select the Progress Bar:**
    Click on the progress bar in your Keynote slide to select it.
