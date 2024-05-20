@@ -107,7 +107,7 @@ To automatize the formatting on all slides at once, position and resize the firs
 1. **Initial Setup:**
    On the first slide where you want the progress bar to start, add the following in the presenter notes:
    ```plaintext
-   {progress bar; start; duration=2; skipDrawing; ChapterSeparation=90; FontFamily=Helvetica-Light; NumberOfDots=50; DotSize=6; ContourWidth=0.2; FontSize=14; CompletedDotFillColor={0,128,0,100}; UncompletedDotFillColor={128,128,128,50}}
+   {progress bar; start; RemoveAll=false; ChapterSeparation=90; FontFamily=Helvetica-Light; FlipUpsideDown=false; FontFamilyHighlightedChapter=Helvetica; NumberOfDots=40; DotSize=7; ContourWidth=0.2; FontSize=18; chapter=Introduction; CompletedDotFillColor={91,96,95,100}; UncompletedDotFillColor={91,96,95,30}; CompletedDotStrokeColor={0,0,0,100}; UncompletedDotStrokeColor={0,0,0,100}; BaselineOffset=0; Margins={0,40,0,40}; SameAsPreviousAutomatic=true; SetAllPositionsEqual=true; PreserveExistingImages=false; skipDrawing; duration=1.5}
    ```
 
 2. **Intermediate Slides:**
@@ -179,6 +179,7 @@ These commands are used in the `{progress bar; start; ...}` configuration on the
 - `FlipUpsideDown`: (true/false) Flips the progress bar upside down.
 - `SetAllPositionsEqual`: (true/false) Sets all progress bar positions to be equal. Check [this section](#set-all-positions-equal) for more details.
 - `Margins`: (array of numbers) Margins around the progress bar in the format `{top,right,bottom,left}`.
+- `SameAsPreviousAutomatic`: (true/false; default=false) Applies the command SaveAsPrevious automatically on each slide subsequent to a _Magic Move_ transition.
 
 
 #### 5.1.2. Commands on individual slides<a id="configuration-syntax-individuals"></a>
