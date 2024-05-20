@@ -176,7 +176,7 @@ These commands are used in the `{progress bar; start; ...}` configuration on the
 - `UncompletedDotStrokeColor`: (array; default={0, 0, 0, 100}) Stroke color of uncompleted dots in RGBA format.
 
 **Positioning:**
-- `ChapterLabelsAtBottom`: (true/false; default=false) Flips the progress bar upside down.
+- `ChapterLabelsAtBottom`: (true/false; default=false) Shows the chapter labels below the dots.
 - `SetAllPositionsEqual`: (true/false; default=false) Sets all progress bar positions to be equal. Check [this section](#set-all-positions-equal) for more details.
 - `Margins`: (array of numbers; default={0, 0, 0, 0}) Margins around the progress bar in the format `{top,right,bottom,left}`.
 - `SameAsPreviousAutomatic`: (true/false; default=false) Applies the command SaveAsPrevious automatically on each slide subsequent to a _Magic Move_ transition. Check [this section](#same-as-previous) for more details.
