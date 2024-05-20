@@ -365,14 +365,15 @@ on run
 					end if
 				end if
 			else
-				
-				(* Check if the presenter note is empty, then it just writes the default note configuration, otherwise extend them by emulating typing *)
-				if (((current application's NSString's alloc()'s initWithString:(presenter notes of theSlide))'s stringByTrimmingCharactersInSet:whiteSpaces)'s isEqualToString:"") then
-					set presenter notes of theSlide to theDefaultConfiguration & linefeed
-				else
-					set progressBarHelper to current application's ProgressBarKeynoteUI's alloc()'s init()
+				if theFirstSlide is not missing value and theLastSlide is missing value then
 					
-					(*
+					(* Check if the presenter note is empty, then it just writes the default note configuration, otherwise extend them by emulating typing *)
+					if (((current application's NSString's alloc()'s initWithString:(presenter notes of theSlide))'s stringByTrimmingCharactersInSet:whiteSpaces)'s isEqualToString:"") then
+						set presenter notes of theSlide to theDefaultConfiguration & linefeed
+					else
+						set progressBarHelper to current application's ProgressBarKeynoteUI's alloc()'s init()
+						
+						(*
 					-- This code only works on Apple Silicon but not Apple Intel
 					-- Therefore, we use the alternative written in Objective-C
 										
@@ -388,70 +389,83 @@ on run
 						end repeat
 					end tell
 					*)
-					
-					if thePresenterNotes is missing value then
-						tell application "System Events" to set previousFrontmostProcess to (first process where it is frontmost)
 						
-						-- Open the presenter notes and store whether the presenter notes were toggled (meaning they were closed)
-						set wasPresenterNotesToggled to (my showPresenterNotes:true)
-						
-						-- Find the presenter notes
-						-- set thePresenterNotes to my findPresenterNotes()
-						
-						if not (progressBarHelper's findPresenterNotesTextArea() as boolean) then
-							my displayError("Error: Unable to find presenter notes", "Tried finding presenter notes but failed.", 15, true)
-						end if
-						set thePresenterNotes to (progressBarHelper's getPresenterNotesTextArea())
-						
-					end if
-					
-					if thePresenterNotes is missing value then
-						my displayError("Error: Unable to identify the scroll area of the presenter notes", "No matching scroll area found in the Keynote window.", 15, true)
-					end if
-					
-					set theNotes to (presenter notes of theSlide as string)
-					
-					(* Find out how many empty lines at the beginning *)
-					repeat with i from 0 to (count of theNotes) - 1
-						if (character (i + 1) of theNotes) ≠ linefeed then
-							exit repeat
-						end if
-					end repeat
-					
-					set current slide of the front document to theSlide
-					
-					if not (progressBarHelper's focusOnPresenterNotesScrollArea() as boolean) then
-						my displayError("Error: Unable to focus presenter notes", "Tried focusing the presenter notes for 1 second but failed.", 15, true)
-					end if
-					
-					tell application "System Events" to tell application process "Keynote"
-						key code 126 using {command down} -- arrow up
-						-- key code 123 using {command down} -- arrow left
-						
-						keystroke theDefaultConfiguration
-						
-						if i = 0 then
-							key code 36 -- enter
-							key code 36 -- enter							
-						else if i = 1 then
-							key code 36 -- enter
+						if thePresenterNotes is missing value then
+							tell application "System Events" to set previousFrontmostProcess to (first process where it is frontmost)
+							
+							-- Open the presenter notes and store whether the presenter notes were toggled (meaning they were closed)
+							set wasPresenterNotesToggled to (my showPresenterNotes:true)
+							
+							-- Find the presenter notes
+							-- set thePresenterNotes to my findPresenterNotes()
+							
+							if not (progressBarHelper's findPresenterNotesTextArea() as boolean) then
+								my displayError("Error: Unable to find presenter notes", "Tried finding presenter notes but failed.", 15, true)
+							end if
+							set thePresenterNotes to (progressBarHelper's getPresenterNotesTextArea())
+							
 						end if
 						
-					end tell
-					
+						if thePresenterNotes is missing value then
+							my displayError("Error: Unable to identify the scroll area of the presenter notes", "No matching scroll area found in the Keynote window.", 15, true)
+						end if
+						
+						set theNotes to (presenter notes of theSlide as string)
+						
+						(* Find out how many empty lines at the beginning *)
+						repeat with i from 0 to (count of theNotes) - 1
+							if (character (i + 1) of theNotes) ≠ linefeed then
+								exit repeat
+							end if
+						end repeat
+						
+						set current slide of the front document to theSlide
+						
+						if not (progressBarHelper's focusOnPresenterNotesScrollArea() as boolean) then
+							my displayError("Error: Unable to focus presenter notes", "Tried focusing the presenter notes for 1 second but failed.", 15, true)
+						end if
+						
+						tell application "System Events" to tell application process "Keynote"
+							key code 126 using {command down} -- arrow up
+							-- key code 123 using {command down} -- arrow left
+							
+							keystroke theDefaultConfiguration
+							
+							if i = 0 then
+								key code 36 -- enter
+								key code 36 -- enter							
+							else if i = 1 then
+								key code 36 -- enter
+							end if
+							
+						end tell
+						
+					end if
 				end if
 				
+				(theCmds's setValue:theDefaultConfiguration forKey:"duration")
+			end if
+			
+			(* Find start slide *)
+			if (theCmds's valueForKey:("start")) is not missing value then
+				if theFirstSlide is not missing value then
+					log "Warning: multiple slides with 'start' command. Previous slides will be ignored."
+				end if
+				set theFirstSlide to (theCmds's valueForKey:"slide")'s intValue()
+			end if
+			
+			(* Find last slide *)
+			if (theCmds's valueForKey:("stop")) is not missing value then
+				if theLastSlide is not missing value then
+					log "Warning: multiple slides with 'stop' command. Subsequent slides will be ignored."
+				else
+					set theLastSlide to (theCmds's valueForKey:"slide")'s intValue()
+				end if
 			end if
 			
 			(theCmdsSlides's addObject:theCmds)
 			
 			my updateProgress(theSlideNum, "Parsing slides", "Slide " & theSlideNum & " out of " & (count of theSlides))
-			
-			if theLastSlide is not missing value then
-				log "Last slide processed: " & theLastSlide
-				exit repeat
-			end if
-			
 		end repeat
 		
 		if wasPresenterNotesToggled then
@@ -462,11 +476,10 @@ on run
 			tell application "System Events" to set the frontmost of previousFrontmostProcess to true
 		end if
 		
-		(* Find start slide *)
-		set i to 1
-		repeat with theCmds in theCmdsSlides
+		repeat with idx from theFirstSlide to theLastSlide
+			set theCmds to (theCmdsSlides's objectAtIndex:(idx - 1))
+			
 			if (theCmds's valueForKey:("start")) is not missing value then
-				set theFirstSlide to i
 				
 				(* Configure the initial parameters *)
 				set theConf to (theCmds's valueForKey:("NumberOfDots"))
@@ -713,10 +726,22 @@ on run
 			set theDuration to (theChapter's valueForKey:"duration")'s doubleValue()
 			set theNumDots to (theChapter's valueForKey:"numDots")'s intValue()
 			set thePartialDuration to 0
+			set theNumSlidesInChapter to (theChapter's valueForKey:"cmds")'s |count|()
+			set theSlideInChapter to 1
+			set theWeight to 0
 			repeat with theCmds in (theChapter's valueForKey:"cmds")
-				set thePartialDuration to thePartialDuration + ((theCmds's valueForKey:"duration")'s doubleValue())
+				if theSlideInChapter is theNumSlidesInChapter then
+					set theWeight to 1
+				else if theSlideInChapter is 1 then
+					set theWeight to 0
+				else
+					set theWeight to 0.5
+				end if
+				set thePartialDuration to thePartialDuration + theWeight * ((theCmds's valueForKey:"duration")'s doubleValue())
 				(theCmds's setValue:(my ceiling(thePartialDuration / theDuration * theNumDots)) forKey:"dotIdx")
 				(theCmds's setValue:theChapterNum forKey:"chapIdx")
+				set thePartialDuration to thePartialDuration + (1 - theWeight) * ((theCmds's valueForKey:"duration")'s doubleValue())
+				set theSlideInChapter to theSlideInChapter + 1
 			end repeat
 			set theChapterNum to theChapterNum + 1
 		end repeat
@@ -745,7 +770,6 @@ on run
 		
 		set theFontAttrsUncompleted to current application's NSMutableDictionary's alloc()'s initWithDictionary:theFontAttrsCompleted
 		set theFontAttrsCompletedHighlighted to current application's NSMutableDictionary's alloc()'s initWithDictionary:theFontAttrsCompleted
-		
 		
 		if doRemoveAll then
 			set theSlides to slides of front document
