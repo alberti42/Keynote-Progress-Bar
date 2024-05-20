@@ -38,6 +38,7 @@ property doFlipUpsideDown : false
 property doResetSizeAndPosition : false
 property doPreserveExistingImages : false
 property doRemoveAll : false
+property doSameAsPreviousWhenMagicMove : false
 
 -- Function to check if running on Apple Silicon (ARM)
 on isAppleSilicon()
@@ -252,7 +253,7 @@ on run
 	
 	tell application "Keynote"
 		
-		if not (exists front document) then my displayError("Critical error: Progress Bar", "You must first open a Keynote document.", 15, true)
+		if not (exists front document) then my displayError("Critical error: Keynote Progress Bar", "You must first open a Keynote document.", 15, true)
 		if playing is true then tell the front document to stop
 		
 		set theCurrentSlide to current slide of front document
@@ -358,7 +359,7 @@ on run
 									exit repeat
 								end if
 							else
-								my displayError("Critical error: Progress Bar", "Error: Command {progress bar; ...} not properly terminated by a curly bracket at slide number " & slide number of theSlide & ".", 15, true)
+								my displayError("Critical error: Keynote Progress Bar", "Error: Command {progress bar; ...} not properly terminated by a curly bracket at slide number " & slide number of theSlide & ".", 15, true)
 								exit repeat
 							end if
 						end repeat
@@ -526,6 +527,15 @@ on run
 						set doPreserveExistingImages to true
 					else
 						set doPreserveExistingImages to theConf's boolValue()
+					end if
+				end if
+				set theConf to (theCmds's valueForKey:("SameAsPreviousAutomatic"))
+				if theConf is not missing value then
+					if (theConf's isEqualTo:theNullObj) then
+						(* if no argument is provided, true is assumed *)
+						set doSameAsPreviousWhenMagicMove to true
+					else
+						set doSameAsPreviousWhenMagicMove to theConf's boolValue()
 					end if
 				end if
 				set theConf to (theCmds's valueForKey:("RemoveAll"))
@@ -699,7 +709,7 @@ on run
 				set theDuration to theDuration + ((theCmds's valueForKey:("duration"))'s doubleValue())
 			end repeat
 			
-			if theDuration is 0 then my displayError("Critical error: Progress Bar", "The chapter number " & theChapterNum & " has a zero duration. Change the duration of at least one slide to a nonzero value.", 15, true)
+			if theDuration is 0 then my displayError("Critical error: Keynote Progress Bar", "The chapter number " & theChapterNum & " has a zero duration. Change the duration of at least one slide to a nonzero value.", 15, true)
 			
 			set theTotalDuration to theTotalDuration + theDuration
 			
@@ -757,10 +767,10 @@ on run
 		set {theResult, isDir} to fileManager's fileExistsAtPath:theTmpPath isDirectory:(specifier)
 		if theResult is false then
 			set {theResult, theError} to fileManager's createDirectoryAtPath:theTmpPath withIntermediateDirectories:false attributes:(missing value) |error|:(specifier)
-			if theResult is false then my displayError("Critical error: Progress Bar", theError's localizedDescription() as text, 15, true)
+			if theResult is false then my displayError("Critical error: Keynote Progress Bar", theError's localizedDescription() as text, 15, true)
 		else
 			if isDir is false then
-				my displayError("Critical error: Progress Bar", "The temporary folder could not be created because a file already exists at the chosen position.", 15, true)
+				my displayError("Critical error: Keynote Progress Bar", "The temporary folder could not be created because a file already exists at the chosen position.", 15, true)
 			end if
 		end if
 		
@@ -847,6 +857,8 @@ on run
 		my updateProgress(0, "Setting progress bar", "Slide " & 0 & " out of " & theNumSlides)
 		
 		set thePosition to missing value
+		set isPreviousAnimationMagicMove to false
+		set thePreviousSlide to missing value
 		
 		repeat with k from 1 to theNumSlides
 			
@@ -859,8 +871,16 @@ on run
 			
 			if (theCmds's valueForKey:"skipDrawing") is missing value then
 				
-				set theSame to (theCmds's valueForKey:"SameAsPrevious")
-				if theSame is missing value then
+				set doTheSame to false
+				
+				if (theCmds's valueForKey:"SameAsPrevious") is not missing value then
+					set doTheSame to true
+				end if
+				if (doSameAsPreviousWhenMagicMove and isPreviousAnimationMagicMove) then
+					set doTheSame to true
+				end if
+				
+				if not doTheSame then
 					set thePreviousSlide to theSlide
 					
 					set theChapIdx to (theCmds's valueForKey:"chapIdx")'s intValue()
@@ -1021,10 +1041,13 @@ on run
 					
 					thePDFimage's releasePDFimage()
 				else
+					if thePreviousSlide is missing value then
+						my displayError("Critical error: Keynote Progress Bar", "You configured slide " & theSlide & " to have the same progress bar image as the previous slide. However, the previous slide " & (theSlide - 1) & " does not have any progress bar image.", 15, true)
+					end if
 					set theImgPath to (theTmpPath's stringByAppendingPathComponent:("ProgressBar-" & thePreviousSlide & ".pdf")) as string
 				end if
 				
-				if theResult is false then my displayError("Critical error: Progress Bar", "The progress bar could not be generated for slide number " & theSlide & ".", 15, true)
+				if theResult is false then my displayError("Critical error: Keynote Progress Bar", "The progress bar could not be generated for slide number " & theSlide & ".", 15, true)
 				if doPreserveExistingImages and (count of theOldImgs) > 0 then
 					set file name of (item 1 of theOldImgs) to POSIX file theImgPath
 					set position of (item 1 of theOldImgs) to thePosition
@@ -1032,6 +1055,14 @@ on run
 					set width of (item 1 of theOldImgs) to theWidth
 				else
 					tell (item theSlide) of theSlides to set theNewImg to make new image with properties {file:POSIX file theImgPath, position:thePosition, width:theWidth, height:theHeight}
+				end if
+				
+				set theTransitionProperties to (item theSlide of theSlides)'s transition properties
+				set theTransitionEffect to (theTransitionProperties's transition effect)
+				if (theTransitionEffect is equal to magic move) then
+					set isPreviousAnimationMagicMove to true
+				else
+					set isPreviousAnimationMagicMove to false
 				end if
 				
 			end if
@@ -1054,7 +1085,7 @@ on run
 		end repeat
 		
 		set {theResult, theError} to fileManager's removeItemAtPath:theTmpPath |error|:(specifier)
-		if theResult is false then my displayError("Critical error: Progress Bar", "The temporary folder could not be removed.", 15, true)
+		if theResult is false then my displayError("Critical error: Keynote Progress Bar", "The temporary folder could not be removed.", 15, true)
 		
 		set current slide of front document to theCurrentSlide
 	end tell
