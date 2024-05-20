@@ -65,7 +65,7 @@ This AppleScript program adds a customizable progress bar to presentations creat
 
 ### 4.2. Commands and parameters<a id="usage-commands"></a>
 
-To configure the progress bar, add commands to the _Presenter Notes_ of your Keynote slides. The syntax for the commands is as follows.
+To configure the progress bar, add commands to the _Presenter Notes_ of your Keynote slides. The syntax for the commands is as follows:
 
 ```plaintext
 {progress bar; command; parameter1=value1; parameter2=value2; ...}
