@@ -19,21 +19,16 @@ This AppleScript program adds a customizable progress bar to presentations creat
 		- [[#5.1. Basic syntax of commands|5.1. Basic syntax of commands]]
 			- [[#5.1.1. Commands on the initial slide|5.1.1. Commands on the initial slide]]
 			- [[#5.1.2. Commands on individual slides|5.1.2. Commands on individual slides]]
-		- [[#5.2. Examples|5.2. Examples]]
-			- [[#5.2.1. Starting Slide|5.2.1. Starting Slide]]
-			- [[#5.2.2. Intermediate Slide|5.2.2. Intermediate Slide]]
-			- [[#5.2.3. Ending Slide|5.2.3. Ending Slide]]
-			- [[#5.2.4. Slide with Dark Background|5.2.4. Slide with Dark Background]]
-	- [[#6. Detailed Options|6. Detailed Options]]
-		- [[#6.1. PreserveExistingImages|6.1. PreserveExistingImages]]
-		- [[#6.2. SetAllPositionsEqual|6.2. SetAllPositionsEqual]]
-		- [[#6.3. SameAsPrevious|6.3. SameAsPrevious]]
-		- [[#6.4. RemoveAll|6.4. RemoveAll]]
-	- [[#7. Positioning and Resizing|7. Positioning and Resizing]]
-	- [[#8. Donations|8. Donations]]
-	- [[#9. Author|9. Author]]
-	- [[#10. Contributing|10. Contributing]]
-	- [[#11. License|11. License]]
+		- [[#5.2. Detailed options|5.2. Detailed options]]
+			- [[#5.2.1. PreserveExistingImages|5.2.1. PreserveExistingImages]]
+			- [[#5.2.2. SetAllPositionsEqual|5.2.2. SetAllPositionsEqual]]
+			- [[#5.2.3. SameAsPrevious|5.2.3. SameAsPrevious]]
+			- [[#5.3. RemoveAll|5.3. RemoveAll]]
+	- [[#6. Positioning and Resizing|6. Positioning and Resizing]]
+	- [[#7. Donations|7. Donations]]
+	- [[#8. Author|8. Author]]
+	- [[#9. Contributing|9. Contributing]]
+	- [[#10. License|10. License]]
 
 
 ## 2. Features
@@ -54,7 +49,7 @@ This AppleScript program adds a customizable progress bar to presentations creat
 3. Place the compiled framework in `/Users/your-username/Library/Frameworks`.
 4. Open the AppleScript `path/to/the/cloned/repository/AppleScript/Add Progress Bar to Keynote.applescript.applescript` with Apple’s _Script Editor_ and save the script in your favorite script location (e.g., `/Users/your-username/Library/Scripts`) as compiled-script format `.scpt`. 
 5. Open your Keynote presentation.
-6. Add the configuration commands to the presenter notes of the relevant slides. Check [[#4. Usage|Usage]] for more information.
+6. Add the configuration commands to the presenter notes of the relevant slides. Check section on [[#4. Usage|usage]] for more information.
 7. From the _Script Editor_, run the AppleScript to process the slides and insert the progress bar images to your slides. If you have multiple Keynote presentations opened, only the frontmost document will be considered.
 
 ## 4. Usage
@@ -159,7 +154,7 @@ These commands are used in the `{progress bar; start; ...}` configuration on the
 **General Commands:**
 - `start`: (no argument) Special command marking the slide where the progress bar should be first displayed.
 - `RemoveAll`: (true/false; default=false) Special command to clean the presentation from all progress bars; no new progress bars will be generated.
-- `PreserveExistingImages`: (true/false; default=false) Preserves all existing progress bar images.
+- `PreserveExistingImages`: (true/false; default=false) Preserves all existing progress bar images. Check the section dedicated to [PreserveExistingImages](#my-anchor) for more details.
 
 **Chapter Labels:**
 - `ChapterSeparation`: (number) Distance between chapter markers in pixels.
@@ -181,7 +176,7 @@ These commands are used in the `{progress bar; start; ...}` configuration on the
 
 **Positioning:**
 - `FlipUpsideDown`: (true/false) Flips the progress bar upside down.
-- `SetAllPositionsEqual`: (true/false) Sets all progress bar positions to be equal. See also [[#6.2. SetAllPositionsEqual|SetAllPositionsEqual]] for more details.
+- `SetAllPositionsEqual`: (true/false) Sets all progress bar positions to be equal. Check [[#6.2. SetAllPositionsEqual|SetAllPositionsEqual]] for more details.
 - `Margins`: (array of numbers) Margins around the progress bar in the format `{top,right,bottom,left}`.
 
 
@@ -193,72 +188,46 @@ These commands are applied to individual slides to control their specific behavi
 - `chapter`: (string) Name of the new chapter in your presentation. You can use double quotation marks if the chapter name contains spaces.
 - `skipDrawing`: (no argument) Skips drawing the progress bar for the current slide. This command is convenient to hide the progress bar on slides where it would overlap on some graphical elements.
 - `stop`: (no argument) Special command marking the last slide where the progress bar should be displayed. All slides after the `stop` command will be ignored.
-- `SameAsPrevious`: (no argument) See also [[#6.3. SameAsPrevious|SameAsPrevious]] for more details.
+- `SameAsPrevious`: (no argument) Uses the progress bar image from the previous slide to avoid flickering during _Magic Move_ transitions. Check [[#6.3. SameAsPrevious|SameAsPrevious]] for more details.
 
-### 5.2. Examples
+### 5.2. Detailed options
 
-#### 5.2.1. Starting Slide
+#### 5.2.1. PreserveExistingImages<a id="my-anchor"></a>
 
-```plaintext
-{progress bar; start; RemoveAll=false; ChapterSeparation=90; FontFamily=Helvetica-Light; FlipUpsideDown=false; FontFamilyHighlightedChapter=Helvetica; SetAllPositionsEqual=true; NumberOfDots=43; DotSize=7; ContourWidth=0.2; FontSize=18; chapter=Introduction; CompletedDotFillColor={91,96,95,100}; UncompletedDotFillColor={91,96,95,30}; CompletedDotStrokeColor={0,0,0,100}; UncompletedDotStrokeColor={0,0,0,100}; BaselineOffset=0; Margins={0,40,0,40}; OverwriteExistingImages=true; skip; duration=1.73}
-```
+When this option is true (default), the app uses any previously placed progress bar as a reference and updates it, maintaining its size, position, and z-order on the slide. This is particularly useful when the progress bar needs to be positioned as the background element, hidden by other elements in the foreground. By preserving the existing progress bar, the newly generated progress bar images replace the old ones without altering their predefined z-order, ensuring that the intended layering of slide elements is maintained.
 
-#### 5.2.2. Intermediate Slide
-
-```plaintext
-{progress bar; duration=1.5}
-```
-
-#### 5.2.3. Ending Slide
-
-```plaintext
-{progress bar; skip; stop}
-```
-
-#### 5.2.4. Slide with Dark Background
-
-```plaintext
-{progress bar; duration=1.5; CompletedDotFillColor={255,255,255,100}; UncompletedDotFillColor={255,255,255,60}; CompletedDotStrokeColor={0,0,0,100}; UncompletedDotStrokeColor={0,0,0,100}; CompletedTextColor={255,255,255,100}; UncompletedTextColor={255,255,255,100};}
-```
-
-## 6. Detailed Options
-
-### 6.1. PreserveExistingImages
-
-When this option is true (default), the app uses any previously placed progress bar as a reference and replaces it, maintaining the size, position, and z-order on the slide. This is particularly convenient because sometimes the progress bar should be placed as the last element in the background and be hidden by other elements in the foreground. In this way, when the progress bar is newly generated, progress bar images are replaced instead of being rewritten, thus keeping the right z-order that was defined for the previously generated progress bar.
-
-### 6.2. SetAllPositionsEqual
+#### 5.2.2. SetAllPositionsEqual
 
 When this option is true, all progress bar images in all slides have the same size and position as the first progress bar. The first progress bar is the first one appearing. If the first slides use the command `skipDrawing`, then it will be the first progress bar on the first slide not containing `skipDrawing`.
 
-### 6.3. SameAsPrevious
+#### 5.2.3. SameAsPrevious
 
-This is a command in the first slide. When this is true, all images of the progress bar are removed from all slides. This is important when we want to clean the slides from the progress bar. No progress bar is created.
+When this command is used, the current slide reuses the progress bar image generated for the previous slide. This is particularly important when using the _Magic Move_ animation from the previous slide to the current one. By displaying the previous progress bar image, we avoid flickering that would otherwise occur due to the _Magic Move_ animation. However, while the duration for the slide is correctly computed, the progress bar's advancement cannot be displayed when reusing the image from the previous slide.
 
-### 6.4. RemoveAll
+#### 5.3. RemoveAll
 
-This is a command in the first slide. When this is true, all images of the progress bar are removed from all slides. This is important when we want to clean the slides from the progress bar. No progress bar is created.
+This is a special command in the first slide. When this is true, all images of the progress bar are removed from all slides. This is important when we would like to clean the slides from the progress bar. No progress bar is created.
 
-## 7. Positioning and Resizing
+## 6. Positioning and Resizing
 
 The first run of the app, if no previous progress bar existed, places the progress bar at the bottom to fill nearly the entire width. This is seldom ideal. The user is free to change the position by moving the progress bar and resizing it. It is important to uncheck `Constrain proportions` under the panel `Format > Arrange` of Keynote when selecting the progress bar generated in its default position. This allows the user to stretch the progress bar to the desired size. It must be mentioned that in doing so, the aspect ratio may look weird and not properly scaled. The user should not worry. The next execution of the app will use the right size, but also respect the correct aspect ratio for the dots and text.
 
-## 8. Donations
+## 7. Donations
 I would be grateful for any donation to support the development of this plugin.
 
 [<img src="docs/images/buy_me_coffee.png" width=300 alt="Buy Me a Coffee QR Code"/>](https://buymeacoffee.com/alberti)
 
-## 9. Author
+## 8. Author
 - **Author:** Andrea Alberti
 - **GitHub Profile:** [alberti42](https://github.com/alberti42)
 - **Donations:** [![Buy Me a Coffee](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-orange)](https://buymeacoffee.com/alberti)
 
 Feel free to contribute to the development of this plugin or report any issues in the [GitHub repository](https://github.com/alberti42/import-attachments-plus/issues).
 
-## 10. Contributing
+## 9. Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request with your improvements.
 
-## 11. License
+## 10. License
 
 This project is licensed under the MIT License; see the [LICENSE](LICENSE) file for details.
