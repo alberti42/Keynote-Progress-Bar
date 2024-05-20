@@ -13,11 +13,11 @@ use scripting additions
 
 -- Set default values for properties
 property theDefaultDuration : 1
-property theNumberOfDots : 80
+property theNumberOfDots : 40
 
 property theMargins : {0, 0, 0, 0}
 property theChapterSeparation : 30
-property theDotSize : 8
+property theDotSize : 7
 property theContourWidth : 0.2
 
 property theCompletedTextColorDefault : {0, 0, 0, 100}
@@ -36,7 +36,7 @@ property theBaselineOffset : 0
 
 property doFlipUpsideDown : false
 property doResetSizeAndPosition : false
-property doPreserveExistingImages : true
+property doPreserveExistingImages : false
 property doRemoveAll : false
 
 -- Function to check if running on Apple Silicon (ARM)
@@ -99,6 +99,7 @@ on configureColor(theColorStr)
 	end if
 	return theColor
 end configureColor
+
 -- Defines the total number of steps for the progress reporting.
 on setTotalStepsForProgress(totalSteps)
 	set progress total steps to totalSteps
@@ -499,6 +500,7 @@ on run
 				set theConf to (theCmds's valueForKey:("SetAllPositionsEqual"))
 				if theConf is not missing value then
 					if (theConf's isEqualTo:theNullObj) then
+						(* if no argument is provided, true is assumed *)
 						set doResetSizeAndPosition to true
 					else
 						set doResetSizeAndPosition to theConf's boolValue()
@@ -507,6 +509,7 @@ on run
 				set theConf to (theCmds's valueForKey:("PreserveExistingImages"))
 				if theConf is not missing value then
 					if (theConf's isEqualTo:theNullObj) then
+						(* if no argument is provided, true is assumed *)
 						set doPreserveExistingImages to true
 					else
 						set doPreserveExistingImages to theConf's boolValue()
@@ -515,6 +518,7 @@ on run
 				set theConf to (theCmds's valueForKey:("RemoveAll"))
 				if theConf is not missing value then
 					if (theConf's isEqualTo:theNullObj) then
+						(* if no argument is provided, true is assumed *)
 						set doRemoveAll to true
 					else
 						set doRemoveAll to theConf's boolValue()
@@ -892,6 +896,7 @@ on run
 					end if
 					set theUncompletedTextColor to my configureColor(theUncompletedTextColor)
 					
+					(* The font size of the labels *)
 					set theFont to (current application's NSFont's fontWithName:theFontFamily |size|:theFontSize)
 					set theFontHighlighted to (current application's NSFont's fontWithName:theFontFamilyHighlightedChapter |size|:theFontSize * 1)
 					(theFontAttrsCompleted's setObject:theFont forKey:(current application's NSFontAttributeName))
