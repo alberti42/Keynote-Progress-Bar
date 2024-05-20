@@ -79,7 +79,9 @@ The progress of the dots in the progress bar is computed based on the actual tim
 
 ## 4.4. Adjusting position and size<a id="usage-positioning"></a>
 
-After running the script for the first time, you may need to adjust the position and size of the progress bar to better fit your slide layout. In fact, the first run of the app, if no previous progress bar existed, places the progress bar at the bottom to fill nearly the entire width. This is seldom ideal. The user is free to change the position by moving the progress bar and resizing it. It is important to uncheck `Constrain proportions` under the panel `Format > Arrange` of Keynote when selecting the progress bar generated in its default position. This allows the user to stretch the progress bar to the desired size. It must be mentioned that in doing so, the aspect ratio may look weird and not properly scaled. The user should not worry. The next execution of the app will use the right size, but also respect the correct aspect ratio for the dots and text.
+After running the script for the first time, you may need to adjust the position and size of the progress bar to better fit your slide layout. In fact, the first run of the app, if no previous progress bar existed, places the progress bar at the bottom to fill nearly the entire width. This is seldom ideal. The user is free to change the position by moving the progress bar and resizing it. It is important to uncheck `Constrain proportions` under the panel `Format > Arrange` of Keynote when selecting the progress bar generated in its default position. This allows the user to stretch the progress bar to the desired size. It must be mentioned that in doing so, the aspect ratio may look weird and not properly scaled. The user should not worry. The next execution of the app will use the right size, but also respect the correct aspect ratio for the dots and text. 
+
+To automatize the formatting on all slides at once, the user can position and resize the first occurrence of the progress bar image and subsequently run the app with `PreserveExistingImages` set to false (default behavior) and `SetAllPositionsEqual` set to true.
 
 1. **Select the Progress Bar:**
    Click on the progress bar in your Keynote slide to select it.
@@ -199,7 +201,7 @@ Overwriting the global behavior is useful for example when showing the progress 
 
 #### 5.2.1. PreserveExistingImages<a id="preserve-existing-images"></a>
 
-When this option is true (default), the app uses any previously placed progress bar as a reference and updates it, maintaining its size, position, and z-order on the slide. This is particularly useful when the progress bar needs to be positioned as the background element, hidden by other elements in the foreground. By preserving the existing progress bar, the newly generated progress bar images replace the old ones without altering their predefined z-order, ensuring that the intended layering of slide elements is maintained.
+When this option is true, the app uses any previously placed progress bar as a reference and updates it, maintaining its size, position, and z-order on the slide. This is particularly useful when the progress bar needs to be positioned as the background element, hidden by other elements in the foreground. By preserving the existing progress bar, the newly generated progress bar images replace the old ones without altering their predefined z-order, ensuring that the intended layering of slide elements is maintained. The default behavior is false.
 
 #### 5.2.2. SetAllPositionsEqual<a id="set-all-positions-equal"></a>
 
