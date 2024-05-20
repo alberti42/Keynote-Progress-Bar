@@ -1,5 +1,3 @@
--- {progress bar; duration=1; start; ChapterSeparation=30; FontFamily=Helvetica Neue; FlipUpsideDown=false; FontFamilyHighlightedChapter=Helvetica Neue Medium; SetAllPositionsEqual=true; NumberOfDots=80; DotSize=8; ContourWidth=0.2; FontSize=12; chapter=Introduction; CompletedDotFillColor={91,96,95,100}; UncompletedDotFillColor={91,96,95,30}; CompletedDotStrokeColor={0,0,0,100}; BaselineOffset=0; UncompletedDotStrokeColor={0,0,0,100}; Margins={0,0,0,0}; OverwriteAllImages=true;}
-
 -- Import necessary frameworks
 use framework "Foundation"
 use framework "CoreImage"
@@ -557,7 +555,7 @@ on run
 						set item 4 of theMargins to (theConf's objectAtIndex:3)'s doubleValue()
 					end if
 				end if
-				set theConf to (theCmds's valueForKey:("FlipUpsideDown"))
+				set theConf to (theCmds's valueForKey:("ChapterLabelsAtBottom"))
 				if theConf is not missing value then
 					if (theConf's isEqualTo:theNullObj) then
 						set doFlipUpsideDown to true

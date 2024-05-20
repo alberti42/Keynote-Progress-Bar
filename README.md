@@ -159,10 +159,10 @@ These commands are used in the `{progress bar; start; ...}` configuration on the
 
 **Chapter Labels:**
 - `ChapterSeparation`: (number) Distance between chapter markers in pixels.
-- `FontFamily`: (string) Font family for the progress bar labels.
-- `FontFamilyHighlightedChapter`: (string) Font family for the highlighted chapter text.
-- `FontSize`: (number) Font size of the progress bar labels.
-- `BaselineOffset`: (number) Baseline offset for the labels.
+- `FontFamily`: (string; default=Helvetica-Light) Font family for the progress bar labels.
+- `FontFamilyHighlightedChapter`: (string; default=Helvetica) Font family for the highlighted chapter text.
+- `FontSize`: (number; default=12) Font size of the progress bar labels.
+- `BaselineOffset`: (number; default=0) Baseline offset for the labels.
 - `CompletedTextColor`: (array; default={0, 0, 0, 100}) Color of labels for finished and current chapters in RGBA format.
 - `UncompletedTextColor`: (array; default={0, 0, 0, 30}) Color of labels for next chapters in RGBA format.
 
@@ -170,15 +170,15 @@ These commands are used in the `{progress bar; start; ...}` configuration on the
 - `NumberOfDots`: (integer number; default=40) Number of dots in the progress bar.
 - `DotSize`: (floating number; default=7) Size of the dots in pixels.
 - `ContourWidth`: (number; default=0.2) Width of the contour line around the dots.
-- `CompletedDotFillColor`: (array) Color of completed dots in RGBA format (e.g., `{91,96,95,100}`).
-- `UncompletedDotFillColor`: (array) Color of uncompleted dots in RGBA format.
-- `CompletedDotStrokeColor`: (array) Stroke color of completed dots in RGBA format.
-- `UncompletedDotStrokeColor`: (array) Stroke color of uncompleted dots in RGBA format.
+- `CompletedDotFillColor`: (array; default={91, 96, 95, 100}) Color of completed dots in RGBA format (e.g., `{91,96,95,100}`).
+- `UncompletedDotFillColor`: (array; default={91, 96, 95, 30}) Color of uncompleted dots in RGBA format.
+- `CompletedDotStrokeColor`: (array; default={0, 0, 0, 100}) Stroke color of completed dots in RGBA format.
+- `UncompletedDotStrokeColor`: (array; default={0, 0, 0, 100}) Stroke color of uncompleted dots in RGBA format.
 
 **Positioning:**
-- `FlipUpsideDown`: (true/false) Flips the progress bar upside down.
-- `SetAllPositionsEqual`: (true/false) Sets all progress bar positions to be equal. Check [this section](#set-all-positions-equal) for more details.
-- `Margins`: (array of numbers) Margins around the progress bar in the format `{top,right,bottom,left}`.
+- `ChapterLabelsAtBottom`: (true/false; default=false) Flips the progress bar upside down.
+- `SetAllPositionsEqual`: (true/false; default=false) Sets all progress bar positions to be equal. Check [this section](#set-all-positions-equal) for more details.
+- `Margins`: (array of numbers; default={0, 0, 0, 0}) Margins around the progress bar in the format `{top,right,bottom,left}`.
 - `SameAsPreviousAutomatic`: (true/false; default=false) Applies the command SaveAsPrevious automatically on each slide subsequent to a _Magic Move_ transition. Check [this section](#same-as-previous) for more details.
 
 
@@ -186,8 +186,8 @@ These commands are used in the `{progress bar; start; ...}` configuration on the
 
 These commands are applied to individual slides to control their specific behavior and appearance in the context of the progress bar:
 
-- `duration`: (floating-point number) Sets the duration in minutes for the current slide.
-- `chapter`: (string) Name of the new chapter in your presentation. You can use double quotation marks if the chapter name contains spaces.
+- `duration`: (floating-point number; default=1) Sets the duration in minutes for the current slide.
+- `chapter`: (string; default="") Name of the new chapter in your presentation. You can use double quotation marks if the chapter name contains spaces.
 - `skipDrawing`: (no argument) Skips drawing the progress bar for the current slide. This command is convenient to hide the progress bar on slides where it would overlap on some graphical elements.
 - `SameAsPrevious`: (no argument) Uses the progress bar image from the previous slide to avoid flickering during _Magic Move_ transitions. Check [this section](#same-as-previous) for more details.
 - `stop`: (no argument) Special command marking the last slide where the progress bar should be displayed. All slides after the `stop` command will be ignored. It is mandatory to have one slide with this command.
