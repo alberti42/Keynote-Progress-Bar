@@ -231,4 +231,4 @@ Feel free to contribute to the development of this plugin or report any issues i
 
 ## 9. License<a id="license"></a>
 
-This project is licensed under the MIT License; see the [LICENSE](LICENSE) file for details.
+This project is licensed under a [custom license](LICENSE).
