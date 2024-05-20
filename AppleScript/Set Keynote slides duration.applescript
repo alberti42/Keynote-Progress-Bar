@@ -368,16 +368,16 @@ on run
 							key code 124 -- arrow right							
 						end repeat
 						
-						delay 0.2
+						--delay 0.02
 						
 						repeat with i from 1 to (second item of theDurationPosition)
 							key code 117 -- forward delete
 						end repeat
 						
-						delay 0.2
+						--delay 0.02
 						
 						keystroke theDuration
-						delay 1
+						delay 0.05
 					end tell
 					
 				end if
