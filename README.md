@@ -153,7 +153,7 @@ These commands are used in the `{progress bar; start; ...}` configuration on the
 **General Commands:**
 - `start`: (no argument) Special command marking the slide where the progress bar should be first displayed.
 - `RemoveAll`: (true/false; default=false) Special command to clean the presentation from all progress bars; no new progress bars will be generated.
-- `PreserveExistingImages`: (true/false; default=false) Preserves all existing progress bar images. Check the section dedicated to [PreserveExistingImages](#preserve-existing-images) for more details.
+- `PreserveExistingImages`: (true/false; default=false) Preserves all existing progress bar images. Check [this section](#preserve-existing-images) for more details.
 
 **Chapter Labels:**
 - `ChapterSeparation`: (number) Distance between chapter markers in pixels.
@@ -175,7 +175,7 @@ These commands are used in the `{progress bar; start; ...}` configuration on the
 
 **Positioning:**
 - `FlipUpsideDown`: (true/false) Flips the progress bar upside down.
-- `SetAllPositionsEqual`: (true/false) Sets all progress bar positions to be equal. Check [[#6.2. SetAllPositionsEqual|SetAllPositionsEqual]] for more details.
+- `SetAllPositionsEqual`: (true/false) Sets all progress bar positions to be equal. Check [this section](#set-all-positions-equal] for more details.
 - `Margins`: (array of numbers) Margins around the progress bar in the format `{top,right,bottom,left}`.
 
 
@@ -187,7 +187,7 @@ These commands are applied to individual slides to control their specific behavi
 - `chapter`: (string) Name of the new chapter in your presentation. You can use double quotation marks if the chapter name contains spaces.
 - `skipDrawing`: (no argument) Skips drawing the progress bar for the current slide. This command is convenient to hide the progress bar on slides where it would overlap on some graphical elements.
 - `stop`: (no argument) Special command marking the last slide where the progress bar should be displayed. All slides after the `stop` command will be ignored.
-- `SameAsPrevious`: (no argument) Uses the progress bar image from the previous slide to avoid flickering during _Magic Move_ transitions. Check [[#6.3. SameAsPrevious|SameAsPrevious]] for more details.
+- `SameAsPrevious`: (no argument) Uses the progress bar image from the previous slide to avoid flickering during _Magic Move_ transitions. Check [this section](#same-as-previous) for more details.
 
 ### 5.2. Detailed options<a id="configuration-detailed"></a>
 
