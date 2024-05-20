@@ -81,7 +81,7 @@ The progress of the dots in the progress bar is computed based on the actual tim
 
 ## 4.4. Adjusting position and size<a id="usage-positioning"></a>
 
-### 4.4.1 Manual adjustment<a id="usage-positioning-manual"></a>
+### 4.4.1. Manual adjustment<a id="usage-positioning-manual"></a>
 
 After running the script for the first time, you may need to adjust the position and size of the progress bar to better fit your slide layout. In fact, the first run of the app, if no previous progress bar existed, places the progress bar at the bottom to fill nearly the entire width. This is seldom ideal. The user is free to change the position by moving the progress bar and resizing it. It is important to uncheck `Constrain proportions` under the panel `Format > Arrange` of Keynote when selecting the progress bar generated in its default position. This allows the user to stretch the progress bar to the desired size. It must be mentioned that in doing so, the aspect ratio may look weird and not properly scaled. The user should not worry. The next execution of the app will use the right size, but also respect the correct aspect ratio for the dots and text. 
 
@@ -94,7 +94,7 @@ After running the script for the first time, you may need to adjust the position
 3. **Resize and Position:**
    Drag the progress bar to the desired position and resize it as needed. Don’t worry about the aspect ratio; the next execution of the script will maintain the correct aspect ratio for the dots and text while respecting your adjustments.
 
-### 4.4.2 Automatic adjustment<a id="usage-positioning-automatic"></a>
+### 4.4.2. Automatic adjustment<a id="usage-positioning-automatic"></a>
 
 To automatize the formatting on all slides at once, position and resize the first occurrence of the progress bar image and subsequently run the app with `PreserveExistingImages` set to false (default behavior) and `SetAllPositionsEqual` set to true.
 
