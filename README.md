@@ -213,7 +213,7 @@ I would be grateful for any donation to support the development of this plugin.
 [<img src="Docs/Images/buy_me_coffee.png" width=300 alt="Buy Me a Coffee QR Code"/>](https://buymeacoffee.com/alberti)
 
 ## 7. Author<a id="author"></a>
-- **Author:** Andrea Alberti
+- **Author:** [Andrea Alberti](https://www.linkedin.com/in/dr-andrea-alberti/)
 - **GitHub Profile:** [alberti42](https://github.com/alberti42)
 - **Donations:** [![Buy Me a Coffee](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-orange)](https://buymeacoffee.com/alberti)
 
