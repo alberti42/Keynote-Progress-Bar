@@ -212,7 +212,7 @@ This is a special command in the first slide. When this is true, all images of t
 ## 6. Donations<a id="Donations"></a>
 I would be grateful for any donation to support the development of this plugin.
 
-[<img src="docs/images/buy_me_coffee.png" width=300 alt="Buy Me a Coffee QR Code"/>](https://buymeacoffee.com/alberti)
+[<img src="Docs/Images/buy_me_coffee.png" width=300 alt="Buy Me a Coffee QR Code"/>](https://buymeacoffee.com/alberti)
 
 ## 7. Author<a id="xxx"></a>
 - **Author:** Andrea Alberti
