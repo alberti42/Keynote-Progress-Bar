@@ -179,7 +179,7 @@ These commands are used in the `{progress bar; start; ...}` configuration on the
 - `FlipUpsideDown`: (true/false) Flips the progress bar upside down.
 - `SetAllPositionsEqual`: (true/false) Sets all progress bar positions to be equal. Check [this section](#set-all-positions-equal) for more details.
 - `Margins`: (array of numbers) Margins around the progress bar in the format `{top,right,bottom,left}`.
-- `SameAsPreviousAutomatic`: (true/false; default=false) Applies the command SaveAsPrevious automatically on each slide subsequent to a _Magic Move_ transition.
+- `SameAsPreviousAutomatic`: (true/false; default=false) Applies the command SaveAsPrevious automatically on each slide subsequent to a _Magic Move_ transition. Check [this section](#same-as-previous) for more details.
 
 
 #### 5.1.2. Commands on individual slides<a id="configuration-syntax-individuals"></a>
