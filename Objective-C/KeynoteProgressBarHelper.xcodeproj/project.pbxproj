@@ -380,7 +380,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
-				PRODUCT_BUNDLE_IDENTIFIER = Alberti42.KeynoteProgressBarHelper;
+				PRODUCT_BUNDLE_IDENTIFIER = org.Alberti42.KeynoteProgressBarHelper;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 			};
 			name = Debug;
@@ -409,7 +409,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
-				PRODUCT_BUNDLE_IDENTIFIER = Alberti42.KeynoteProgressBarHelper;
+				PRODUCT_BUNDLE_IDENTIFIER = org.Alberti42.KeynoteProgressBarHelper;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 			};
 			name = Release;
