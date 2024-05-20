@@ -281,6 +281,9 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
     
     // Loop to wait until the app is frontmost
     for (int i = 0; i < 100; i++) { // maximum of 1 seconds
+        // Do not fix this deprecated command with the new behavior because it would stop working.
+        // We would need to add a delay afterward with [NSThread sleepForTimeInterval:0.01] to make it work.
+        // It seems that the new implementation is asynchronous and stops working for our application.
         NSDictionary *activeAppInfo = [[NSWorkspace sharedWorkspace] activeApplication];
         NSString *activeAppBundleIdentifier = activeAppInfo[@"NSApplicationBundleIdentifier"];
         
