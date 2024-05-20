@@ -215,7 +215,7 @@ I would be grateful for any donation to support the development of this plugin.
 ## 7. Author<a id="author"></a>
 - **Author:** Andrea Alberti [LinkedIn](https://www.linkedin.com/in/dr-andrea-alberti/) [ORCID](https://orcid.org/0000-0002-1698-3895)
 - **ORCID:** <img decoding="async" width="16" height="16" style="width: 16px;" src="https://i0.wp.com/info.orcid.org/wp-content/uploads/2020/12/orcid_16x16.gif?resize=16%2C16&amp;ssl=1" alt="orcid logo 16px" data-recalc-dims="1"> [0000-0002-1698-3895](https://orcid.org/0000-0002-1698-3895)
-- **LinkedId:** [https://www.linkedin.com/in/dr-andrea-alberti/](https://www.linkedin.com/in/dr-andrea-alberti/)
+- **LinkedIn:** [https://www.linkedin.com/in/dr-andrea-alberti/](https://www.linkedin.com/in/dr-andrea-alberti/)
 - **GitHub:** [alberti42](https://github.com/alberti42)
 - **Donations:** [![Buy Me a Coffee](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-orange)](https://buymeacoffee.com/alberti)
 
