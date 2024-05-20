@@ -152,7 +152,7 @@ These commands are used in the `{progress bar; start; ...}` configuration on the
 
 **General Commands:**
 - `start`: (no argument) Special command marking the slide where the progress bar should be first displayed.
-- `RemoveAll`: (true/false; default=false) Special command to clean the presentation from all progress bars; no new progress bars will be generated.
+- `RemoveAll`: (true/false; default=false) Special command to clean the presentation from all progress bars; no new progress bars will be generated. Check [this section](#remove-all) for more details.
 - `PreserveExistingImages`: (true/false; default=false) Preserves all existing progress bar images. Check [this section](#preserve-existing-images) for more details.
 
 **Chapter Labels:**
