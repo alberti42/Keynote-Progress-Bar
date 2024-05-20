@@ -19,11 +19,11 @@ This AppleScript program adds a customizable progress bar to presentations creat
 		- [5.1. Basic syntax of commands](#configuration-syntax)
 			- [5.1.1. Commands on the initial slide](#configuration-syntax-initial)
 			- [5.1.2. Commands on individual slides](#configuration-syntax-individuals)
-		- [[#5.2. Detailed options|5.2. Detailed options]]
-			- [[#5.2.1. PreserveExistingImages|5.2.1. PreserveExistingImages]]
-			- [[#5.2.2. SetAllPositionsEqual|5.2.2. SetAllPositionsEqual]]
-			- [[#5.2.3. SameAsPrevious|5.2.3. SameAsPrevious]]
-			- [[#5.3. RemoveAll|5.3. RemoveAll]]
+		- [5.2. Detailed options](#configuration-detailed)
+			- [5.2.1. PreserveExistingImages](#PreserveExistingImages)
+			- [5.2.2. SetAllPositionsEqual](#SetAllPositionsEqual)
+			- [5.2.3. SameAsPrevious](#SameAsPrevious)
+			- [5.3. RemoveAll](#RemoveAll)
 	- [[#6. Positioning and Resizing|6. Positioning and Resizing]]
 	- [[#7. Donations|7. Donations]]
 	- [[#8. Author|8. Author]]
@@ -147,7 +147,7 @@ There are two categories of commands:
 1. commands applying to the initial slides. These are typically global configurations.
 2. commands applying to the individual slides to customize their particular behavior.
 
-#### 5.1.1. Commands on the initial slide<a id="configuration-syntax-initials"></a>
+#### 5.1.1. Commands on the initial slide<a id="configuration-syntax-initial"></a>
 
 These commands are used in the `{progress bar; start; ...}` configuration on the first slide, where the progress bar is intended to start, to set up the overall behavior and style of the progress bar throughout the presentation:
 
@@ -190,7 +190,7 @@ These commands are applied to individual slides to control their specific behavi
 - `stop`: (no argument) Special command marking the last slide where the progress bar should be displayed. All slides after the `stop` command will be ignored.
 - `SameAsPrevious`: (no argument) Uses the progress bar image from the previous slide to avoid flickering during _Magic Move_ transitions. Check [[#6.3. SameAsPrevious|SameAsPrevious]] for more details.
 
-### 5.2. Detailed options<a id="xxx"></a>
+### 5.2. Detailed options<a id="configuration-detailed"></a>
 
 #### 5.2.1. PreserveExistingImages<a id="PreserveExistingImages"></a>
 
