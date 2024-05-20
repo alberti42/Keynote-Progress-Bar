@@ -10,8 +10,8 @@ This AppleScript program adds a customizable progress bar to presentations creat
 	- [3. Installation](#installation)
 	- [4. Usage](#usage)
 		- [4.1. Adding progress bar to your presentation](#usage-generation)
-		- [[#4.2. Commands and parameters|4.2. Commands and parameters]]
-		- [[#4.3. Progress bar calculation|4.3. Progress bar calculation]]
+		- [Commands and parameters](#usage-commands)
+		- [4.3. Progress bar calculation](#usage-calculation)
 		- [[#4.4. Example workflow|4.4. Example workflow]]
 		- [[#4.5. Running the Script|4.5. Running the Script]]
 		- [[#4.6. Adjusting Position and Size|4.6. Adjusting Position and Size]]
@@ -73,7 +73,7 @@ This AppleScript program adds a customizable progress bar to presentations creat
 - **Individual Slide Commands:** These are set on each slide to control specific behaviors.
   - `duration`, `chapter`, `skipDrawing`, `stop`.
 
-### 4.3. Progress bar calculation
+### 4.3. Progress bar calculation<a id="usage-calculation"></a>
 
 The progress of the dots in the progress bar is computed based on the actual time spent on each slide, as indicated by the `duration` field, rather than the slide number. This approach ensures accurate representation of the presentation's progress, especially in cases where a sequence of slides is used to create an animation that conceptually belongs to a single slide. By relying on the `duration` field, the progress bar accurately reflects the time allocated to each section of the presentation, providing a better visual cue for the audience.
 
