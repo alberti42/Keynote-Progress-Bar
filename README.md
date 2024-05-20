@@ -219,11 +219,9 @@ I would be grateful for any donation to support the development of this plugin.
 - **GitHub:** [alberti42](https://github.com/alberti42)
 - **Donations:** [![Buy Me a Coffee](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-orange)](https://buymeacoffee.com/alberti)
 
-Feel free to contribute to the development of this plugin or report any issues in the [GitHub repository](https://github.com/alberti42/import-attachments-plus/issues).
-
 ## 8. Contributing<a id="contributing"></a>
 
-Contributions are welcome! Please open an issue or submit a pull request with your improvements.
+Feel free to contribute to the development of this plugin or report any issues in the [GitHub repository](https://github.com/alberti42/Keynote-ProgressBar/issues).
 
 ## 9. License<a id="license"></a>
 
