@@ -10,15 +10,15 @@ This AppleScript program adds a customizable progress bar to presentations creat
 	- [3. Installation](#installation)
 	- [4. Usage](#usage)
 		- [4.1. Adding progress bar to your presentation](#usage-generation)
-		- [4.2 Commands and parameters](#usage-commands)
+		- [4.2. Commands and parameters](#usage-commands)
 		- [4.3. Progress bar calculation](#usage-calculation)
   		- [4.4. Adjusting position and size](#usage-positioning)
 		- [4.5. Example workflow](#usage-examples)
 		- [4.6. Running the Script](#usage-running)
-	- [[#5. Configuration|5. Configuration]]
-		- [[#5.1. Basic syntax of commands|5.1. Basic syntax of commands]]
-			- [[#5.1.1. Commands on the initial slide|5.1.1. Commands on the initial slide]]
-			- [[#5.1.2. Commands on individual slides|5.1.2. Commands on individual slides]]
+	- [#5. Configuration](#configuration)
+		- [5.1. Basic syntax of commands](#configuration-syntax)
+			- [5.1.1. Commands on the initial slide](#configuration-syntax-initial)
+			- [5.1.2. Commands on individual slides](#configuration-syntax-individuals)
 		- [[#5.2. Detailed options|5.2. Detailed options]]
 			- [[#5.2.1. PreserveExistingImages|5.2.1. PreserveExistingImages]]
 			- [[#5.2.2. SetAllPositionsEqual|5.2.2. SetAllPositionsEqual]]
@@ -29,7 +29,6 @@ This AppleScript program adds a customizable progress bar to presentations creat
 	- [[#8. Author|8. Author]]
 	- [[#9. Contributing|9. Contributing]]
 	- [[#10. License|10. License]]
-
 
 ## 2. Features<a id="features"></a>
 
@@ -131,11 +130,11 @@ By following these steps, you can effectively add and customize a progress bar i
 3. **Verify the Progress Bar:**
    Check your Keynote slides to verify that the progress bar has been added and configured according to your specifications.
    
-## 5. Configuration<a id="xxx"></a>
+## 5. Configuration<a id="configuration"></a>
 
 To configure the progress bar, add commands to the presenter notes of your Keynote slides. The syntax for the commands is as follows:
 
-### 5.1. Basic syntax of commands<a id="xxx"></a>
+### 5.1. Basic syntax of commands<a id="configuration-syntax"></a>
 
 Commands can be provided by including in the _Presenter Notes_ of Keynote a string with the following format:
 
@@ -148,7 +147,7 @@ There are two categories of commands:
 1. commands applying to the initial slides. These are typically global configurations.
 2. commands applying to the individual slides to customize their particular behavior.
 
-#### 5.1.1. Commands on the initial slide<a id="xxx"></a>
+#### 5.1.1. Commands on the initial slide<a id="configuration-syntax-initials"></a>
 
 These commands are used in the `{progress bar; start; ...}` configuration on the first slide, where the progress bar is intended to start, to set up the overall behavior and style of the progress bar throughout the presentation:
 
@@ -181,7 +180,7 @@ These commands are used in the `{progress bar; start; ...}` configuration on the
 - `Margins`: (array of numbers) Margins around the progress bar in the format `{top,right,bottom,left}`.
 
 
-#### 5.1.2. Commands on individual slides<a id="xxx"></a>
+#### 5.1.2. Commands on individual slides<a id="configuration-syntax-individuals"></a>
 
 These commands are applied to individual slides to control their specific behavior and appearance in the context of the progress bar:
 
