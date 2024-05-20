@@ -181,11 +181,17 @@ These commands are applied to individual slides to control their specific behavi
 - `SameAsPrevious`: (no argument) Uses the progress bar image from the previous slide to avoid flickering during _Magic Move_ transitions. Check [this section](#same-as-previous) for more details.
 - `stop`: (no argument) Special command marking the last slide where the progress bar should be displayed. All slides after the `stop` command will be ignored. It is mandatory to have one slide with this command.
 
- #### 5.1.3. Commands on individual slides overwriting global configurations<a id="configuration-syntax-overwrite"></a>
+#### 5.1.3. Commands on individual slides overwriting global configurations<a id="configuration-syntax-overwrite"></a>
 
- The following list shows the commands that can be provided on individual slides, which overwrite the global behavior:
+The following commands can be provided on individual slides to override the global configurations set on the initial slide. These commands allow for customized behavior and appearance of the progress bar on specific slides:
 
- - `CompletedDotFillColor`, `UncompletedDotFillColor`, `CompletedDotStrokeColor`, `UncompletedDotStrokeColor`, `CompletedTextColor`, `UncompletedTextColor`, `BackgroundColor`.
+- `CompletedDotFillColor`
+- `UncompletedDotFillColor`
+- `CompletedDotStrokeColor`
+- `UncompletedDotStrokeColor`
+- `CompletedTextColor`
+- `UncompletedTextColor`
+- `BackgroundColor`
 
 Overwriting the global behavior is useful for example when showing the progress bar on a slide with dark background; see [this example](#example-dark).
 
