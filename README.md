@@ -71,7 +71,7 @@ To configure the progress bar, add commands to the _Presenter Notes_ of your Key
 {progress bar; command; parameter1=value1; parameter2=value2; ...}
 ```
 
-A detailed description of the commands is provided in [this section](#commands).
+A detailed description of the commands is provided in [this section](#configuration).
 
 ### 4.3. Progress bar calculation<a id="usage-calculation"></a>
 
