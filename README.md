@@ -47,7 +47,7 @@ This AppleScript program adds a customizable progress bar to presentations creat
 3. Place the compiled framework in `/Users/your-username/Library/Frameworks`.
 4. Open the AppleScript `path/to/the/cloned/repository/AppleScript/Add Progress Bar to Keynote.applescript.applescript` with Apple’s _Script Editor_ and save the script in your favorite script location (e.g., `/Users/your-username/Library/Scripts`) as compiled-script format `.scpt`. 
 5. Open your Keynote presentation.
-6. Add the configuration commands to the presenter notes of the relevant slides. Check section on [[#4. Usage|usage]] for more information.
+6. Add the configuration commands to the presenter notes of the relevant slides. Check section on [usage](#usage) for more information.
 7. From the _Script Editor_, run the AppleScript to process the slides and insert the progress bar images to your slides. If you have multiple Keynote presentations opened, only the frontmost document will be considered.
 
 ## 4. Usage<a id="usage"></a>
