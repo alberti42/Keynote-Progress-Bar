@@ -66,10 +66,13 @@ This AppleScript program adds a customizable progress bar to presentations creat
 ### 4.2. Commands and parameters<a id="usage-commands"></a>
 
 - **Global Configuration Commands:** These are set on the initial slide using the `{progress bar; start; ...}` command.
-  - `start`, `RemoveAll`, `ChapterSeparation`, `FontFamily`, `FontFamilyHighlightedChapter`, `FontSize`, `FlipUpsideDown`, `SetAllPositionsEqual`, `NumberOfDots`, `DotSize`, `ContourWidth`, `CompletedDotFillColor`, `UncompletedDotFillColor`, `CompletedDotStrokeColor`, `UncompletedDotStrokeColor`, `CompletedTextColor`, `UncompletedTextColor`, `BaselineOffset`, `Margins`, `PreserveExistingImages`.
+  - `ChapterSeparation`, `FontFamily`, `FontFamilyHighlightedChapter`, `FontSize`, `FlipUpsideDown`, `SetAllPositionsEqual`, `NumberOfDots`, `DotSize`, `ContourWidth`, `CompletedDotFillColor`, `UncompletedDotFillColor`, `CompletedDotStrokeColor`, `UncompletedDotStrokeColor`, `CompletedTextColor`, `UncompletedTextColor`, `BaselineOffset`, `Margins`, `PreserveExistingImages`.
 
 - **Individual Slide Commands:** These are set on each slide to control specific behaviors.
-  - `duration`, `chapter`, `skipDrawing`, `stop`.
+  - `duration`, `chapter`, `skipDrawing`, `SameAsPrevious`.
+ 
+- **Special commands:** These are special commands either on the first or last slide.
+  - `start`, `stop`, `RemoveAll`
 
 ### 4.3. Progress bar calculation<a id="usage-calculation"></a>
 
