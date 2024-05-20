@@ -1,11 +1,11 @@
-# Keynote Progress Bar
+# Keynote Progress Bar<a id="Keynote-Progress-Bar"></a>
 
 This AppleScript program adds a customizable progress bar to presentations created with Apple Keynote. The progress bar is configured using commands placed in the presenter notes of your slides. This project utilizes a custom Objective-C framework, `KeynoteProgressBarHelper`, for generating vector graphics (PDF) images of the progress bar.
 
 ## 1. Table of Contents ^toc
 
 - [[#Keynote Progress Bar|Keynote Progress Bar]]
-	- [[#1. Table of Contents ^toc|1. Table of Contents]]
+	- [Table of Contents](#Keynote-Progress-Bar)
 	- [[#2. Features|2. Features]]
 	- [[#3. Installation|3. Installation]]
 	- [[#4. Usage|4. Usage]]
@@ -192,7 +192,7 @@ These commands are applied to individual slides to control their specific behavi
 
 ### 5.2. Detailed options
 
-#### 5.2.1. PreserveExistingImages<a id="my-anchor"></a>
+#### 5.2.1. PreserveExistingImages<a id="PreserveExistingImages"></a>
 
 When this option is true (default), the app uses any previously placed progress bar as a reference and updates it, maintaining its size, position, and z-order on the slide. This is particularly useful when the progress bar needs to be positioned as the background element, hidden by other elements in the foreground. By preserving the existing progress bar, the newly generated progress bar images replace the old ones without altering their predefined z-order, ensuring that the intended layering of slide elements is maintained.
 
