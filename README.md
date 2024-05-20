@@ -2,39 +2,49 @@
 
 This AppleScript program adds a customizable progress bar to presentations created with Apple Keynote. The progress bar is configured using commands placed in the presenter notes of your slides. This project utilizes a custom Objective-C framework, `KeynoteProgressBarHelper`, for generating vector graphics (PDF) images of the progress bar.
 
-## Table of Contents
+## 1. Table of Contents ^toc
 
-- [[Keynote Progress Bar|Keynote Progress Bar]]
-- [[## Table of Contents|Table of Contents]]
-	- [[#1. Features|1. Features]]
-	- [[#2. Installation and usage|2. Installation and usage]]
-	- [[#3. Configuration|3. Configuration]]
-		- [[#3.1. Basic syntax of commands|3.1. Basic syntax of commands]]
-			- [[#Commands on the initial slide|Commands on the initial slide]]
-			- [[#Commands on individual slides|Commands on individual slides]]
-		- [[#3.2. Examples|3.2. Examples]]
-			- [[#Starting Slide|Starting Slide]]
-			- [[#Intermediate Slide|Intermediate Slide]]
-			- [[#Ending Slide|Ending Slide]]
-			- [[#Slide with Dark Background|Slide with Dark Background]]
-	- [[#4. Detailed Options|4. Detailed Options]]
-		- [[#4.1. PreserveExistingImages|4.1. PreserveExistingImages]]
-		- [[#4.2. SetAllPositionsEqual|4.2. SetAllPositionsEqual]]
-		- [[#4.3. RemoveAll|4.3. RemoveAll]]
-	- [[#5. Positioning and Resizing|5. Positioning and Resizing]]
-	- [[#6. Contributing|6. Contributing]]
-	- [[#7. License|7. License]]
-	- [[#8. Troubleshooting|8. Troubleshooting]]
+- [[#Keynote Progress Bar|Keynote Progress Bar]]
+	- [[#1. Table of Contents ^toc|1. Table of Contents]]
+	- [[#2. Features|2. Features]]
+	- [[#3. Installation|3. Installation]]
+	- [[#4. Usage|4. Usage]]
+		- [[#4.1. Adding progress bar to your presentation|4.1. Adding progress bar to your presentation]]
+		- [[#4.2. Commands and parameters|4.2. Commands and parameters]]
+		- [[#4.3. Progress bar calculation|4.3. Progress bar calculation]]
+		- [[#4.4. Example workflow|4.4. Example workflow]]
+		- [[#4.5. Running the Script|4.5. Running the Script]]
+		- [[#4.6. Adjusting Position and Size|4.6. Adjusting Position and Size]]
+	- [[#5. Configuration|5. Configuration]]
+		- [[#5.1. Basic syntax of commands|5.1. Basic syntax of commands]]
+			- [[#5.1.1. Commands on the initial slide|5.1.1. Commands on the initial slide]]
+			- [[#5.1.2. Commands on individual slides|5.1.2. Commands on individual slides]]
+		- [[#5.2. Examples|5.2. Examples]]
+			- [[#5.2.1. Starting Slide|5.2.1. Starting Slide]]
+			- [[#5.2.2. Intermediate Slide|5.2.2. Intermediate Slide]]
+			- [[#5.2.3. Ending Slide|5.2.3. Ending Slide]]
+			- [[#5.2.4. Slide with Dark Background|5.2.4. Slide with Dark Background]]
+	- [[#6. Detailed Options|6. Detailed Options]]
+		- [[#6.1. PreserveExistingImages|6.1. PreserveExistingImages]]
+		- [[#6.2. SetAllPositionsEqual|6.2. SetAllPositionsEqual]]
+		- [[#6.3. SameAsPrevious|6.3. SameAsPrevious]]
+		- [[#6.4. RemoveAll|6.4. RemoveAll]]
+	- [[#7. Positioning and Resizing|7. Positioning and Resizing]]
+	- [[#8. Donations|8. Donations]]
+	- [[#9. Author|9. Author]]
+	- [[#10. Contributing|10. Contributing]]
+	- [[#11. License|11. License]]
 
 
-## 1. Features
+## 2. Features
 
 - Customizable progress bar with various styling options
 - Support for chapters with different styles
 - Easy configuration through presenter notes
 - Automatic insertion of progress bar images into Keynote slides
+- Progress bar based on actual presentation time, ensuring accurate visual representation.
 
-## 2. Installation and usage
+## 3. Installation
 
 1. Clone this repository:
    ```sh
@@ -44,14 +54,92 @@ This AppleScript program adds a customizable progress bar to presentations creat
 3. Place the compiled framework in `/Users/your-username/Library/Frameworks`.
 4. Open the AppleScript `path/to/the/cloned/repository/AppleScript/Add Progress Bar to Keynote.applescript.applescript` with Apple’s _Script Editor_ and save the script in your favorite script location (e.g., `/Users/your-username/Library/Scripts`) as compiled-script format `.scpt`. 
 5. Open your Keynote presentation.
-6. Add the configuration commands to the presenter notes of the relevant slides.
-7. From the _Script Editor_, run the AppleScript to process the slides and insert the progress bar images. If you have multiple Keynote presentations opened, the foremost document will be considered by the script.
+6. Add the configuration commands to the presenter notes of the relevant slides. Check [[#4. Usage|Usage]] for more information.
+7. From the _Script Editor_, run the AppleScript to process the slides and insert the progress bar images to your slides. If you have multiple Keynote presentations opened, only the frontmost document will be considered.
+
+## 4. Usage
+
+### 4.1. Adding progress bar to your presentation
+
+1. **Open Your Keynote Presentation:**
+   Ensure your Keynote presentation is open before running the script.
+
+2. **Add Configuration Commands:**
+   Insert the configuration commands in the presenter notes of your slides. Refer to the examples provided in the `Examples` section for proper syntax and usage.
+
+3. **Run the AppleScript:**
+   Open the AppleScript with Apple’s _Script Editor_ and run it. If you have multiple Keynote presentations open, the foremost document will be processed.
+
+### 4.2. Commands and parameters
+
+- **Global Configuration Commands:** These are set on the initial slide using the `{progress bar; start; ...}` command.
+  - `start`, `RemoveAll`, `ChapterSeparation`, `FontFamily`, `FontFamilyHighlightedChapter`, `FontSize`, `FlipUpsideDown`, `SetAllPositionsEqual`, `NumberOfDots`, `DotSize`, `ContourWidth`, `CompletedDotFillColor`, `UncompletedDotFillColor`, `CompletedDotStrokeColor`, `UncompletedDotStrokeColor`, `CompletedTextColor`, `UncompletedTextColor`, `BaselineOffset`, `Margins`, `PreserveExistingImages`.
+
+- **Individual Slide Commands:** These are set on each slide to control specific behaviors.
+  - `duration`, `chapter`, `skipDrawing`, `stop`.
+
+### 4.3. Progress bar calculation
+
+The progress of the dots in the progress bar is computed based on the actual time spent on each slide, as indicated by the `duration` field, rather than the slide number. This approach ensures accurate representation of the presentation's progress, especially in cases where a sequence of slides is used to create an animation that conceptually belongs to a single slide. By relying on the `duration` field, the progress bar accurately reflects the time allocated to each section of the presentation, providing a better visual cue for the audience.
+
+### 4.4. Example workflow
+
+1. **Initial Setup:**
+   On the first slide where you want the progress bar to start, add the following in the presenter notes:
+   ```plaintext
+   {progress bar; start; duration=2; skipDrawing; ChapterSeparation=90; FontFamily=Helvetica-Light; NumberOfDots=50; DotSize=6; ContourWidth=0.2; FontSize=14; CompletedDotFillColor={0,128,0,100}; UncompletedDotFillColor={128,128,128,50}}
+   ```
+
+2. **Intermediate Slides:**
+   For each intermediate slide, set the duration:
+   ```plaintext
+   {progress bar; duration=1.5}
+   ```
+
+3. **Ending the Progress Bar:**
+   On the final slide where you want the progress bar to end, add:
+   ```plaintext
+   {progress bar; stop}
+   ```
+
+4. **Handling Slides with Dark Background:**
+   For slides with a dark background, customize the colors for better visibility:
+   ```plaintext
+   {progress bar; duration=1.5; CompletedDotFillColor={255,255,255,100}; UncompletedDotFillColor={255,255,255,60}; CompletedDotStrokeColor={0,0,0,100}; UncompletedDotStrokeColor={0,0,0,100}; CompletedTextColor={255,255,255,100}; UncompletedTextColor={255,255,255,100};}
+   ```
+
+### 4.5. Running the Script
+
+1. **Open the Script Editor:**
+   Launch Apple’s _Script Editor_ and open the saved AppleScript file.
+
+2. **Run the Script:**
+   Click the "Run" button in the _Script Editor_ to execute the script. Ensure that the Keynote presentation you wish to modify is the foremost document.
+
+3. **Verify the Progress Bar:**
+   Check your Keynote slides to verify that the progress bar has been added and configured according to your specifications.
+
+### 4.6. Adjusting Position and Size
+
+After running the script for the first time, you may need to adjust the position and size of the progress bar to better fit your slide layout:
+
+1. **Select the Progress Bar:**
+   Click on the progress bar in your Keynote slide to select it.
+
+2. **Uncheck Constrain Proportions:**
+   In the Keynote menu, go to `Format > Arrange` and uncheck `Constrain proportions` to freely adjust the width and height of the progress bar.
+
+3. **Resize and Position:**
+   Drag the progress bar to the desired position and resize it as needed. Don’t worry about the aspect ratio; the next execution of the script will maintain the correct aspect ratio for the dots and text while respecting your adjustments.
+
+By following these steps, you can effectively add and customize a progress bar in your Keynote presentations, providing a clear visual cue of the presentation's progress based on the actual time allocated to each slide.
+
    
-## 3. Configuration
+## 5. Configuration
 
 To configure the progress bar, add commands to the presenter notes of your Keynote slides. The syntax for the commands is as follows:
 
-### 3.1. Basic syntax of commands
+### 5.1. Basic syntax of commands
 
 Commands can be provided by including in the _Presenter Notes_ of Keynote a string with the following format:
 
@@ -64,97 +152,113 @@ There are two categories of commands:
 1. commands applying to the initial slides. These are typically global configurations.
 2. commands applying to the individual slides to customize their particular behavior.
 
-
-#### Commands on the initial slide
+#### 5.1.1. Commands on the initial slide
 
 These commands are used in the `{progress bar; start; ...}` configuration on the first slide, where the progress bar is intended to start, to set up the overall behavior and style of the progress bar throughout the presentation:
 
-- `start`: Marks the slide starting from which the progress bar should be displayed.
-- `RemoveAll`: (true/false) Removes all progress bars before starting.
+**General Commands:**
+- `start`: (no argument) Special command marking the slide where the progress bar should be first displayed.
+- `RemoveAll`: (true/false; default=false) Special command to clean the presentation from all progress bars; no new progress bars will be generated.
+- `PreserveExistingImages`: (true/false; default=false) Preserves all existing progress bar images.
+
+**Chapter Labels:**
 - `ChapterSeparation`: (number) Distance between chapter markers in pixels.
-- `FontFamily`: (string) Font family for the progress bar text.
+- `FontFamily`: (string) Font family for the progress bar labels.
 - `FontFamilyHighlightedChapter`: (string) Font family for the highlighted chapter text.
-- `FontSize`: (number) Font size of the progress bar text.
-- `FlipUpsideDown`: (true/false) Flips the progress bar upside down.
-- `SetAllPositionsEqual`: (true/false) Sets all progress bar positions to be equal.
-- `NumberOfDots`: (integer number) Number of dots in the progress bar.
-- `DotSize`: (floating number) Size of the dots in pixels.
-- `ContourWidth`: (number) Width of the contour line around the dots.
+- `FontSize`: (number) Font size of the progress bar labels.
+- `BaselineOffset`: (number) Baseline offset for the labels.
+- `CompletedTextColor`: (array; default={0, 0, 0, 100}) Color of labels for finished and current chapters in RGBA format.
+- `UncompletedTextColor`: (array; default={0, 0, 0, 30}) Color of labels for next chapters in RGBA format.
+
+**Dots:**
+- `NumberOfDots`: (integer number; default=40) Number of dots in the progress bar.
+- `DotSize`: (floating number; default=7) Size of the dots in pixels.
+- `ContourWidth`: (number; default=0.2) Width of the contour line around the dots.
 - `CompletedDotFillColor`: (array) Color of completed dots in RGBA format (e.g., `{91,96,95,100}`).
 - `UncompletedDotFillColor`: (array) Color of uncompleted dots in RGBA format.
 - `CompletedDotStrokeColor`: (array) Stroke color of completed dots in RGBA format.
 - `UncompletedDotStrokeColor`: (array) Stroke color of uncompleted dots in RGBA format.
-- `CompletedTextColor`: (array) Color of text for finish and present chapters in RGBA format.
-- `UncompletedTextColor`: (array) Color of text for next chapters in RGBA format.
-- `BaselineOffset`: (number) Baseline offset for the text.
-- `Margins`: (array of numbers) Margins around the progress bar in the format `{top,right,bottom,left}`.
-- `PreserveExistingImages`: (true/false) Preserves all existing progress bar images.
 
-#### Commands on individual slides
+**Positioning:**
+- `FlipUpsideDown`: (true/false) Flips the progress bar upside down.
+- `SetAllPositionsEqual`: (true/false) Sets all progress bar positions to be equal. See also [[#6.2. SetAllPositionsEqual|SetAllPositionsEqual]] for more details.
+- `Margins`: (array of numbers) Margins around the progress bar in the format `{top,right,bottom,left}`.
+
+
+#### 5.1.2. Commands on individual slides
 
 These commands are applied to individual slides to control their specific behavior and appearance in the context of the progress bar:
 
 - `duration`: (floating-point number) Sets the duration in minutes for the current slide.
 - `chapter`: (string) Name of the new chapter in your presentation. You can use double quotation marks if the chapter name contains spaces.
 - `skipDrawing`: (no argument) Skips drawing the progress bar for the current slide. This command is convenient to hide the progress bar on slides where it would overlap on some graphical elements.
-- `stop`: (no argument) Marks the slides until which the progress bar should be displayed. All slides after the `stop` command will be ignored.
+- `stop`: (no argument) Special command marking the last slide where the progress bar should be displayed. All slides after the `stop` command will be ignored.
+- `SameAsPrevious`: (no argument) See also [[#6.3. SameAsPrevious|SameAsPrevious]] for more details.
 
-### 3.2. Examples
+### 5.2. Examples
 
-#### Starting Slide
+#### 5.2.1. Starting Slide
 
 ```plaintext
 {progress bar; start; RemoveAll=false; ChapterSeparation=90; FontFamily=Helvetica-Light; FlipUpsideDown=false; FontFamilyHighlightedChapter=Helvetica; SetAllPositionsEqual=true; NumberOfDots=43; DotSize=7; ContourWidth=0.2; FontSize=18; chapter=Introduction; CompletedDotFillColor={91,96,95,100}; UncompletedDotFillColor={91,96,95,30}; CompletedDotStrokeColor={0,0,0,100}; UncompletedDotStrokeColor={0,0,0,100}; BaselineOffset=0; Margins={0,40,0,40}; OverwriteExistingImages=true; skip; duration=1.73}
 ```
 
-#### Intermediate Slide
+#### 5.2.2. Intermediate Slide
 
 ```plaintext
 {progress bar; duration=1.5}
 ```
 
-#### Ending Slide
+#### 5.2.3. Ending Slide
 
 ```plaintext
 {progress bar; skip; stop}
 ```
 
-#### Slide with Dark Background
+#### 5.2.4. Slide with Dark Background
 
 ```plaintext
 {progress bar; duration=1.5; CompletedDotFillColor={255,255,255,100}; UncompletedDotFillColor={255,255,255,60}; CompletedDotStrokeColor={0,0,0,100}; UncompletedDotStrokeColor={0,0,0,100}; CompletedTextColor={255,255,255,100}; UncompletedTextColor={255,255,255,100};}
 ```
 
-## 4. Detailed Options
+## 6. Detailed Options
 
-### 4.1. PreserveExistingImages
+### 6.1. PreserveExistingImages
 
-When this option is false (default), the app uses any previously placed progress bar as a reference and replaces it, maintaining the size, position, and z-order on the slide. This is particularly convenient because sometimes the user may want to put the progress bar as the last element, hidden by other elements in the foreground. By avoiding rewriting the image of the progress bar, we can keep the right z-order.
+When this option is true (default), the app uses any previously placed progress bar as a reference and replaces it, maintaining the size, position, and z-order on the slide. This is particularly convenient because sometimes the progress bar should be placed as the last element in the background and be hidden by other elements in the foreground. In this way, when the progress bar is newly generated, progress bar images are replaced instead of being rewritten, thus keeping the right z-order that was defined for the previously generated progress bar.
 
-### 4.2. SetAllPositionsEqual
+### 6.2. SetAllPositionsEqual
 
 When this option is true, all progress bar images in all slides have the same size and position as the first progress bar. The first progress bar is the first one appearing. If the first slides use the command `skipDrawing`, then it will be the first progress bar on the first slide not containing `skipDrawing`.
 
-### 4.3. RemoveAll
+### 6.3. SameAsPrevious
 
 This is a command in the first slide. When this is true, all images of the progress bar are removed from all slides. This is important when we want to clean the slides from the progress bar. No progress bar is created.
 
-## 5. Positioning and Resizing
+### 6.4. RemoveAll
+
+This is a command in the first slide. When this is true, all images of the progress bar are removed from all slides. This is important when we want to clean the slides from the progress bar. No progress bar is created.
+
+## 7. Positioning and Resizing
 
 The first run of the app, if no previous progress bar existed, places the progress bar at the bottom to fill nearly the entire width. This is seldom ideal. The user is free to change the position by moving the progress bar and resizing it. It is important to uncheck `Constrain proportions` under the panel `Format > Arrange` of Keynote when selecting the progress bar generated in its default position. This allows the user to stretch the progress bar to the desired size. It must be mentioned that in doing so, the aspect ratio may look weird and not properly scaled. The user should not worry. The next execution of the app will use the right size, but also respect the correct aspect ratio for the dots and text.
 
+## 8. Donations
+I would be grateful for any donation to support the development of this plugin.
 
-## 6. Contributing
+[<img src="docs/images/buy_me_coffee.png" width=300 alt="Buy Me a Coffee QR Code"/>](https://buymeacoffee.com/alberti)
+
+## 9. Author
+- **Author:** Andrea Alberti
+- **GitHub Profile:** [alberti42](https://github.com/alberti42)
+- **Donations:** [![Buy Me a Coffee](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-orange)](https://buymeacoffee.com/alberti)
+
+Feel free to contribute to the development of this plugin or report any issues in the [GitHub repository](https://github.com/alberti42/import-attachments-plus/issues).
+
+## 10. Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request with your improvements.
 
-## 7. License
+## 11. License
 
 This project is licensed under the MIT License; see the [LICENSE](LICENSE) file for details.
-
-## 8. Troubleshooting
-
-If you encounter any issues, please consider the following steps:
-- Ensure you have placed the `KeynoteProgressBarHelper` framework in the correct directory.
-- Verify that the syntax in your presenter notes matches the examples provided.
-- Check that you have the necessary permissions to run AppleScripts and access Keynote.>)
