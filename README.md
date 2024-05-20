@@ -112,7 +112,7 @@ By following these steps, you can effectively add and customize a progress bar i
    {progress bar; stop}
    ```
 
-4. **Handling Slides with Dark Background:**
+4. **Handling Slides with Dark Background:** <a id="example-dark"></a>
    For slides with a dark background, customize the colors for better visibility:
    ```plaintext
    {progress bar; duration=1.5; CompletedDotFillColor={255,255,255,100}; UncompletedDotFillColor={255,255,255,60}; CompletedDotStrokeColor={0,0,0,100}; UncompletedDotStrokeColor={0,0,0,100}; CompletedTextColor={255,255,255,100}; UncompletedTextColor={255,255,255,100};}
@@ -183,9 +183,11 @@ These commands are applied to individual slides to control their specific behavi
 
  #### 5.1.3. Commands on individual slides overwriting global configurations<a id="configuration-syntax-overwrite"></a>
 
- The following list shows the commands that can be provided on individual slides, which overwrite the default behavior:
+ The following list shows the commands that can be provided on individual slides, which overwrite the global behavior:
 
  - `CompletedDotFillColor`, `UncompletedDotFillColor`, `CompletedDotStrokeColor`, `UncompletedDotStrokeColor`, `CompletedTextColor`, `UncompletedTextColor`, `BackgroundColor`.
+
+Overwriting the global behavior is useful for example when showing the progress bar on a slide with dark background; see [this example](#example-dark).
 
 ### 5.2. Detailed description of selected commands<a id="configuration-detailed"></a>
 
