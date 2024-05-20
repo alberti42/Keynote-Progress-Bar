@@ -74,7 +74,7 @@ Download the Keynote presentation [example](https://github.com/alberti42/Keynote
 To configure the _Keynote Progress Bar_, add commands to the _Presenter Notes_ of your Keynote slides. The syntax for the commands is as follows:
 
 ```plaintext
-{progress bar; command; parameter1=value1; parameter2=value2; ...}
+{progress bar; command1; command2=<argument>; command3=<argument>; ...}
 ```
 
 A detailed description of the commands is provided in [this section](#configuration).
