@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		651E2A0A2CB2959D00968449 /* KeynoteProgressBarHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659209A821EE46D1003AF1F4 /* KeynoteProgressBarHelper.framework */; };
-		651E2A0B2CB2959E00968449 /* KeynoteProgressBarHelper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 659209A821EE46D1003AF1F4 /* KeynoteProgressBarHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		659209B221EE46D2003AF1F4 /* KeynoteProgressBarHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659209A821EE46D1003AF1F4 /* KeynoteProgressBarHelper.framework */; };
 		659209B721EE46D2003AF1F4 /* KeynoteProgressBarHelperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 659209B621EE46D2003AF1F4 /* KeynoteProgressBarHelperTests.m */; };
 		659209B921EE46D2003AF1F4 /* KeynoteProgressBarHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 659209AB21EE46D1003AF1F4 /* KeynoteProgressBarHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -19,13 +17,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		651E2A0C2CB2959E00968449 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6592099F21EE46D1003AF1F4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 659209A721EE46D1003AF1F4;
-			remoteInfo = KeynoteProgressBarHelper;
-		};
 		659209B321EE46D2003AF1F4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6592099F21EE46D1003AF1F4 /* Project object */;
@@ -33,28 +24,7 @@
 			remoteGlobalIDString = 659209A721EE46D1003AF1F4;
 			remoteInfo = KeynoteProgressBarHelper;
 		};
-		65E5E9BA2CB28C960085BA79 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6592099F21EE46D1003AF1F4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 65E5E9A72CB28C930085BA79;
-			remoteInfo = "App for testing components";
-		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		651E2A0E2CB2959E00968449 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				651E2A0B2CB2959E00968449 /* KeynoteProgressBarHelper.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		659209A821EE46D1003AF1F4 /* KeynoteProgressBarHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KeynoteProgressBarHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,8 +35,6 @@
 		659209D321EE545D003AF1F4 /* ProgressBarPDFImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProgressBarPDFImage.m; sourceTree = "<group>"; };
 		65C331EA2BF8FA2F0072F85A /* ProgressBarKeynoteUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProgressBarKeynoteUI.h; sourceTree = "<group>"; };
 		65C331EC2BF8FB300072F85A /* ProgressBarKeynoteUI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProgressBarKeynoteUI.m; sourceTree = "<group>"; };
-		65E5E9A82CB28C930085BA79 /* App for testing components.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "App for testing components.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		65E5E9B92CB28C960085BA79 /* App for testing componentsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "App for testing componentsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,21 +50,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				659209B221EE46D2003AF1F4 /* KeynoteProgressBarHelper.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		65E5E9A52CB28C930085BA79 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				651E2A0A2CB2959D00968449 /* KeynoteProgressBarHelper.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		65E5E9B62CB28C960085BA79 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,8 +78,6 @@
 			children = (
 				659209A821EE46D1003AF1F4 /* KeynoteProgressBarHelper.framework */,
 				659209B121EE46D2003AF1F4 /* KeynoteProgressBarHelperTests.xctest */,
-				65E5E9A82CB28C930085BA79 /* App for testing components.app */,
-				65E5E9B92CB28C960085BA79 /* App for testing componentsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -203,47 +154,6 @@
 			productReference = 659209B121EE46D2003AF1F4 /* KeynoteProgressBarHelperTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		65E5E9A72CB28C930085BA79 /* App for testing components */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 65E5E9D12CB28C970085BA79 /* Build configuration list for PBXNativeTarget "App for testing components" */;
-			buildPhases = (
-				65E5E9A42CB28C930085BA79 /* Sources */,
-				65E5E9A52CB28C930085BA79 /* Frameworks */,
-				65E5E9A62CB28C930085BA79 /* Resources */,
-				651E2A0E2CB2959E00968449 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				651E2A0D2CB2959E00968449 /* PBXTargetDependency */,
-			);
-			name = "App for testing components";
-			packageProductDependencies = (
-			);
-			productName = "App for testing components";
-			productReference = 65E5E9A82CB28C930085BA79 /* App for testing components.app */;
-			productType = "com.apple.product-type.application";
-		};
-		65E5E9B82CB28C960085BA79 /* App for testing componentsTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 65E5E9D22CB28C970085BA79 /* Build configuration list for PBXNativeTarget "App for testing componentsTests" */;
-			buildPhases = (
-				65E5E9B52CB28C960085BA79 /* Sources */,
-				65E5E9B62CB28C960085BA79 /* Frameworks */,
-				65E5E9B72CB28C960085BA79 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				65E5E9BB2CB28C960085BA79 /* PBXTargetDependency */,
-			);
-			name = "App for testing componentsTests";
-			packageProductDependencies = (
-			);
-			productName = "App for testing componentsTests";
-			productReference = 65E5E9B92CB28C960085BA79 /* App for testing componentsTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -259,13 +169,6 @@
 					};
 					659209B021EE46D2003AF1F4 = {
 						CreatedOnToolsVersion = 10.1;
-					};
-					65E5E9A72CB28C930085BA79 = {
-						CreatedOnToolsVersion = 16.0;
-					};
-					65E5E9B82CB28C960085BA79 = {
-						CreatedOnToolsVersion = 16.0;
-						TestTargetID = 65E5E9A72CB28C930085BA79;
 					};
 				};
 			};
@@ -284,8 +187,6 @@
 			targets = (
 				659209A721EE46D1003AF1F4 /* KeynoteProgressBarHelper */,
 				659209B021EE46D2003AF1F4 /* KeynoteProgressBarHelperTests */,
-				65E5E9A72CB28C930085BA79 /* App for testing components */,
-				65E5E9B82CB28C960085BA79 /* App for testing componentsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -299,20 +200,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		659209AF21EE46D2003AF1F4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		65E5E9A62CB28C930085BA79 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		65E5E9B72CB28C960085BA79 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -339,37 +226,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		65E5E9A42CB28C930085BA79 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		65E5E9B52CB28C960085BA79 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		651E2A0D2CB2959E00968449 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 659209A721EE46D1003AF1F4 /* KeynoteProgressBarHelper */;
-			targetProxy = 651E2A0C2CB2959E00968449 /* PBXContainerItemProxy */;
-		};
 		659209B421EE46D2003AF1F4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 659209A721EE46D1003AF1F4 /* KeynoteProgressBarHelper */;
 			targetProxy = 659209B321EE46D2003AF1F4 /* PBXContainerItemProxy */;
-		};
-		65E5E9BB2CB28C960085BA79 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 65E5E9A72CB28C930085BA79 /* App for testing components */;
-			targetProxy = 65E5E9BA2CB28C960085BA79 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -589,118 +452,6 @@
 			};
 			name = Release;
 		};
-		65E5E9CB2CB28C970085BA79 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_ENTITLEMENTS = "App for testing components/App_for_testing_components.entitlements";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9V3X7C8VCK;
-				ENABLE_HARDENED_RUNTIME = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSAppleEventsUsageDescription = "The app 'Add Progress Bar to Keynote' needs Accessibility permission to control Keynote.";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2019 Andrea Alberti. All rights reserved.";
-				INFOPLIST_KEY_NSMainNibFile = MainMenu;
-				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.Alberti42.App-for-testing-components";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-			};
-			name = Debug;
-		};
-		65E5E9CC2CB28C970085BA79 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_ENTITLEMENTS = "App for testing components/App_for_testing_components.entitlements";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9V3X7C8VCK;
-				ENABLE_HARDENED_RUNTIME = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSAppleEventsUsageDescription = "The app 'Add Progress Bar to Keynote' needs Accessibility permission to control Keynote.";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2019 Andrea Alberti. All rights reserved.";
-				INFOPLIST_KEY_NSMainNibFile = MainMenu;
-				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.Alberti42.App-for-testing-components";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-			};
-			name = Release;
-		};
-		65E5E9CD2CB28C970085BA79 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9V3X7C8VCK;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2019 Andrea Alberti. All rights reserved.";
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.Alberti42.App-for-testing-componentsTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/App for testing components.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/App for testing components";
-			};
-			name = Debug;
-		};
-		65E5E9CE2CB28C970085BA79 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9V3X7C8VCK;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2019 Andrea Alberti. All rights reserved.";
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.Alberti42.App-for-testing-componentsTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/App for testing components.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/App for testing components";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -727,24 +478,6 @@
 			buildConfigurations = (
 				659209C021EE46D2003AF1F4 /* Debug */,
 				659209C121EE46D2003AF1F4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		65E5E9D12CB28C970085BA79 /* Build configuration list for PBXNativeTarget "App for testing components" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				65E5E9CB2CB28C970085BA79 /* Debug */,
-				65E5E9CC2CB28C970085BA79 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		65E5E9D22CB28C970085BA79 /* Build configuration list for PBXNativeTarget "App for testing componentsTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				65E5E9CD2CB28C970085BA79 /* Debug */,
-				65E5E9CE2CB28C970085BA79 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
