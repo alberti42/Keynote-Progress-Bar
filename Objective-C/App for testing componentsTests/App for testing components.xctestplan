@@ -1,0 +1,34 @@
+{
+  "configurations" : [
+    {
+      "id" : "C3CC5D32-08A7-4428-86B1-243366DD9490",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:KeynoteProgressBarHelper.xcodeproj",
+      "identifier" : "651055B12CB2A964004CCBCD",
+      "name" : "App for testing components"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "skippedTests" : [
+        "App_for_testing_componentsTests\/testOpenClosePresenter",
+        "App_for_testing_componentsTests\/testPDFimages",
+        "App_for_testing_componentsTests\/testPerformanceExample"
+      ],
+      "target" : {
+        "containerPath" : "container:KeynoteProgressBarHelper.xcodeproj",
+        "identifier" : "651055C22CB2A966004CCBCD",
+        "name" : "App for testing componentsTests"
+      }
+    }
+  ],
+  "version" : 1
+}

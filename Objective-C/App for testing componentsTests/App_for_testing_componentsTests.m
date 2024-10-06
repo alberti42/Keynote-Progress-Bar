@@ -59,7 +59,6 @@
     // Check if the focus is set on the presenter notes scroll area
     BOOL focusSet = [p focusOnPresenterNotesScrollArea];
     XCTAssertTrue(focusSet, @"Failed to set focus on the presenter notes text area.");
-    
 
     NSLog(@"\n\n=============");
 }

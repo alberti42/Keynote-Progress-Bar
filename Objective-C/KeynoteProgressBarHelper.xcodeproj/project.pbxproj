@@ -65,6 +65,7 @@
 		659209B621EE46D2003AF1F4 /* KeynoteProgressBarHelperTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeynoteProgressBarHelperTests.m; sourceTree = "<group>"; };
 		659209D221EE545D003AF1F4 /* ProgressBarPDFImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProgressBarPDFImage.h; sourceTree = "<group>"; };
 		659209D321EE545D003AF1F4 /* ProgressBarPDFImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProgressBarPDFImage.m; sourceTree = "<group>"; };
+		659B994B2CB2BA2800A8A92D /* App for testing components.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = "App for testing components.xctestplan"; path = "App for testing componentsTests/App for testing components.xctestplan"; sourceTree = "<group>"; };
 		65C331EA2BF8FA2F0072F85A /* ProgressBarKeynoteUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProgressBarKeynoteUI.h; sourceTree = "<group>"; };
 		65C331EC2BF8FB300072F85A /* ProgressBarKeynoteUI.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProgressBarKeynoteUI.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -118,6 +119,7 @@
 		6592099E21EE46D1003AF1F4 = {
 			isa = PBXGroup;
 			children = (
+				659B994B2CB2BA2800A8A92D /* App for testing components.xctestplan */,
 				659209AA21EE46D1003AF1F4 /* KeynoteProgressBarHelper */,
 				659209B521EE46D2003AF1F4 /* KeynoteProgressBarHelperTests */,
 				651055B32CB2A964004CCBCD /* App for testing components */,
