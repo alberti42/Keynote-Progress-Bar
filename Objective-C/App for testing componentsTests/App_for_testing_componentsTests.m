@@ -51,14 +51,17 @@
     
     BOOL result = [p togglePresenterNotes:true];
     XCTAssertTrue(result, @"Failed to open the presenter notes.");
+    NSLog(@"Presenter notes opened successfully");
   
     // Check if the presenter notes scroll area is found
     BOOL foundTextArea = [p findPresenterNotesTextArea];
     XCTAssertTrue(foundTextArea, @"Failed to find the presenter notes text area.");
+    NSLog(@"Found presenter notes");
     
     // Check if the focus is set on the presenter notes scroll area
     BOOL focusSet = [p focusOnPresenterNotesScrollArea];
     XCTAssertTrue(focusSet, @"Failed to set focus on the presenter notes text area.");
+    NSLog(@"Set focus on presenter notes");
 
     NSLog(@"\n\n=============");
 }

@@ -37,33 +37,6 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "659209B021EE46D2003AF1F4"
-               BuildableName = "KeynoteProgressBarHelperTests.xctest"
-               BlueprintName = "KeynoteProgressBarHelperTests"
-               ReferencedContainer = "container:KeynoteProgressBarHelper.xcodeproj">
-            </BuildableReference>
-            <SkippedTests>
-               <Test
-                  Identifier = "KeynoteProgressBarHelperTests/testExample">
-               </Test>
-               <Test
-                  Identifier = "KeynoteProgressBarHelperTests/testKeynoteUI">
-               </Test>
-               <Test
-                  Identifier = "KeynoteProgressBarHelperTests/testOpenClosePresenter">
-               </Test>
-               <Test
-                  Identifier = "KeynoteProgressBarHelperTests/testPDFimages">
-               </Test>
-               <Test
-                  Identifier = "KeynoteProgressBarHelperTests/testPerformanceExample">
-               </Test>
-            </SkippedTests>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

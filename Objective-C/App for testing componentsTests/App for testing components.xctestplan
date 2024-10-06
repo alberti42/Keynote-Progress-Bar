@@ -13,7 +13,8 @@
       "containerPath" : "container:KeynoteProgressBarHelper.xcodeproj",
       "identifier" : "651055B12CB2A964004CCBCD",
       "name" : "App for testing components"
-    }
+    },
+    "uiTestingScreenshotsLifetime" : "keepNever"
   },
   "testTargets" : [
     {
