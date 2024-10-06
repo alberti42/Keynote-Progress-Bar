@@ -143,6 +143,7 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
                                         
                                         if (identifierAttribute != NULL) {
                                             NSString *identifierAttributeString = (__bridge_transfer NSString *)identifierAttribute;
+                                            //NSLog(@"IDENTIFIER: %@",identifierAttributeString);
                                             if ([identifierAttributeString isEqualToString:@"_NS:8"]) {
 #ifdef DEBUG
                                                 NSLog(@"FOUND scroll area %ld of splitter group %ld", j, i);
@@ -413,9 +414,6 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
 
     return success;
 }
-
-
-
 
 - (AXUIElementRef)getPresenterNotesTextArea {
     return self.presenterNotesTextArea;
