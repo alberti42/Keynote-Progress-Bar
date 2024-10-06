@@ -16,6 +16,7 @@
 - (BOOL)findPresenterNotesTextArea;
 - (BOOL)focusOnPresenterNotesScrollArea;
 - (BOOL)togglePresenterNotes:(BOOL)show;
+- (BOOL)getAccessibilityStatus;
 - (AXUIElementRef)getPresenterNotesTextArea;
 
 @end

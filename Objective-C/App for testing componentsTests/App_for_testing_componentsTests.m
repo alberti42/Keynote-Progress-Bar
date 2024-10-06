@@ -25,10 +25,10 @@
 
 
 - (void)testAccessibilityPermissions {
-    NSDictionary *options = @{(__bridge id)kAXTrustedCheckOptionPrompt : @YES};
-    BOOL accessibilityEnabled = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)options);
-
-    XCTAssertTrue(accessibilityEnabled, @"The app is not trusted for Accessibility, please grant permissions in System Preferences.");
+    ProgressBarKeynoteUI* p = [[ProgressBarKeynoteUI alloc] init];
+        
+    BOOL result = [p getAccessibilityStatus];
+    XCTAssertTrue(result, @"The app is not trusted for Accessibility, please grant permissions in System Preferences.");
 }
 
 - (void)testOpenClosePresenter {

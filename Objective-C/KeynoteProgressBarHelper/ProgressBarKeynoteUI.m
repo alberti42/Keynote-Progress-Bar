@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
+#import <CoreGraphics/CoreGraphics.h>
 #include <ApplicationServices/ApplicationServices.h>
 #import "ProgressBarKeynoteUI.h"
 
@@ -197,6 +198,13 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
         }
     }
     return NO; // Failed to set focus or verify focus within the timeout
+}
+
+- (BOOL)getAccessibilityStatus {
+    NSDictionary *options = @{(__bridge id)kAXTrustedCheckOptionPrompt : @YES};
+    BOOL accessibilityEnabled = AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef)options);
+    
+    return accessibilityEnabled;
 }
 
 - (BOOL)togglePresenterNotes:(BOOL)show {

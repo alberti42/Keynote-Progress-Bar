@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		651055DE2CB2A9F0004CCBCD /* KeynoteProgressBarHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659209A821EE46D1003AF1F4 /* KeynoteProgressBarHelper.framework */; };
 		651055DF2CB2A9F0004CCBCD /* KeynoteProgressBarHelper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 659209A821EE46D1003AF1F4 /* KeynoteProgressBarHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		659209B221EE46D2003AF1F4 /* KeynoteProgressBarHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 659209A821EE46D1003AF1F4 /* KeynoteProgressBarHelper.framework */; };
 		659209B921EE46D2003AF1F4 /* KeynoteProgressBarHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 659209AB21EE46D1003AF1F4 /* KeynoteProgressBarHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		659209D421EE545D003AF1F4 /* ProgressBarPDFImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 659209D221EE545D003AF1F4 /* ProgressBarPDFImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		659209D521EE545D003AF1F4 /* ProgressBarPDFImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 659209D321EE545D003AF1F4 /* ProgressBarPDFImage.m */; };
@@ -26,13 +25,6 @@
 			remoteInfo = "App for testing components";
 		};
 		651055E02CB2A9F0004CCBCD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6592099F21EE46D1003AF1F4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 659209A721EE46D1003AF1F4;
-			remoteInfo = KeynoteProgressBarHelper;
-		};
-		659209B321EE46D2003AF1F4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6592099F21EE46D1003AF1F4 /* Project object */;
 			proxyType = 1;
@@ -60,7 +52,6 @@
 		651055C32CB2A966004CCBCD /* App for testing componentsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "App for testing componentsTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		659209A821EE46D1003AF1F4 /* KeynoteProgressBarHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KeynoteProgressBarHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		659209AB21EE46D1003AF1F4 /* KeynoteProgressBarHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeynoteProgressBarHelper.h; sourceTree = "<group>"; };
-		659209B121EE46D2003AF1F4 /* KeynoteProgressBarHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KeynoteProgressBarHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		659209D221EE545D003AF1F4 /* ProgressBarPDFImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProgressBarPDFImage.h; sourceTree = "<group>"; };
 		659209D321EE545D003AF1F4 /* ProgressBarPDFImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProgressBarPDFImage.m; sourceTree = "<group>"; };
 		65C331EA2BF8FA2F0072F85A /* ProgressBarKeynoteUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProgressBarKeynoteUI.h; sourceTree = "<group>"; };
@@ -95,14 +86,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		659209AE21EE46D2003AF1F4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				659209B221EE46D2003AF1F4 /* KeynoteProgressBarHelper.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -128,7 +111,6 @@
 			isa = PBXGroup;
 			children = (
 				659209A821EE46D1003AF1F4 /* KeynoteProgressBarHelper.framework */,
-				659209B121EE46D2003AF1F4 /* KeynoteProgressBarHelperTests.xctest */,
 				651055B22CB2A964004CCBCD /* App for testing components.app */,
 				651055C32CB2A966004CCBCD /* App for testing componentsTests.xctest */,
 			);
@@ -227,24 +209,6 @@
 			productReference = 659209A821EE46D1003AF1F4 /* KeynoteProgressBarHelper.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		659209B021EE46D2003AF1F4 /* KeynoteProgressBarHelperTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 659209BF21EE46D2003AF1F4 /* Build configuration list for PBXNativeTarget "KeynoteProgressBarHelperTests" */;
-			buildPhases = (
-				659209AD21EE46D2003AF1F4 /* Sources */,
-				659209AE21EE46D2003AF1F4 /* Frameworks */,
-				659209AF21EE46D2003AF1F4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				659209B421EE46D2003AF1F4 /* PBXTargetDependency */,
-			);
-			name = KeynoteProgressBarHelperTests;
-			productName = KeynoteProgressBarHelperTests;
-			productReference = 659209B121EE46D2003AF1F4 /* KeynoteProgressBarHelperTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -265,9 +229,6 @@
 					659209A721EE46D1003AF1F4 = {
 						CreatedOnToolsVersion = 10.1;
 					};
-					659209B021EE46D2003AF1F4 = {
-						CreatedOnToolsVersion = 10.1;
-					};
 				};
 			};
 			buildConfigurationList = 659209A221EE46D1003AF1F4 /* Build configuration list for PBXProject "KeynoteProgressBarHelper" */;
@@ -284,7 +245,6 @@
 			projectRoot = "";
 			targets = (
 				659209A721EE46D1003AF1F4 /* KeynoteProgressBarHelper */,
-				659209B021EE46D2003AF1F4 /* KeynoteProgressBarHelperTests */,
 				651055B12CB2A964004CCBCD /* App for testing components */,
 				651055C22CB2A966004CCBCD /* App for testing componentsTests */,
 			);
@@ -300,13 +260,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		651055C12CB2A966004CCBCD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		659209AF21EE46D2003AF1F4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -339,13 +292,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		659209AD21EE46D2003AF1F4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -358,11 +304,6 @@
 			isa = PBXTargetDependency;
 			target = 659209A721EE46D1003AF1F4 /* KeynoteProgressBarHelper */;
 			targetProxy = 651055E02CB2A9F0004CCBCD /* PBXContainerItemProxy */;
-		};
-		659209B421EE46D2003AF1F4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 659209A721EE46D1003AF1F4 /* KeynoteProgressBarHelper */;
-			targetProxy = 659209B321EE46D2003AF1F4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -615,11 +556,13 @@
 				FRAMEWORK_VERSION = A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2019 Andrea Alberti. All rights reserved.";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = org.Alberti42.KeynoteProgressBarHelper;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -641,56 +584,16 @@
 				FRAMEWORK_VERSION = A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2019 Andrea Alberti. All rights reserved.";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++14";
 				PRODUCT_BUNDLE_IDENTIFIER = org.Alberti42.KeynoteProgressBarHelper;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-			};
-			name = Release;
-		};
-		659209C021EE46D2003AF1F4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 9V3X7C8VCK;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2019 Andrea Alberti. All rights reserved.";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.Alberti42.KeynoteProgressBarHelperTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		659209C121EE46D2003AF1F4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 9V3X7C8VCK;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2019 Andrea Alberti. All rights reserved.";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = org.Alberti42.KeynoteProgressBarHelperTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -729,15 +632,6 @@
 			buildConfigurations = (
 				659209BD21EE46D2003AF1F4 /* Debug */,
 				659209BE21EE46D2003AF1F4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		659209BF21EE46D2003AF1F4 /* Build configuration list for PBXNativeTarget "KeynoteProgressBarHelperTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				659209C021EE46D2003AF1F4 /* Debug */,
-				659209C121EE46D2003AF1F4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
