@@ -14,8 +14,24 @@
             filePath = "KeynoteProgressBarHelper/ProgressBarKeynoteUI.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "-findPresenterNotesTextArea"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6D1DEFAA-DCE8-4FD1-A55C-51088C57ADC6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "KeynoteProgressBarHelper/ProgressBarKeynoteUI.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
             landmarkName = "-findPresenterNotesTextArea"
             landmarkType = "7">
          </BreakpointContent>

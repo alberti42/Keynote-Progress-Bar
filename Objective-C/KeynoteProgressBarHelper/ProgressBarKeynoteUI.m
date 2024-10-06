@@ -123,27 +123,16 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
                                 if (splitGroupChildRole != NULL) {
                                     NSString *scrollAreaRoleString = (__bridge_transfer NSString *)splitGroupChildRole;
                                     if ([scrollAreaRoleString isEqualToString:(__bridge NSString *)kAXScrollAreaRole]) {
-                                        
                                         // Scroll Area //
-                                        
 #ifdef DEBUG
                                         getAttribute(splitGroupChild, kAXRoleDescriptionAttribute, @"\n\n===\nRole description of scroll area %ld of splitter group %ld:", j, i);
                                         getAttribute(splitGroupChild, kAXIdentifierAttribute, @"AXIdentifier of scroll area %ld of splitter group %ld:", j, i);
 #endif
-                                        
-                                        
-#if IS_APPLE_SILICON
-#ifdef DEBUG
-                                        NSLog(@"Compiled for Apple Silicon (ARM)");
-#endif
-
-                                        
                                         CFTypeRef identifierAttribute = NULL;
                                         AXUIElementCopyAttributeValue(splitGroupChild, kAXIdentifierAttribute, &identifierAttribute);
                                         
                                         if (identifierAttribute != NULL) {
                                             NSString *identifierAttributeString = (__bridge_transfer NSString *)identifierAttribute;
-                                            //NSLog(@"IDENTIFIER: %@",identifierAttributeString);
                                             if ([identifierAttributeString isEqualToString:@"_NS:8"]) {
 #ifdef DEBUG
                                                 NSLog(@"FOUND scroll area %ld of splitter group %ld", j, i);
@@ -161,60 +150,7 @@ void getAttribute(AXUIElementRef elRef, CFStringRef attribute, NSString *format,
                                             }
                                             CFRelease(identifierAttribute);
                                         }
-                                        
-#elif IS_INTEL
-#ifdef DEBUG
-                                        NSLog(@"Compiled for Intel");
-#endif
-                                        
-                                        
-                                        CFArrayRef scrollAreaChildren = NULL;
-                                        AXUIElementCopyAttributeValue(splitGroupChild, kAXChildrenAttribute, (CFTypeRef *)&scrollAreaChildren);
-                                        
-                                        if (scrollAreaChildren != NULL) {
-                                            CFIndex scrollAreaChildrenCount = CFArrayGetCount(scrollAreaChildren);
-#ifdef DEBUG
-                                            NSLog(@"Children count of scroll area %ld in splitter group %ld: %ld", j, i, scrollAreaChildrenCount);
-#endif
-                                            
-                                            for (CFIndex k = 0; k < scrollAreaChildrenCount; k++) {
-                                                AXUIElementRef scrollAreaChild = CFArrayGetValueAtIndex(scrollAreaChildren, k);
-                                                
-                                                CFTypeRef scrollAreaChildRole = NULL;
-                                                AXUIElementCopyAttributeValue(scrollAreaChild, kAXRoleAttribute, &scrollAreaChildRole);
-                                                
-                                                if (scrollAreaChildRole != NULL) {
-                                                    NSString *scrollAreaChildRoleString = (__bridge_transfer NSString *)scrollAreaChildRole;
-                                                    if ([scrollAreaChildRoleString isEqualToString:(__bridge NSString *)kAXTextAreaRole]) {
-                                                        
-                                                        // Text area //
-#ifdef DEBUG
-                                                        getAttribute(scrollAreaChild, kAXRoleDescriptionAttribute, @"---\nRole description of text area %ld in scroll area %ld of splitter group %ld:", k, j, i);
-                                                        //getAttribute(scrollAreaChild, kAXIdentifierAttribute, @"AXIdentifier of scroll bar %ld in scroll area %ld of splitter group %ld:", k, j, i);
-#endif
-                                                        
-#ifdef DEBUG
-                                                        NSLog(@"FOUND text area %ld in scroll area %ld of splitter group %ld", k, j, i);
-#endif
-                                                        self.presenterNotesTextArea = (AXUIElementRef)CFRetain(scrollAreaChild);
-                                                        
-                                                        CFRelease(scrollAreaChildRole);
-                                                        CFRelease(splitGroupChildRole);
-                                                        CFRelease(mainWindowChildRole);
-                                                        CFRelease(scrollAreaChildren);
-                                                        CFRelease(splitGroupChildren);
-                                                        CFRelease(mainWindowChildren);
-                                                        CFRelease(mainWindow);
-                                                        CFRelease(keynoteApp);
-                                                        return YES;
-                                                    }
-                                                    CFRelease(scrollAreaChildRole);
-                                                }
-                                            }
-                                            CFRelease(scrollAreaChildren);
-                                        }
-#endif
-                                        
+                             
                                     }
                                     CFRelease(splitGroupChildRole);
                                 }
