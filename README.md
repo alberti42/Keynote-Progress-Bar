@@ -29,7 +29,7 @@ Download the Keynote presentation [example](https://github.com/alberti42/Keynote
 			- [5.2.1. PreserveExistingImages](#preserve-existing-images)
 			- [5.2.2. SetAllPositionsEqual](#set-all-positions-equal)
 			- [5.2.3. SameAsPrevious](#same-as-previous)
-			- [5.3. RemoveAll](#remove-all)
+		- [5.3. RemoveAll](#remove-all)
 	- [6. Donations](#donations)
 	- [7. Author](#author)
 	- [8. Contributing](#contributing)
@@ -45,29 +45,88 @@ Download the Keynote presentation [example](https://github.com/alberti42/Keynote
 
 ## 3. Installation<a id="installation"></a>
 
+There are two installation options:
+
+- **Option A (recommended):** Download the pre-built, **signed and notarized** app from the latest GitHub release (no Xcode required).
+- **Option B:** Build the framework yourself and run the AppleScript from Script Editor / as a `.scpt` (developer workflow).
+
+### Option A — Download the notarized app (recommended)
+
+1. Download the latest notarized DMG from GitHub Releases:
+
+   **Direct download:**  
+   https://github.com/alberti42/Keynote-Progress-Bar/releases/latest/download/Add_Progress_Bar_to_Keynote.dmg
+
+2. Open the DMG and drag **Add Progress Bar to Keynote.app** into `/Applications` (or any other folder you like).
+
+3. On first launch, macOS will ask for permission to control Keynote (Automation permission). Please allow it.
+
+4. Open your Keynote presentation and run **Add Progress Bar to Keynote.app**.
+
+> **Note:** The app is signed with a Developer ID and notarized by Apple. Gatekeeper should accept it without warnings. If macOS blocks the app anyway, right-click the app and choose **Open** once.
+
+---
+
+### Option B — Build from source (developer workflow)
+
+This workflow is useful if you want to modify the AppleScript or the Objective-C framework and build everything yourself.
+
 1. Clone this repository:
    ```sh
    git clone https://github.com/alberti42/Keynote-Progress-Bar.git
    ```
-2. Open the `KeynoteProgressBarHelper` framework in Xcode and build it.
-3. Place the compiled framework in `/Users/your-username/Library/Frameworks`.
-4. Open the AppleScript `path/to/the/cloned/repository/AppleScript/Add Progress Bar to Keynote.applescript.applescript` with Apple’s _Script Editor_ and save the script in your favorite script location (e.g., `/Users/your-username/Library/Scripts`) as compiled-script format `.scpt`. 
-5. Open your Keynote presentation.
-6. Add the configuration commands to the presenter notes of the relevant slides. Check section on [usage](#usage) for more information.
-7. From the _Script Editor_, run the AppleScript to process the slides and insert the progress bar images to your slides. If you have multiple Keynote presentations opened, only the frontmost document will be considered.
+
+2. Build the Objective-C framework:
+   - Open `Objective-C/KeynoteProgressBarHelper.xcodeproj` in Xcode.
+   - Build the project (Release configuration recommended).
+   - Locate the resulting `KeynoteProgressBarHelper.framework` in Xcode’s build products (e.g. `Products/Release/`).
+
+3. Create the AppleScript **app**:
+   - Open `AppleScript/Add Progress Bar to Keynote.applescript` with Apple’s **Script Editor**.
+   - Choose **File → Export…**
+   - Set **File Format** to **Application**
+   - Save it as: **Add Progress Bar to Keynote.app**
+
+4. Embed the framework into the AppleScript app:
+   - In Finder, locate **Add Progress Bar to Keynote.app**
+   - Right-click it and choose **Show Package Contents**
+   - Navigate to:
+     ```
+     Contents/Frameworks
+     ```
+     (Create the `Frameworks` folder if it does not exist.)
+   - Copy the compiled framework bundle into that folder, so you end up with:
+     ```
+     Add Progress Bar to Keynote.app
+     └── Contents
+         └── Frameworks
+             └── KeynoteProgressBarHelper.framework
+     ```
+
+5. Run the app:
+   - Open your Keynote presentation.
+   - Add the configuration commands to the presenter notes of the relevant slides. Check section on [usage](#usage) for more information.
+   - Launch **Add Progress Bar to Keynote.app**. If you have multiple Keynote presentations opened, only the frontmost document will be considered.
+
+> **Automation permission:** On first run, macOS will ask for permission for this app to control Keynote. Please allow it.
+
+> **Note:** If you plan to distribute your locally built app to other Macs, you will likely need to code sign and notarize it (see the release workflow scripts / documentation). Otherwise, Gatekeeper may block it on other machines.
 
 ## 4. Usage<a id="usage"></a>
 
 ### 4.1. Adding progress bar to your presentation<a id="usage-generation"></a>
 
 1. **Open Your Keynote Presentation:**
-   Ensure your Keynote presentation is open before running the script.
+   Ensure your Keynote presentation is open before running the script/app.
 
 2. **Add Configuration Commands:**
    Insert the configuration commands in the presenter notes of your slides. Refer to the examples provided in the `Examples` section for proper syntax and usage.
 
-3. **Run the AppleScript:**
-   Open the AppleScript with Apple’s _Script Editor_ and run it. If you have multiple Keynote presentations open, the foremost document will be processed.
+3. **Run the AppleScript / App:**
+   - If you installed the notarized app (Option A), run **Add Progress Bar to Keynote.app**.
+   - If you installed via Script Editor (Option B), open the script in Script Editor and run it.
+
+   If you have multiple Keynote presentations open, the foremost document will be processed.
 
 ### 4.2. Commands and parameters<a id="usage-commands"></a>
 
@@ -87,7 +146,7 @@ The progress of the dots in the _Keynote Progress Bar_ is computed based on the 
 
 ### 4.4.1. Manual adjustment<a id="usage-positioning-manual"></a>
 
-After running the script for the first time, you may need to adjust the position and size of the _Keynote Progress Bar_ to better fit your slide layout. In fact, the first run of the app, if no previous progress bar existed, places the progress bar at the bottom to fill nearly the entire width. This is seldom ideal. The user is free to change the position by moving the progress bar and resizing it. It is important to uncheck `Constrain proportions` under the panel `Format > Arrange` of Keynote when selecting the progress bar generated in its default position. This allows the user to stretch the progress bar to the desired size. It must be mentioned that in doing so, the aspect ratio may look weird and not properly scaled. The user should not worry. The next execution of the app will use the right size, but also respect the correct aspect ratio for the dots and text. 
+After running the script/app for the first time, you may need to adjust the position and size of the _Keynote Progress Bar_ to better fit your slide layout. In fact, the first run of the app, if no previous progress bar existed, places the progress bar at the bottom to fill nearly the entire width. This is seldom ideal. The user is free to change the position by moving the progress bar and resizing it. It is important to uncheck `Constrain proportions` under the panel `Format > Arrange` of Keynote when selecting the progress bar generated in its default position. This allows the user to stretch the progress bar to the desired size. It must be mentioned that in doing so, the aspect ratio may look weird and not properly scaled. The user should not worry. The next execution of the app will use the right size, but also respect the correct aspect ratio for the dots and text. 
 
 1. **Select the Progress Bar:**
    Click on the progress bar in your Keynote slide to select it.
@@ -96,7 +155,7 @@ After running the script for the first time, you may need to adjust the position
    In the Keynote menu, go to `Format > Arrange` and uncheck `Constrain proportions` to freely adjust the width and height of the progress bar.
 
 3. **Resize and Position:**
-   Drag the progress bar to the desired position and resize it as needed. Don’t worry about the aspect ratio; the next execution of the script will maintain the correct aspect ratio for the dots and text while respecting your adjustments.
+   Drag the progress bar to the desired position and resize it as needed. Don’t worry about the aspect ratio; the next execution of the script/app will maintain the correct aspect ratio for the dots and text while respecting your adjustments.
 
 ### 4.4.2. Automatic adjustment<a id="usage-positioning-automatic"></a>
 
@@ -130,15 +189,18 @@ To automatize the formatting on all slides at once, position and resize the firs
 
 ### 4.7. Running the script<a id="usage-running"></a>
 
-1. **Open the Script Editor:**
-   Launch Apple’s _Script Editor_ and open the saved AppleScript file.
+1. **Run the notarized app (recommended):**
+   Launch **Add Progress Bar to Keynote.app** (e.g., from `/Applications`).
 
-2. **Run the Script:**
-   Click the "Run" button in the _Script Editor_ to execute the script. Ensure that the Keynote presentation you wish to modify is the foremost document.
+2. **or Run from Script Editor:**
+   Launch Apple’s _Script Editor_, open your saved AppleScript file, and click **Run**.
 
 3. **Verify the Progress Bar:**
    Check your Keynote slides to verify that the progress bar has been added and configured according to your specifications.
-   
+
+> **Automation permission:** On the first run, macOS will ask for permission for this app/script to control Keynote. If you accidentally deny it, you can re-enable it in:
+> `System Settings → Privacy & Security → Automation`.
+
 ## 5. Configuration<a id="configuration"></a>
 
 ### 5.1. Commands<a id="configuration-syntax"></a>
@@ -180,7 +242,6 @@ These commands are used in the `{progress bar; start; ...}` configuration on the
 - `SetAllPositionsEqual`: (true/false; default=false) Sets all progress bar positions to be equal. Check [this section](#set-all-positions-equal) for more details.
 - `Margins`: (array of numbers; default={0, 0, 0, 0}) Margins around the progress bar in the format `{top,right,bottom,left}`.
 - `SameAsPreviousAutomatic`: (true/false; default=false) Applies the command SaveAsPrevious automatically on each slide subsequent to a _Magic Move_ transition. Check [this section](#same-as-previous) for more details.
-
 
 #### 5.1.2. Commands on individual slides<a id="configuration-syntax-individuals"></a>
 
