@@ -2,4 +2,4 @@
 
 # New features
 
-- Release a version of the app compatible with the new Apple Keynote Studio 
+- Compatible with the new Apple Keynote Studio
