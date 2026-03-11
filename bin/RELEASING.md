@@ -30,6 +30,21 @@ If Apple ever exposes a headless compilation path that loads app dictionaries wi
 
 ---
 
+## Two variants
+
+Two separate app bundles are maintained under `dist/`, one per Keynote variant:
+
+| Folder | Target app | Release DMG |
+|---|---|---|
+| `dist/Keynote/Add Progress Bar to Keynote.app` | Legacy Keynote | `Add_Progress_Bar_to_Keynote_Legacy.dmg` |
+| `dist/Keynote Studio/Add Progress Bar to Keynote.app` | Keynote Creator Studio | `Add_Progress_Bar_to_Keynote_Studio.dmg` |
+
+The only difference between the two compiled apps is the hardcoded target app name in the script (`"Keynote"` vs `"Keynote Creator Studio"`). Users download the DMG matching the Keynote version they have installed.
+
+> **Note:** `dist/` is in `.gitignore` — the compiled apps are not committed to the repo. They live only on your local machine. Do not distribute unnotarized copies; Gatekeeper will block them on other Macs.
+
+---
+
 ## Step-by-step release process
 
 ### 1. Write release notes
@@ -44,30 +59,37 @@ Open `Objective-C/KeynoteProgressBarHelper.xcodeproj` in Xcode.
 Select the **KeynoteProgressBarHelper** scheme, **Release** configuration, and build (`⌘B`).
 Note the path to the built framework (shown in the build log, or find it via **Product → Show Build Folder in Finder**).
 
-### 3. Export the AppleScript app from Script Editor
+### 3. Update the version in both app variants
 
-- Open `AppleScript/Add Progress Bar to Keynote.applescript` in **Script Editor**.
-- **File → Export…**
-  - File Format: **Application**
-  - Save as: `Add Progress Bar to Keynote.app` (anywhere convenient, e.g. your Desktop)
+Open each app in Script Debugger (or Script Editor):
+- `dist/Keynote/Add Progress Bar to Keynote.app`
+- `dist/Keynote Studio/Add Progress Bar to Keynote.app`
 
-### 4. Embed the framework into the app
+Update the version string in both to `X.Y.Z`, then save.
+
+### 4. Embed the updated framework into both variants
 
 ```bash
-mkdir -p "Add Progress Bar to Keynote.app/Contents/Frameworks"
 cp -R "/path/to/KeynoteProgressBarHelper.framework" \
-      "Add Progress Bar to Keynote.app/Contents/Frameworks/"
+      "dist/Keynote/Add Progress Bar to Keynote.app/Contents/Frameworks/"
+
+cp -R "/path/to/KeynoteProgressBarHelper.framework" \
+      "dist/Keynote Studio/Add Progress Bar to Keynote.app/Contents/Frameworks/"
 ```
 
-### 5. Sign, notarize, and package as DMG
+### 5. Sign, notarize, and package both variants
 
 From the repo root:
 
 ```bash
-bin/notarize_app.sh "Add Progress Bar to Keynote.app"
+bin/notarize_app.sh "dist/Keynote/Add Progress Bar to Keynote.app" \
+  --dmg-name "Add_Progress_Bar_to_Keynote_Legacy"
+
+bin/notarize_app.sh "dist/Keynote Studio/Add Progress Bar to Keynote.app" \
+  --dmg-name "Add_Progress_Bar_to_Keynote_Studio"
 ```
 
-This script:
+Each call:
 1. Stages a clean copy (strips resource forks and xattrs)
 2. Signs the embedded framework
 3. Signs the app
@@ -77,11 +99,11 @@ This script:
 7. Staples the ticket to the DMG
 8. Runs a Gatekeeper check
 
-Output: `Add_Progress_Bar_to_Keynote.dmg` in the current directory.
+Output: `Add_Progress_Bar_to_Keynote_Legacy.dmg` and `Add_Progress_Bar_to_Keynote_Studio.dmg` in the current directory.
 
 ### Verifying notarization
 
-To confirm the app is properly notarized:
+Mount each DMG and assess the app inside:
 
 ```bash
 spctl --assess -vv "/Volumes/Add Progress Bar to Keynote/Add Progress Bar to Keynote.app"
@@ -111,7 +133,9 @@ git push origin vX.Y.Z
 ### 7. Create the GitHub release
 
 ```bash
-gh release create vX.Y.Z Add_Progress_Bar_to_Keynote.dmg \
+gh release create vX.Y.Z \
+  Add_Progress_Bar_to_Keynote_Legacy.dmg \
+  Add_Progress_Bar_to_Keynote_Studio.dmg \
   --title "vX.Y.Z" \
   --notes-file release-notes/release-vX.Y.Z.md \
   --latest

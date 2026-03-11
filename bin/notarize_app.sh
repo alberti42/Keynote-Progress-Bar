@@ -31,16 +31,25 @@ set -euo pipefail
 
 APP_PATH=${1:-}
 KEEP_STAGING=0
-if [[ "${2:-}" == "--keep-staging" ]]; then
-  KEEP_STAGING=1
-fi
+DMG_NAME_OVERRIDE=""
+
+shift || true
+while [[ $# -gt 0 ]]; do
+  case "${1:-}" in
+    --keep-staging) KEEP_STAGING=1 ;;
+    --dmg-name) DMG_NAME_OVERRIDE="${2:-}"; shift ;;
+    *) echo "Unknown option: ${1:-}"; exit 1 ;;
+  esac
+  shift
+done
+
 APP_EXPECTED_NAME="Add Progress Bar to Keynote.app"
 
 DEV_ID="Developer ID Application: Andrea Alberti (9V3X7C8VCK)"
 NOTARY_PROFILE="notary-profile"
 
 if [[ -z "$APP_PATH" ]]; then
-  echo "Usage: $0 \"/path/to/${APP_EXPECTED_NAME}\""
+  echo "Usage: $0 \"/path/to/${APP_EXPECTED_NAME}\" [--dmg-name <name>] [--keep-staging]"
   exit 1
 fi
 
@@ -50,8 +59,13 @@ if [[ ! -d "$APP_PATH" ]]; then
 fi
 
 APP_NAME="$(basename "$APP_PATH" .app)"
-DMG_NAME="${APP_NAME}"
-DMG_FILE_NAME="$(printf '%s' "$APP_NAME" | tr -s '[:space:]' '_' )"
+if [[ -n "$DMG_NAME_OVERRIDE" ]]; then
+  DMG_NAME="${DMG_NAME_OVERRIDE}"
+  DMG_FILE_NAME="$(printf '%s' "$DMG_NAME_OVERRIDE" | tr -s '[:space:]' '_' )"
+else
+  DMG_NAME="${APP_NAME}"
+  DMG_FILE_NAME="$(printf '%s' "$APP_NAME" | tr -s '[:space:]' '_' )"
+fi
 DMG_PATH="${PWD}/${DMG_FILE_NAME}.dmg"
 
 # Space-safe mktemp prefix
