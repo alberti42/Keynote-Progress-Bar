@@ -42,6 +42,7 @@ Download the Keynote presentation [example](https://github.com/alberti42/Keynote
 - Easy configuration through presenter notes
 - Automatic insertion of progress bar images into Keynote slides
 - Progress bar based on actual presentation time, ensuring accurate visual representation.
+- Compatible with both **Keynote Creator Studio** (new) and the legacy **Keynote**.
 
 ## 3. Installation<a id="installation"></a>
 
