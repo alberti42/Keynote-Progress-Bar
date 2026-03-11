@@ -1,10 +1,17 @@
 # Keynote Progress Bar<a id="Keynote-Progress-Bar"></a>
 
-This AppleScript program adds a customizable progress bar to presentations created with Apple Keynote. The progress bar is configured using commands placed in the presenter notes of your slides. This project utilizes a custom Objective-C framework, `KeynoteProgressBarHelper`, for generating vector graphics (PDF) images of the progress bar.
+**Keynote Progress Bar** is a macOS app that adds a customizable dot-based progress bar to your Apple Keynote presentations. Configuration is done directly in the presenter notes of your slides — no separate file needed. The app is signed and notarized by Apple, so it installs and runs without Gatekeeper warnings.
+
+Two versions are available — pick the one matching your Keynote installation:
+
+| Version | For |
+|---|---|
+| [Download for Keynote Creator Studio](https://github.com/alberti42/Keynote-Progress-Bar/releases/latest/download/Add_Progress_Bar_to_Keynote_Studio.dmg) | The current Keynote app (macOS 13+) |
+| [Download for legacy Keynote](https://github.com/alberti42/Keynote-Progress-Bar/releases/latest/download/Add_Progress_Bar_to_Keynote_Legacy.dmg) | Older Keynote versions |
 
 ![Example Keynote Progress Bar](Docs/Examples/Example-Keynote-Progress-Bar.png)
 
-Download the Keynote presentation [example](https://github.com/alberti42/Keynote-Progress-Bar/raw/main/Docs/Examples/Example-Keynote-Progress-Bar.key), where the _Keynote Progress Bar_ has already been embedded. You only need Keynote to open the presentation and evaluate how the _Keynote Progress Bar_ looks. No other installation is required for a first look. Alternatively, you can download the [PDF](https://github.com/alberti42/Keynote-Progress-Bar/raw/main/Docs/Examples/Example-Keynote-Progress-Bar.pdf) export of the Keynote presentation.
+To see what the progress bar looks like before installing, download the Keynote [example presentation](https://github.com/alberti42/Keynote-Progress-Bar/raw/main/Docs/Examples/Example-Keynote-Progress-Bar.key) — it already has the progress bar embedded and only requires Keynote to open. A [PDF export](https://github.com/alberti42/Keynote-Progress-Bar/raw/main/Docs/Examples/Example-Keynote-Progress-Bar.pdf) is also available.
 
 ## 1. Table of Contents<a id="toc"></a>
 
@@ -48,23 +55,27 @@ Download the Keynote presentation [example](https://github.com/alberti42/Keynote
 
 There are two installation options:
 
-- **Option A (recommended):** Download the pre-built, **signed and notarized** app from the latest GitHub release (no Xcode required).
-- **Option B:** Build the framework yourself and run the AppleScript from Script Editor / as a `.scpt` (developer workflow).
+- **Option A (recommended):** Download the pre-built, signed and notarized app — no Xcode or developer tools required.
+- **Option B:** Build from source (developer workflow).
 
 ### Option A — Download the notarized app (recommended)
 
-1. Download the latest notarized DMG from GitHub Releases:
+1. Download the DMG matching your Keynote version:
 
-   **Direct download:**  
-   https://github.com/alberti42/Keynote-Progress-Bar/releases/latest/download/Add_Progress_Bar_to_Keynote.dmg
+   | Your Keynote | Download |
+   |---|---|
+   | Keynote Creator Studio (current) | [Add_Progress_Bar_to_Keynote_Studio.dmg](https://github.com/alberti42/Keynote-Progress-Bar/releases/latest/download/Add_Progress_Bar_to_Keynote_Studio.dmg) |
+   | Legacy Keynote | [Add_Progress_Bar_to_Keynote_Legacy.dmg](https://github.com/alberti42/Keynote-Progress-Bar/releases/latest/download/Add_Progress_Bar_to_Keynote_Legacy.dmg) |
 
-2. Open the DMG and drag **Add Progress Bar to Keynote.app** into `/Applications` (or any other folder you like).
+   Not sure which version you have? Open Keynote, go to **Keynote → About Keynote**. Version 15 and later is Keynote Creator Studio; version 14.5 and earlier is legacy Keynote.
 
-3. On first launch, macOS will ask for permission to control Keynote (Automation permission). Please allow it.
+2. Open the DMG and drag **Add Progress Bar to Keynote.app** into `/Applications` (or any folder you like).
+
+3. On first launch, macOS will ask for permission to control Keynote (Automation). Please allow it.
 
 4. Open your Keynote presentation and run **Add Progress Bar to Keynote.app**.
 
-> **Note:** The app is signed with a Developer ID and notarized by Apple. Gatekeeper should accept it without warnings. If macOS blocks the app anyway, right-click the app and choose **Open** the first time you launch it.
+> **Note:** The app is signed with a Developer ID and notarized by Apple. Gatekeeper will accept it without warnings.
 
 ---
 
