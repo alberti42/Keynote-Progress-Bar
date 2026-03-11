@@ -137,8 +137,16 @@ if [[ -d "$FRAMEWORK_PATH" ]]; then
 fi
 
 # --- Sign app ---
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ENTITLEMENTS="${SCRIPT_DIR}/app.entitlements"
+if [[ ! -f "$ENTITLEMENTS" ]]; then
+  echo "Error: entitlements file not found at: $ENTITLEMENTS"
+  exit 1
+fi
+
 echo "==> Signing AppleScript app…"
 codesign --force --timestamp --options runtime \
+  --entitlements "$ENTITLEMENTS" \
   --sign "$DEV_ID" \
   "$STAGED_APP_PATH"
 
