@@ -1,0 +1,3 @@
+- Included Apple Silicon files
+- Changed name of command to new name `ChapterLabelsAtBottom`
+- Added default behavior for chapters without text

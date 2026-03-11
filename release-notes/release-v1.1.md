@@ -1,0 +1,2 @@
+- Added command `SameAsPreviousAutomatic`
+- Sped up execution of `Set Keynote slides duration`
