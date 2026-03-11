@@ -63,7 +63,7 @@ There are two installation options:
 
 4. Open your Keynote presentation and run **Add Progress Bar to Keynote.app**.
 
-> **Note:** The app is signed with a Developer ID and notarized by Apple. Gatekeeper should accept it without warnings. If macOS blocks the app anyway, right-click the app and choose **Open** once.
+> **Note:** The app is signed with a Developer ID and notarized by Apple. Gatekeeper should accept it without warnings. If macOS blocks the app anyway, right-click the app and choose **Open** the first time you launch it.
 
 ---
 
