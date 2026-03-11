@@ -79,6 +79,25 @@ This script:
 
 Output: `Add_Progress_Bar_to_Keynote.dmg` in the current directory.
 
+### Verifying notarization
+
+To confirm the app is properly notarized:
+
+```bash
+spctl --assess -vv "/Volumes/Add Progress Bar to Keynote/Add Progress Bar to Keynote.app"
+```
+
+Expected output:
+```
+accepted
+source=Notarized Developer ID
+origin=Developer ID Application: Andrea Alberti (9V3X7C8VCK)
+```
+
+**Do not run `spctl` on the DMG or the framework** — it will say `rejected (the code is valid but does not seem to be an app)`. This is not an error; `spctl` only assesses app bundles. The DMG and framework are fine as long as the app inside passes.
+
+The DMG will still get a quarantine attribute when downloaded from the internet (applied by the browser). This is normal — because the app is notarized and the ticket is stapled to the DMG, Gatekeeper lifts the quarantine automatically when the user opens it. No warning dialog appears.
+
 ### 6. Commit, tag, and push
 
 ```bash
